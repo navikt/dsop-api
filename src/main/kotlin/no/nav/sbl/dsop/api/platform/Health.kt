@@ -1,4 +1,4 @@
-package no.nav.pam.xmlstilling.admin.platform
+package no.nav.sbl.dsop.api.admin.platform
 
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode

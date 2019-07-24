@@ -1,4 +1,4 @@
-package no.nav.pam.xmlstilling.admin
+package no.nav.sbl.dsop.api
 
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializer
@@ -13,8 +13,8 @@ import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import mu.KotlinLogging
-import no.nav.pam.xmlstilling.admin.Bootstrap.start
-import no.nav.pam.xmlstilling.admin.platform.health
+import no.nav.sbl.dsop.api.Bootstrap.start
+import no.nav.sbl.dsop.api.admin.platform.health
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter

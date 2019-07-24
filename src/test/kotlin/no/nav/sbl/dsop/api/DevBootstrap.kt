@@ -1,4 +1,4 @@
-package no.nav.pam.xmlstilling.admin
+package no.nav.sbl.dsop.api
 
 fun main(args: Array<String>) {
     Bootstrap.start(webApplication())
