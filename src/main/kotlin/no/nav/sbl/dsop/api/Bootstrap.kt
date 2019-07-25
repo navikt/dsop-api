@@ -7,7 +7,9 @@ import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
 import io.ktor.response.respond
+import io.ktor.routing.RoutingPath
 import io.ktor.routing.get
+import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
@@ -33,10 +35,13 @@ fun webApplication(port: Int = 8080): ApplicationEngine {
                 })
             }
         }
+
         routing {
             health()
-            get("get/{id}") {
-                call.respond(call.parameters["id"]!!.toInt() ?: "")
+            route("person/dsop-api/") {
+                get("get/{id}") {
+                    call.respond(call.parameters["id"]!!.toInt() ?: "")
+                }
             }
         }
     }
@@ -47,7 +52,7 @@ object Bootstrap {
     private val log = KotlinLogging.logger { }
 
     fun start(webApplication: ApplicationEngine) {
-        log.debug("Starting weg application")
+        log.debug("Starting web application")
         webApplication.start(wait = true)
     }
 }
