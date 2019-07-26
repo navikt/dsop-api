@@ -57,10 +57,13 @@ fun webApplication(port: Int = 8080): ApplicationEngine {
             health()
             route("person/dsop-api/") {
                 get("get") {
+                    call.request.cookies.rawCookies.forEach {
+                        System.out.println("Cookie: " + it.key + "=" + it.value)}
+
                     val dsopClient = HttpClient(){
                         defaultRequest {
                             header(DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME, DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD)
-                            header("Authorization", call.request.header("Authorization"))
+                            header("Authorization", call.request.cookies["selvbetjening-idporten"] ?: call.request.header("Authorization"))
                         }
                     }
 
