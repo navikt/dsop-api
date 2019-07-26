@@ -17,6 +17,8 @@ import io.ktor.server.netty.Netty
 import mu.KotlinLogging
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
+import no.nav.sbl.dsop.api.service.SporingsloggProxy
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -25,13 +27,16 @@ fun main(args: Array<String>) {
     start(webApplication())
 }
 
-fun webApplication(port: Int = 8080): ApplicationEngine {
+fun webApplication(port: Int = 8080, proxy: SporingsloggProxy = SporingsloggProxy()): ApplicationEngine {
     return embeddedServer(Netty, port) {
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
                 registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { localDateTime, _, _ ->
                     JsonPrimitive(DateTimeFormatter.ISO_INSTANT.format(localDateTime.atOffset(ZoneOffset.UTC).toInstant()))
+                })
+                registerTypeAdapter(LocalDate::class.java, JsonSerializer<LocalDate> { localDate, _, _ ->
+                    JsonPrimitive(DateTimeFormatter.ISO_DATE.format(localDate.atStartOfDay()))
                 })
             }
         }
@@ -40,7 +45,7 @@ fun webApplication(port: Int = 8080): ApplicationEngine {
             health()
             route("person/dsop-api/") {
                 get("get/{id}") {
-                    call.respond(call.parameters["id"]!!.toInt() ?: "")
+                    call.respond(proxy.hentSporingslogg())
                 }
             }
         }
