@@ -63,7 +63,7 @@ fun webApplication(port: Int = 8080): ApplicationEngine {
                     val dsopClient = HttpClient(){
                         defaultRequest {
                             header(DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME, DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD)
-                            header("Authorization", call.request.cookies["selvbetjening-idporten"] ?: call.request.header("Authorization"))
+                            header("Authorization", "Bearer " + call.request.cookies["selvbetjening-idporten"] ?: call.request.header("Authorization"))
                         }
                     }
 
