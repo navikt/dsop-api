@@ -4,16 +4,26 @@ import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializer
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.client.HttpClient
+import io.ktor.client.call.call
+import io.ktor.client.features.defaultRequest
+import io.ktor.client.request.header
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.OutgoingContent
+import io.ktor.request.header
 import io.ktor.response.respond
-import io.ktor.routing.RoutingPath
 import io.ktor.routing.get
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import kotlinx.coroutines.io.ByteWriteChannel
+import kotlinx.coroutines.io.copyAndClose
 import mu.KotlinLogging
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
@@ -25,7 +35,14 @@ fun main(args: Array<String>) {
     start(webApplication())
 }
 
+
 fun webApplication(port: Int = 8080): ApplicationEngine {
+
+    var DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME: String = System.getenv("DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME")
+    var DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD: String = System.getenv("DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD")
+    var SPORINGSLOGG_LESLOGGER_URL: String = System.getenv("SPORINGSLOGG_LESLOGGER_URL")
+
+
     return embeddedServer(Netty, port) {
         install(ContentNegotiation) {
             gson {
@@ -39,10 +56,31 @@ fun webApplication(port: Int = 8080): ApplicationEngine {
         routing {
             health()
             route("person/dsop-api/") {
-                get("get/{id}") {
-                    call.respond(call.parameters["id"]!!.toInt() ?: "")
+                get("get") {
+                    val dsopClient = HttpClient(){
+                        defaultRequest {
+                            header(DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME, DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD)
+                            header("Authorization", call.request.header("Authorization"))
+                        }
+                    }
+
+                    val dsopResult = dsopClient.call(SPORINGSLOGG_LESLOGGER_URL)
+                    var responseHeaders = dsopResult.response.headers
+                    val responseContentType = responseHeaders[HttpHeaders.ContentType]
+                    val responseContentLength = responseHeaders[HttpHeaders.ContentLength]
+                    val responseStatusCode = dsopResult.response.status
+
+                    call.respond(object : OutgoingContent.WriteChannelContent() {
+                        override val contentLength: Long? = responseContentLength?.toLong()
+                        override val contentType: ContentType = responseContentType?.let { ContentType.parse(it) } ?: ContentType.Application.Json
+                        override val status: HttpStatusCode? = responseStatusCode
+                        override suspend fun writeTo(channel: ByteWriteChannel) {
+                            dsopResult.response.content.copyAndClose(channel)
+                        }
+                    })
                 }
             }
+
         }
     }
 }

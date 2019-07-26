@@ -50,19 +50,21 @@
             <artifactId>ktor-server-jetty</artifactId>
             <version>${ktor_version}</version>
         </dependency>
-
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-netty</artifactId>
             <version>${ktor_version}</version>
         </dependency>
-
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-gson</artifactId>
             <version>${ktor_version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-apache</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
         <dependency>
             <groupId>io.github.microutils</groupId>
             <artifactId>kotlin-logging</artifactId>
