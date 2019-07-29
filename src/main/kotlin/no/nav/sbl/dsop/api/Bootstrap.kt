@@ -27,6 +27,7 @@ import kotlinx.coroutines.io.copyAndClose
 import mu.KotlinLogging
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -35,20 +36,16 @@ fun main(args: Array<String>) {
     start(webApplication())
 }
 
-
-fun webApplication(port: Int = 8080): ApplicationEngine {
-
-    var DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME: String = System.getenv("DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME")
-    var DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD: String = System.getenv("DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD")
-    var SPORINGSLOGG_LESLOGGER_URL: String = System.getenv("SPORINGSLOGG_LESLOGGER_URL")
-
-
+fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
     return embeddedServer(Netty, port) {
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
                 registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { localDateTime, _, _ ->
                     JsonPrimitive(DateTimeFormatter.ISO_INSTANT.format(localDateTime.atOffset(ZoneOffset.UTC).toInstant()))
+                })
+                registerTypeAdapter(LocalDate::class.java, JsonSerializer<LocalDate> { localDate, _, _ ->
+                    JsonPrimitive(DateTimeFormatter.ISO_DATE.format(localDate.atStartOfDay()))
                 })
             }
         }
@@ -57,34 +54,39 @@ fun webApplication(port: Int = 8080): ApplicationEngine {
             health()
             route("person/dsop-api/") {
                 get("get") {
-                    val selvbetjeningIdtoken = call.request.cookies["selvbetjening-idtoken"]
-                    val authorization =
-                            if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer " + selvbetjeningIdtoken
-                            else call.request.header("Authorization")
-                    val dsopClient = HttpClient(){
-                        defaultRequest {
-                            header(DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_USERNAME, DSOP_API_SPORINGSLOGG_LESLOGGER_API_KEY_PASSWORD)
-                            header("Authorization", authorization)
+                    if (mockdata != null) {
+                        call.respond(mockdata)
+                    } else {
+                        val env = Environment()
+                        val selvbetjeningIdtoken = call.request.cookies["selvbetjening-idtoken"]
+                        val authorization =
+                                if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer " + selvbetjeningIdtoken
+                                else call.request.header("Authorization")
+                        val dsopClient = HttpClient() {
+                            defaultRequest {
+                                header(env.dsopApiSporingsloggLesloggerApiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
+                                header("Authorization", authorization)
+                            }
                         }
+
+                        val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
+                        var responseHeaders = dsopResult.response.headers
+                        val responseContentType = responseHeaders[HttpHeaders.ContentType]
+                        val responseContentLength = responseHeaders[HttpHeaders.ContentLength]
+                        val responseStatusCode = dsopResult.response.status
+
+                        call.respond(object : OutgoingContent.WriteChannelContent() {
+                            override val contentLength: Long? = responseContentLength?.toLong()
+                            override val contentType: ContentType = responseContentType?.let { ContentType.parse(it) }
+                                    ?: ContentType.Application.Json
+                            override val status: HttpStatusCode? = responseStatusCode
+                            override suspend fun writeTo(channel: ByteWriteChannel) {
+                                dsopResult.response.content.copyAndClose(channel)
+                            }
+                        })
                     }
-
-                    val dsopResult = dsopClient.call(SPORINGSLOGG_LESLOGGER_URL)
-                    var responseHeaders = dsopResult.response.headers
-                    val responseContentType = responseHeaders[HttpHeaders.ContentType]
-                    val responseContentLength = responseHeaders[HttpHeaders.ContentLength]
-                    val responseStatusCode = dsopResult.response.status
-
-                    call.respond(object : OutgoingContent.WriteChannelContent() {
-                        override val contentLength: Long? = responseContentLength?.toLong()
-                        override val contentType: ContentType = responseContentType?.let { ContentType.parse(it) } ?: ContentType.Application.Json
-                        override val status: HttpStatusCode? = responseStatusCode
-                        override suspend fun writeTo(channel: ByteWriteChannel) {
-                            dsopResult.response.content.copyAndClose(channel)
-                        }
-                    })
                 }
             }
-
         }
     }
 }
