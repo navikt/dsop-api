@@ -1,36 +1,8 @@
 [![CircleCI](https://circleci.com/gh/navikt/dsop-api.svg?style=svg)](https://circleci.com/gh/navikt/dsop-api)
-[![Maintainability](https://api.codeclimate.com/v1/badges/1a17b576c58daeb8bbc0/maintainability)](https://codeclimate.com/github/navikt/dsop-api/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/1a17b576c58daeb8bbc0/test_coverage)](https://codeclimate.com/github/navikt/dsop-api/test_coverage)
 
 # DSOP-Api
 
-React applikasjon som skal gi brukeren innsikt i informasjonen NAV har lagret.
-
-## Komme i gang
-
-Hent repoet fra github
-
-```
-git clone https://github.com/navikt/dsop-api.git
-```
-
-Installer nødvendige pakker:
-
-```
-npm install
-```
-
-Start applikasjonen lokalt:
-
-```
-npm start
-```
-
-## Feature toggles
-
-DSOP-Api benytter Unleash til å skru av og på funksjonalitet som er under utvikling.<br>
-https://unleash.nais.adeo.no/#/features<br>
-Obs: Unleash er kun tilgjengelig i fagsystemsonen.
+Api bygget på Ktor for å koble seg opp mot DSOP / sporingslogg 
 
 ## Deployering
 
@@ -48,6 +20,10 @@ git push && git push --tags
 ```
 
 Godkjenn produksjonssettingen i [CircleCI](https://circleci.com/gh/navikt/workflows/dsop-api).
+
+## Lokal Kjøring
+
+For å kjøre opp løsningen lokalt, kjør [DevBootstrap](https://github.com/navikt/dsop-api/blob/readme/src/test/kotlin/no/nav/sbl/dsop/api/DevBootstrap.kt).
 
 ## Logging
 
