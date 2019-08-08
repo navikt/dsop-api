@@ -28,8 +28,8 @@
       "enabled": true
     },
     "replicas": {
-      "min": 1,
-      "max": 2
+      "min": 2,
+      "max": 4
     },
     "webproxy": true,
     "env": [
