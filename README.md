@@ -23,7 +23,7 @@ Godkjenn produksjonssettingen i [CircleCI](https://circleci.com/gh/navikt/workfl
 
 ## Lokal Kjøring
 
-For å kjøre opp løsningen lokalt, kjør [DevBootstrap](https://github.com/navikt/dsop-api/blob/readme/src/test/kotlin/no/nav/sbl/dsop/api/DevBootstrap.kt).
+For å kjøre opp løsningen lokalt, kjør [DevBootstrap](https://github.com/navikt/dsop-api/blob/master/src/test/kotlin/no/nav/sbl/dsop/api/DevBootstrap.kt).
 
 ## Logging
 
