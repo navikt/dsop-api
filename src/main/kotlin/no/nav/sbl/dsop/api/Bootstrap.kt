@@ -9,12 +9,14 @@ import io.ktor.client.call.call
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.header
 import io.ktor.features.ContentNegotiation
+import io.ktor.features.StatusPages
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.OutgoingContent
 import io.ktor.request.header
+import io.ktor.request.uri
 import io.ktor.response.respond
 import io.ktor.routing.get
 import io.ktor.routing.route
@@ -24,6 +26,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import kotlinx.coroutines.io.ByteWriteChannel
 import kotlinx.coroutines.io.copyAndClose
+import mu.KLogging
 import mu.KotlinLogging
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
@@ -38,6 +41,11 @@ fun main(args: Array<String>) {
 
 fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
     return embeddedServer(Netty, port) {
+        install(StatusPages) {
+            status(HttpStatusCode.NotFound) { cause ->
+                KLogging().logger.warn(cause.description + ": " + call.request.uri)
+            }
+        }
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
@@ -92,11 +100,10 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
 }
 
 object Bootstrap {
-
     private val log = KotlinLogging.logger { }
 
     fun start(webApplication: ApplicationEngine) {
-        log.debug("Starting web application")
+        log.info("Starting web application")
         webApplication.start(wait = true)
     }
 }
