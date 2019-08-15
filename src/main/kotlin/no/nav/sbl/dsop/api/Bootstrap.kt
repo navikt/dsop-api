@@ -8,6 +8,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.header
+import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.gson.gson
@@ -56,6 +57,15 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
                     JsonPrimitive(DateTimeFormatter.ISO_DATE.format(localDate.atStartOfDay()))
                 })
             }
+        }
+        install(CORS) {
+            host(host = "personopplysninger-q0.nais.oera-q.local", schemes = listOf("https"))
+            host(host = "nav.no", subDomains = listOf("www", "www-q0", "www-q1", "personopplysninger-q"), schemes = listOf("https"))
+            allowSameOrigin = true
+            allowCredentials = true
+            allowNonSimpleContentTypes = true
+            header(HttpHeaders.Origin)
+            header(HttpHeaders.Authorization)
         }
 
         routing {
