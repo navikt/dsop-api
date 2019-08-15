@@ -7,7 +7,7 @@ Api bygget på Ktor for å koble seg opp mot DSOP / sporingslogg
 ## Deployering
 
 Applikasjonen bygges automatisk til dev / https://www-q0.nav.no/person/dsop-api ved merge til master eller ved manuell godkjenning i [CircleCI](https://circleci.com/gh/navikt/workflows/dsop-api). <br><br>
-For å lansere applikasjonen til produksjon / https://www.nav.no/person/personopplysninger-api, knytt en commit til en [Git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging):
+For å lansere applikasjonen til produksjon / https://www.nav.no/person/dsop-api, knytt en commit til en [Git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging):
 
 ```
 git tag -a vX.X.X -m "Din melding"
