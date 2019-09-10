@@ -1,5 +1,6 @@
 package no.nav.sbl.dsop.api.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -11,9 +12,10 @@ data class Sporingslogg (
         val leverteData: LeverteData? = null
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Sporingslogg2 (
         val tema: String? = null,
-        val uthentingsTidspunkt: LocalDateTime? = null,
+        //val uthentingsTidspunkt: LocalDateTime? = null,
         val mottaker: String? = null,
         val behandlingsgrunnlag: String? = null,
         val leverteData: String? = null,
