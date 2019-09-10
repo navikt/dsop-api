@@ -1,5 +1,7 @@
 package no.nav.sbl.dsop.oppslag.dsop
 
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializer
 import io.ktor.application.call
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
@@ -24,6 +26,8 @@ import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.*
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 fun Route.dsop(mockdata: Any? = null) {
     get("get") {
@@ -41,7 +45,11 @@ fun Route.dsop(mockdata: Any? = null) {
                     header("Authorization", authorization)
                 }
                 install(JsonFeature) {
-                    serializer = GsonSerializer()
+                    serializer = GsonSerializer() {
+                        registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { localDateTime, _, _ ->
+                            JsonPrimitive(DateTimeFormatter.ISO_INSTANT.format(localDateTime.atOffset(ZoneOffset.UTC).toInstant()))
+                        })
+                    }
                 }
 
             }
