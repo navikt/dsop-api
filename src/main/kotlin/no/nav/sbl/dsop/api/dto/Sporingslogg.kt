@@ -11,6 +11,15 @@ data class Sporingslogg (
         val leverteData: LeverteData? = null
 )
 
+data class Sporingslogg2 (
+        val tema: String? = null,
+        val uthentingsTidspunkt: LocalDateTime? = null,
+        val mottaker: String? = null,
+        val behandlingsgrunnlag: String? = null,
+        val leverteData: String? = null,
+        val samtykkeToken: String? = null
+)
+
 data class LeverteData (
         val uttrekksperiode: Periode,
         val vedtak: List<Vedtak>

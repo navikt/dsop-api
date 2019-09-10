@@ -17,10 +17,7 @@ import io.ktor.routing.get
 import kotlinx.coroutines.io.ByteWriteChannel
 import kotlinx.coroutines.io.copyAndClose
 import no.nav.sbl.dsop.api.Environment
-import no.nav.sbl.dsop.api.dto.LeverteData
-import no.nav.sbl.dsop.api.dto.Periode
-import no.nav.sbl.dsop.api.dto.Sporingslogg
-import no.nav.sbl.dsop.api.dto.Vedtak
+import no.nav.sbl.dsop.api.dto.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -42,37 +39,39 @@ fun Route.dsop(mockdata: Any? = null) {
             }
 
             val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
+            val sporingslogg2 = dsopResult.response.receive<Sporingslogg2>()
+            call.respond(sporingslogg2)
             //call.respond(dsopResult.response.receive<String>())
 
-            val vedtaksListe = mutableListOf<Vedtak>()
-            vedtaksListe.add(Vedtak(
-                    vedtakId = "1",
-                    vedtakstype = "Endring",
-                    vedtaksstatus = "Iverksatt",
-                    vedtaksperiode = Periode(fra = LocalDate.now(), til = LocalDate.now()),
-                    vedtaksvariant = "",
-                    rettighetstype = "Arbeidsavklaringspenger",
-                    aktivitetsfase = "Under arbeidsavklaring",
-                    utfall = "Ja"
-            ))
-            vedtaksListe.add(Vedtak(
-                    vedtakId = "2",
-                    vedtakstype = "Endring",
-                    vedtaksstatus = "Iverksatt",
-                    vedtaksperiode = Periode(fra = LocalDate.now(), til = LocalDate.now()),
-                    vedtaksvariant = "",
-                    rettighetstype = "Arbeidsavklaringspenger",
-                    aktivitetsfase = "Under arbeidsavklaring",
-                    utfall = "Ja"
-            ))
-            val leverteData = LeverteData(uttrekksperiode = Periode(fra = LocalDate.now(), til = LocalDate.now()), vedtak = vedtaksListe)
-            val sporingslogg = Sporingslogg(
-                    tema = "Arbeidsavklaringspenger",
-                    uthentingsTidspunkt = LocalDateTime.now(),
-                    mottaker = "Forsikring AS",
-                    behandlingsgrunnlag = "Hjemmel",
-                    leverteData = leverteData)
-            call.respond(sporingslogg)
+//            val vedtaksListe = mutableListOf<Vedtak>()
+//            vedtaksListe.add(Vedtak(
+//                    vedtakId = "1",
+//                    vedtakstype = "Endring",
+//                    vedtaksstatus = "Iverksatt",
+//                    vedtaksperiode = Periode(fra = LocalDate.now(), til = LocalDate.now()),
+//                    vedtaksvariant = "",
+//                    rettighetstype = "Arbeidsavklaringspenger",
+//                    aktivitetsfase = "Under arbeidsavklaring",
+//                    utfall = "Ja"
+//            ))
+//            vedtaksListe.add(Vedtak(
+//                    vedtakId = "2",
+//                    vedtakstype = "Endring",
+//                    vedtaksstatus = "Iverksatt",
+//                    vedtaksperiode = Periode(fra = LocalDate.now(), til = LocalDate.now()),
+//                    vedtaksvariant = "",
+//                    rettighetstype = "Arbeidsavklaringspenger",
+//                    aktivitetsfase = "Under arbeidsavklaring",
+//                    utfall = "Ja"
+//            ))
+//            val leverteData = LeverteData(uttrekksperiode = Periode(fra = LocalDate.now(), til = LocalDate.now()), vedtak = vedtaksListe)
+//            val sporingslogg = Sporingslogg(
+//                    tema = "Arbeidsavklaringspenger",
+//                    uthentingsTidspunkt = LocalDateTime.now(),
+//                    mottaker = "Forsikring AS",
+//                    behandlingsgrunnlag = "Hjemmel",
+//                    leverteData = leverteData)
+//            call.respond(sporingslogg)
 
             
 //            var responseHeaders = dsopResult.response.headers
