@@ -28,6 +28,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 fun Route.dsop(mockdata: Any? = null) {
     get("get") {
@@ -58,7 +59,19 @@ fun Route.dsop(mockdata: Any? = null) {
 
             val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
             val sporingslogg2 = dsopResult.response.receive<List<Sporingslogg2>>()
-            call.respond(sporingslogg2)
+            call.respond(
+                    sporingslogg2.map {
+                        Sporingslogg2(
+                                tema = it.tema,
+                                uthentingsTidspunkt = it.uthentingsTidspunkt,
+                                mottaker = it.mottaker,
+                                leverteData = String(Base64.getDecoder().decode(it.leverteData)),
+                                samtykkeToken = it.samtykkeToken
+
+                        )
+                    }
+            )
+            //call.respond(sporingslogg2)
             //call.respond(dsopResult.response.receive<String>())
 
 //            val vedtaksListe = mutableListOf<Vedtak>()
