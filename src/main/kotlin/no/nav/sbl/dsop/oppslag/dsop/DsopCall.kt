@@ -47,8 +47,8 @@ fun Route.dsop(mockdata: Any? = null) {
             }
 
 
-            val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl) 
-            val sporingslogg2 = dsopResult.response.receive<Sporingslogg2>()
+            val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
+            val sporingslogg2 = dsopResult.response.receive<List<Sporingslogg2>>()
             call.respond(sporingslogg2)
             //call.respond(dsopResult.response.receive<String>())
 
