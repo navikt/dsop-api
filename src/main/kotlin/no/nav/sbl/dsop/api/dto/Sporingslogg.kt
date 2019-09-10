@@ -15,7 +15,8 @@ data class Sporingslogg (
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Sporingslogg2 (
         val tema: String? = null,
-        val uthentingsTidspunkt: LocalDateTime? = null,
+//        val uthentingsTidspunkt: LocalDateTime? = null,
+        val uthentingsTidspunkt: String? = null,
         val mottaker: String? = null,
         val behandlingsgrunnlag: String? = null,
         val leverteData: String? = null,
