@@ -3,6 +3,7 @@ package no.nav.sbl.dsop.oppslag.dsop
 import io.ktor.application.call
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
+import io.ktor.client.call.receive
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
@@ -35,20 +36,23 @@ fun Route.dsop(mockdata: Any? = null) {
             }
 
             val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
-            var responseHeaders = dsopResult.response.headers
-            val responseContentType = responseHeaders[HttpHeaders.ContentType]
-            val responseContentLength = responseHeaders[HttpHeaders.ContentLength]
-            val responseStatusCode = dsopResult.response.status
+            call.respond(dsopResult.response.receive<String>())
 
-            call.respond(object : OutgoingContent.WriteChannelContent() {
-                override val contentLength: Long? = responseContentLength?.toLong()
-                override val contentType: ContentType = responseContentType?.let { ContentType.parse(it) }
-                        ?: ContentType.Application.Json
-                override val status: HttpStatusCode? = responseStatusCode
-                override suspend fun writeTo(channel: ByteWriteChannel) {
-                    dsopResult.response.content.copyAndClose(channel)
-                }
-            })
+            
+//            var responseHeaders = dsopResult.response.headers
+//            val responseContentType = responseHeaders[HttpHeaders.ContentType]
+//            val responseContentLength = responseHeaders[HttpHeaders.ContentLength]
+//            val responseStatusCode = dsopResult.response.status
+//
+//            call.respond(object : OutgoingContent.WriteChannelContent() {
+//                override val contentLength: Long? = responseContentLength?.toLong()
+//                override val contentType: ContentType = responseContentType?.let { ContentType.parse(it) }
+//                        ?: ContentType.Application.Json
+//                override val status: HttpStatusCode? = responseStatusCode
+//                override suspend fun writeTo(channel: ByteWriteChannel) {
+//                    dsopResult.response.content.copyAndClose(channel)
+//                }
+//            })
         }
     }
 
