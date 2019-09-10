@@ -5,11 +5,15 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.call.receive
 import io.ktor.client.features.defaultRequest
+import io.ktor.client.features.json.GsonSerializer
+import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.header
+import io.ktor.features.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.OutgoingContent
+import io.ktor.http.contentType
 import io.ktor.request.header
 import io.ktor.response.respond
 import io.ktor.routing.Route
@@ -36,9 +40,16 @@ fun Route.dsop(mockdata: Any? = null) {
                     header(env.dsopApiSporingsloggLesloggerApiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
                     header("Authorization", authorization)
                 }
+                install(JsonFeature) {
+                    serializer = GsonSerializer()
+                }
+
             }
 
-            val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
+
+            val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl) {
+                contentType(ContentType.Application.Json)
+            }
             val sporingslogg2 = dsopResult.response.receive<Sporingslogg2>()
             call.respond(sporingslogg2)
             //call.respond(dsopResult.response.receive<String>())
