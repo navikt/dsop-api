@@ -65,7 +65,8 @@ fun Route.dsop(mockdata: Any? = null) {
                                 tema = it.tema,
                                 uthentingsTidspunkt = it.uthentingsTidspunkt,
                                 mottaker = it.mottaker,
-                                leverteData = String(Base64.getDecoder().decode(it.leverteData)),
+                                //leverteData = String(Base64.getDecoder().decode(it.leverteData)),
+                                leverteData = it.leverteData,
                                 samtykkeToken = it.samtykkeToken
 
                         )
