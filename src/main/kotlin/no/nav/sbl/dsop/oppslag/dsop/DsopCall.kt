@@ -10,25 +10,16 @@ import io.ktor.client.features.defaultRequest
 import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.header
-import io.ktor.features.ContentNegotiation
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.OutgoingContent
-import io.ktor.http.contentType
+import io.ktor.client.request.parameter
 import io.ktor.request.header
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
-import kotlinx.coroutines.io.ByteWriteChannel
-import kotlinx.coroutines.io.copyAndClose
 import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.*
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 fun Route.dsop(mockdata: Any? = null) {
     get("get") {
@@ -42,7 +33,7 @@ fun Route.dsop(mockdata: Any? = null) {
                     else call.request.header("Authorization")
             val dsopClient = HttpClient() {
                 defaultRequest {
-                    header(env.dsopApiSporingsloggLesloggerApiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
+                    header(env.apiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
                     header("Authorization", authorization)
                 }
                 install(JsonFeature) {
@@ -59,12 +50,27 @@ fun Route.dsop(mockdata: Any? = null) {
 
             val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
             val sporingslogg2 = dsopResult.response.receive<List<Sporingslogg2>>()
+
+            val eregClient = HttpClient() {
+                defaultRequest {
+                    header(env.apiKeyUsername, env.dsopApiEregApiApikeyPassword)
+                    header("Authorization", authorization)
+                    header("Nav-Call-Id", "1234")
+                    header("Nav-Consumer-Id", "dsop-api")
+                    parameter("gyldigDato", "2019-01-01")
+                }
+            }
+            val orgnr = "914782007"
+            val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/" + orgnr + "/noekkelinfo"))
+            val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
+
+
             call.respond(
                     sporingslogg2.map {
                         Sporingslogg2(
                                 tema = it.tema,
                                 uthentingsTidspunkt = it.uthentingsTidspunkt,
-                                mottaker = it.mottaker,
+                                mottaker = it.mottaker.plus(eregOrganisasjon.navn?.navnelinje1),
                                 //leverteData = String(Base64.getDecoder().decode(it.leverteData)),
                                 leverteData = it.leverteData,
                                 samtykkeToken = it.samtykkeToken
