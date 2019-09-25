@@ -64,7 +64,7 @@ fun Route.dsop(mockdata: Any? = null) {
             }
             val orgnr = "914782007"
             val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/" + orgnr + "/noekkelinfo"))
-            val resp = eregResult.response.receive<String>()
+            //val resp = eregResult.response.receive<String>()
             //KLogging().logger.warn("Response: ".plus(resp))
             val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
 
