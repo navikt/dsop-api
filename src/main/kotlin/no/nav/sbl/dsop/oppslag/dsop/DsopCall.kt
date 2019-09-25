@@ -15,6 +15,7 @@ import io.ktor.request.header
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
+import mu.KLogging
 import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.*
 import java.time.LocalDateTime
@@ -62,7 +63,9 @@ fun Route.dsop(mockdata: Any? = null) {
             }
             val orgnr = "914782007"
             val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/" + orgnr + "/noekkelinfo"))
-            val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
+            val resp = eregResult.response.receive<String>()
+            KLogging().logger.warn("Response: ".plus(resp))
+            //val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
 
 
             call.respond(
@@ -70,7 +73,8 @@ fun Route.dsop(mockdata: Any? = null) {
                         Sporingslogg2(
                                 tema = it.tema,
                                 uthentingsTidspunkt = it.uthentingsTidspunkt,
-                                mottaker = it.mottaker.plus(eregOrganisasjon.navn?.navnelinje1),
+                                //mottaker = it.mottaker.plus(eregOrganisasjon.navn?.navnelinje1),
+                                mottaker = it.mottaker,
                                 //leverteData = String(Base64.getDecoder().decode(it.leverteData)),
                                 leverteData = it.leverteData,
                                 samtykkeToken = it.samtykkeToken
