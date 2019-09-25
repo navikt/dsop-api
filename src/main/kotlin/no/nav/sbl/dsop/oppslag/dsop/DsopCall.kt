@@ -60,12 +60,13 @@ fun Route.dsop(mockdata: Any? = null) {
                     header("Nav-Consumer-Id", "dsop-api")
                     parameter("gyldigDato", "2019-01-01")
                 }
+                install(JsonFeature)
             }
             val orgnr = "914782007"
             val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/" + orgnr + "/noekkelinfo"))
             val resp = eregResult.response.receive<String>()
-            KLogging().logger.warn("Response: ".plus(resp))
-            //val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
+            //KLogging().logger.warn("Response: ".plus(resp))
+            val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
 
 
             call.respond(
@@ -73,8 +74,8 @@ fun Route.dsop(mockdata: Any? = null) {
                         Sporingslogg2(
                                 tema = it.tema,
                                 uthentingsTidspunkt = it.uthentingsTidspunkt,
-                                //mottaker = it.mottaker.plus(eregOrganisasjon.navn?.navnelinje1),
-                                mottaker = it.mottaker,
+                                mottaker = it.mottaker.plus(eregOrganisasjon.navn?.navnelinje1),
+                                //mottaker = it.mottaker,
                                 //leverteData = String(Base64.getDecoder().decode(it.leverteData)),
                                 leverteData = it.leverteData,
                                 samtykkeToken = it.samtykkeToken
