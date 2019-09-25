@@ -64,15 +64,20 @@ fun Route.dsop(mockdata: Any? = null) {
 //            val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/" + orgnr + "/noekkelinfo"))
 //            val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
             val orgnavn = getOrganisasjonsnavn(authorization, orgnr)
+            val orgnavnCache = HashMap<String, String>()
+
 
             call.respond(
                     sporingslogg2.map {
+                        if (it.mottaker != null && orgnavnCache.get(it.mottaker) == null) {
+                            orgnavnCache.put(it.mottaker, getOrganisasjonsnavn(authorization, it.mottaker))
+                        }
+
                         Sporingslogg2(
                                 tema = it.tema,
                                 uthentingsTidspunkt = it.uthentingsTidspunkt,
                                 mottaker = it.mottaker,
-                                mottakernavn = orgnavn,
-                                //mottaker = it.mottaker,
+                                mottakernavn = orgnavnCache.get(it.mottaker),
                                 //leverteData = String(Base64.getDecoder().decode(it.leverteData)),
                                 leverteData = it.leverteData,
                                 samtykkeToken = it.samtykkeToken

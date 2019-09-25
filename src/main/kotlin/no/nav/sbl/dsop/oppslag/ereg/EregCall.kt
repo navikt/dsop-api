@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.EregOrganisasjon
 
-fun getOrganisasjonsnavn(authorization: String?, orgnr: String?): String? = runBlocking {
+fun getOrganisasjonsnavn(authorization: String?, orgnr: String?): String = runBlocking {
     val env = Environment()
     val eregClient = HttpClient() {
         defaultRequest {
@@ -25,5 +25,5 @@ fun getOrganisasjonsnavn(authorization: String?, orgnr: String?): String? = runB
     }
     val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/" + orgnr + "/noekkelinfo"))
     val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
-    eregOrganisasjon.navn?.navnelinje1
+    eregOrganisasjon.navn?.navnelinje1 ?: ""
 }
