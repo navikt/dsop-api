@@ -26,6 +26,8 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
+val CONSUMER_ID = "dsop-api"
+
 fun main(args: Array<String>) {
     start(webApplication())
 }
