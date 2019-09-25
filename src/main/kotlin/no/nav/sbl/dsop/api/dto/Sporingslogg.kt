@@ -18,6 +18,7 @@ data class Sporingslogg2 (
 //        val uthentingsTidspunkt: LocalDateTime? = null,
         val uthentingsTidspunkt: String? = null,
         val mottaker: String? = null,
+        val mottakernavn: String? = null,
         val behandlingsgrunnlag: String? = null,
         val leverteData: String? = null,
         val samtykkeToken: String? = null
