@@ -27,5 +27,5 @@ fun getOrganisasjonsnavn(authorization: String?, orgnr: String?): String = runBl
     }
     val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/$orgnr/noekkelinfo"))
     val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
-    eregOrganisasjon.navn?.navnelinje1 ?: ""
+    eregOrganisasjon.navn!!.getNavn()
 }
