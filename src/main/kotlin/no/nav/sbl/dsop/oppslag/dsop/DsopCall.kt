@@ -1,13 +1,10 @@
 package no.nav.sbl.dsop.oppslag.dsop
 
-import com.google.gson.JsonPrimitive
-import com.google.gson.JsonSerializer
 import io.ktor.application.call
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.call.receive
 import io.ktor.client.features.defaultRequest
-import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.header
 import io.ktor.request.header
@@ -17,10 +14,6 @@ import io.ktor.routing.get
 import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.Sporingslogg
 import no.nav.sbl.dsop.oppslag.ereg.getOrganisasjonsnavn
-import java.lang.IllegalArgumentException
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 fun Route.dsop(mockdata: Any? = null) {
     get("get") {
@@ -37,13 +30,7 @@ fun Route.dsop(mockdata: Any? = null) {
                     header(env.apiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
                     header("Authorization", authorization)
                 }
-                install(JsonFeature) {
-                    serializer = GsonSerializer() {
-                        registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { localDateTime, _, _ ->
-                            JsonPrimitive(DateTimeFormatter.ISO_INSTANT.format(localDateTime.atOffset(ZoneOffset.UTC).toInstant()))
-                        })
-                    }
-                }
+                install(JsonFeature)
             }
 
             val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
