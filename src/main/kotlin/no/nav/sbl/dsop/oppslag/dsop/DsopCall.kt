@@ -15,8 +15,9 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import no.nav.sbl.dsop.api.Environment
-import no.nav.sbl.dsop.api.dto.Sporingslogg2
+import no.nav.sbl.dsop.api.dto.Sporingslogg
 import no.nav.sbl.dsop.oppslag.ereg.getOrganisasjonsnavn
+import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -29,8 +30,8 @@ fun Route.dsop(mockdata: Any? = null) {
             val env = Environment()
             val selvbetjeningIdtoken = call.request.cookies["selvbetjening-idtoken"]
             val authorization =
-                    if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer " + selvbetjeningIdtoken
-                    else call.request.header("Authorization")
+                    if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(selvbetjeningIdtoken)
+                    else call.request.header("Authorization") ?: throw IllegalArgumentException("Kunne ikke hente ut brukers OIDC-token.")
             val dsopClient = HttpClient() {
                 defaultRequest {
                     header(env.apiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
@@ -46,7 +47,7 @@ fun Route.dsop(mockdata: Any? = null) {
             }
 
             val dsopResult = dsopClient.call(env.sporingloggLesloggerUrl)
-            val sporingslogg2 = dsopResult.response.receive<List<Sporingslogg2>>()
+            val sporingslogg2 = dsopResult.response.receive<List<Sporingslogg>>()
 
             val orgnavnCache = HashMap<String, String>()
             call.respond(
@@ -55,7 +56,7 @@ fun Route.dsop(mockdata: Any? = null) {
                         orgnavnCache.put(it.mottaker, getOrganisasjonsnavn(authorization, it.mottaker))
                     }
 
-                    Sporingslogg2(
+                    Sporingslogg(
                         tema = it.tema,
                         uthentingsTidspunkt = it.uthentingsTidspunkt,
                         mottaker = it.mottaker,

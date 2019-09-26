@@ -27,6 +27,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 val CONSUMER_ID = "dsop-api"
+val HTTP_STATUS_CODES_2XX = IntRange(200, 299)
 
 fun main(args: Array<String>) {
     start(webApplication())
