@@ -1,7 +1,5 @@
 package no.nav.sbl.dsop.api
 
-import com.google.gson.JsonPrimitive
-import com.google.gson.JsonSerializer
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CORS
@@ -21,10 +19,6 @@ import mu.KotlinLogging
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 val CONSUMER_ID = "dsop-api"
 val HTTP_STATUS_CODES_2XX = IntRange(200, 299)
@@ -43,12 +37,6 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
-                registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { localDateTime, _, _ ->
-                    JsonPrimitive(DateTimeFormatter.ISO_INSTANT.format(localDateTime.atOffset(ZoneOffset.UTC).toInstant()))
-                })
-                registerTypeAdapter(LocalDate::class.java, JsonSerializer<LocalDate> { localDate, _, _ ->
-                    JsonPrimitive(DateTimeFormatter.ISO_DATE.format(localDate.atStartOfDay()))
-                })
             }
         }
         install(CORS) {
@@ -60,7 +48,6 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
             header(HttpHeaders.Origin)
             header(HttpHeaders.Authorization)
         }
-
 
         routing {
             health()
