@@ -19,7 +19,7 @@
         <coroutines_version>1.2.2</coroutines_version>
         <kotlin_loggin_version>1.5.8</kotlin_loggin_version>
         <prometheus.version>0.6.0</prometheus.version>
-        <surefire.version>2.22.0</surefire.version>
+        <surefire.version>2.22.1</surefire.version>
     </properties>
 
     <dependencies>
