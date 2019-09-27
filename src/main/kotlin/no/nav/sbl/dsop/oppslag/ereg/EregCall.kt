@@ -15,18 +15,19 @@ import no.nav.sbl.dsop.api.HTTP_STATUS_CODES_2XX
 import no.nav.sbl.dsop.api.dto.EregOrganisasjon
 import org.slf4j.MDC
 
-fun getOrganisasjonsnavn(authorization: String, orgnr: String): String = runBlocking {
-    val env = Environment()
-    val eregClient = HttpClient() {
+fun getOrganisasjonsnavn(authorization: String, orgnr: String, testClient: HttpClient? = null, environment: Environment): String = runBlocking {
+    val eregClient = testClient ?:  HttpClient() {
         defaultRequest {
-            header(env.apiKeyUsername, env.dsopApiEregApiApikeyPassword)
+            header(environment.apiKeyUsername, environment.dsopApiEregApiApikeyPassword)
             header("Authorization", authorization)
             header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
             header("Nav-Consumer-Id", CONSUMER_ID)
         }
         install(JsonFeature)
+        expectSuccess = false
     }
-    val eregResult = eregClient.call(env.eregApiUrl.plus("v1/organisasjon/$orgnr/noekkelinfo"))
+    val eregResult = eregClient.call(environment.eregApiUrl.plus("v1/organisasjon/$orgnr/noekkelinfo"))
+    eregClient.close()
     if (HTTP_STATUS_CODES_2XX.contains(eregResult.response.status.value)) {
         val eregOrganisasjon = eregResult.response.receive<EregOrganisasjon>()
         eregOrganisasjon.navn.getNavn()

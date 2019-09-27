@@ -40,7 +40,7 @@ fun Route.dsop(mockdata: Any? = null) {
             call.respond(
                 sporingslogg2.map {
                     if (it.mottaker != null && orgnavnCache.get(it.mottaker) == null) {
-                        orgnavnCache.put(it.mottaker, getOrganisasjonsnavn(authorization, it.mottaker))
+                        orgnavnCache.put(it.mottaker, getOrganisasjonsnavn(authorization = authorization, orgnr = it.mottaker, environment = env))
                     }
 
                     Sporingslogg(

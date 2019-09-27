@@ -1,0 +1,27 @@
+{
+  "organisasjonsnummer": "991003525",
+  "navn": {
+    "redigertnavn": "ARBEIDS- OG VELFERDSETATEN",
+    "navnelinje1": "ARBEIDS- OG VELFERDSETATEN",
+    "navnelinje3": "IKT DRIFT STEINKJER",
+    "bruksperiode": {
+      "fom": "2018-01-11T04:00:43.413"
+    },
+    "gyldighetsperiode": {
+      "fom": "2018-01-10"
+    }
+  },
+  "enhetstype": "BEDR",
+  "adresse": {
+    "adresselinje1": "Bogavegen 6",
+    "postnummer": "7725",
+    "landkode": "NO",
+    "kommunenummer": "5004",
+    "bruksperiode": {
+      "fom": "2018-01-02T04:15:25.753"
+    },
+    "gyldighetsperiode": {
+      "fom": "2018-01-01"
+    }
+  }
+}
