@@ -211,6 +211,7 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <forkCount>0</forkCount>
                 </configuration>
             </plugin>
         </plugins>
