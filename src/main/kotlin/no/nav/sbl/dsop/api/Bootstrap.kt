@@ -20,12 +20,8 @@ import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.concurrent.scheduleAtFixedRate
 
-val CONSUMER_ID = "dsop-api"
-val HTTP_STATUS_CODES_2XX = IntRange(200, 299)
-val KODEVERK_TEMA_CACHE = HashMap<String, String>()
 
 fun main(args: Array<String>) {
     start(webApplication())
@@ -33,7 +29,7 @@ fun main(args: Array<String>) {
 
 fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
     val timer = Timer("kodeverk-cache-clear-task", true)
-    timer.scheduleAtFixedRate(10000L, 10000L) {
+    timer.scheduleAtFixedRate(KODEVERK_TEMA_CACHE_CLEARING_INTERVAL, KODEVERK_TEMA_CACHE_CLEARING_INTERVAL) {
         KLogging().logger.info("Clearing cache...")
         KODEVERK_TEMA_CACHE.clear()
     }
