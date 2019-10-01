@@ -28,7 +28,7 @@ fun getKodeverk(authorization: String, kode: String, testClient: HttpClient? = n
         install(JsonFeature)
         expectSuccess = false
     }
-    val kodeverkResult = kodeverkClient.call(environment.kodeverkRestApiUrl.plus("v1/kodeverk/tema/koder/betydninger"))
+    val kodeverkResult = kodeverkClient.call(environment.kodeverkRestApiUrl.plus("v1/kodeverk/Tema/koder/betydninger"))
     kodeverkClient.close()
     if (HTTP_STATUS_CODES_2XX.contains(kodeverkResult.response.status.value)) {
         val kodeverk = kodeverkResult.response.receive<Kodeverk>()
