@@ -1,0 +1,768 @@
+{
+  "betydninger": {
+    "RVE": [
+      {
+        "gyldigFra": "2017-09-30",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Rettferdsvederlag",
+            "tekst": "Rettferdsvederlag"
+          }
+        }
+      }
+    ],
+    "OPA": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Oppfølging - Arbeidsgiver",
+            "tekst": "Oppfølging - Arbeidsgiver"
+          }
+        }
+      }
+    ],
+    "KLA": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Klage/Anke",
+            "tekst": "Klage/Anke"
+          }
+        }
+      }
+    ],
+    "HJE": [
+      {
+        "gyldigFra": "2017-11-10",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Hjelpemidler",
+            "tekst": "Hjelpemidler"
+          }
+        }
+      },
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "2017-11-09",
+        "beskrivelser": {
+          "nb": {
+            "term": "Hjelpemidker",
+            "tekst": "Hjelpemidker"
+          }
+        }
+      }
+    ],
+    "KTR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Kontroll",
+            "tekst": "Kontroll"
+          }
+        }
+      }
+    ],
+    "TRK": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Trekkhåndtering",
+            "tekst": "Trekkhåndtering"
+          }
+        }
+      }
+    ],
+    "OPP": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Oppfølging",
+            "tekst": "Oppfølging"
+          }
+        }
+      }
+    ],
+    "STO": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Regnskap/utbetaling",
+            "tekst": "Regnskap/utbetaling"
+          }
+        }
+      }
+    ],
+    "TRY": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Trygdeavgift",
+            "tekst": "Trygdeavgift"
+          }
+        }
+      }
+    ],
+    "SYK": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Sykepenger",
+            "tekst": "Sykepenger"
+          }
+        }
+      }
+    ],
+    "SYM": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Sykemeldinger",
+            "tekst": "Sykemeldinger"
+          }
+        }
+      }
+    ],
+    "LGA": [
+      {
+        "gyldigFra": "2018-06-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Lønnsgaranti",
+            "tekst": "Lønnsgaranti"
+          }
+        }
+      }
+    ],
+    "FOR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Foreldre- og svangerskapspenger",
+            "tekst": "Foreldre- og svangerskapspenger"
+          }
+        }
+      }
+    ],
+    "FOS": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Forsikring",
+            "tekst": "Forsikring"
+          }
+        }
+      }
+    ],
+    "MED": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Medlemskap",
+            "tekst": "Medlemskap"
+          }
+        }
+      }
+    ],
+    "SUP": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Supplerende stønad",
+            "tekst": "Supplerende stønad"
+          }
+        }
+      }
+    ],
+    "AAP": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Arbeidsavklaringspenger",
+            "tekst": "Arbeidsavklaringspenger"
+          }
+        }
+      }
+    ],
+    "TSO": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Tilleggsstønad",
+            "tekst": "Tilleggsstønad"
+          }
+        }
+      }
+    ],
+    "GEN": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Generell",
+            "tekst": "Generell"
+          }
+        }
+      }
+    ],
+    "SAA": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Sanksjon - Arbeidsgiver",
+            "tekst": "Sanksjon - Arbeidsgiver"
+          }
+        }
+      }
+    ],
+    "TSR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Tilleggsstønad arbeidssøkere",
+            "tekst": "Tilleggsstønad arbeidssøkere"
+          }
+        }
+      }
+    ],
+    "AAR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Aa-registeret",
+            "tekst": "Aa-registeret"
+          }
+        }
+      }
+    ],
+    "OMS": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Omsorgspenger, Pleiepenger og opplæringspenger",
+            "tekst": "Omsorgspenger, Pleiepenger og opplæringspenger"
+          }
+        }
+      }
+    ],
+    "SIK": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Sikkerhetstiltak",
+            "tekst": "Sikkerhetstiltak"
+          }
+        }
+      }
+    ],
+    "GRA": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Gravferdsstønad",
+            "tekst": "Gravferdsstønad"
+          }
+        }
+      }
+    ],
+    "IAR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Inkluderende Arbeidsliv",
+            "tekst": "Inkluderende Arbeidsliv"
+          }
+        }
+      }
+    ],
+    "SAK": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Saksomkostning",
+            "tekst": "Saksomkostning"
+          }
+        }
+      }
+    ],
+    "ENF": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Enslig forsørger",
+            "tekst": "Enslig forsørger"
+          }
+        }
+      }
+    ],
+    "IND": [
+      {
+        "gyldigFra": "2018-08-24",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Tiltakspenger",
+            "tekst": "Tiltakspenger"
+          }
+        }
+      },
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "2018-08-23",
+        "beskrivelser": {
+          "nb": {
+            "term": "Individstønad",
+            "tekst": "Individstønad"
+          }
+        }
+      }
+    ],
+    "KNA": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Kontakt NAV",
+            "tekst": "Kontakt NAV"
+          }
+        }
+      }
+    ],
+    "SER": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Serviceklager",
+            "tekst": "Serviceklager"
+          }
+        }
+      }
+    ],
+    "SAP": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Sanksjon - Person",
+            "tekst": "Sanksjon - Person"
+          }
+        }
+      }
+    ],
+    "ERS": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Erstatning",
+            "tekst": "Erstatning"
+          }
+        }
+      }
+    ],
+    "YRA": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Yrkesrettet attføring",
+            "tekst": "Yrkesrettet attføring"
+          }
+        }
+      }
+    ],
+    "OVR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "4 - Øvrig",
+            "tekst": "4 - Øvrig"
+          }
+        }
+      }
+    ],
+    "GRU": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Grunn- og hjelpestønad",
+            "tekst": "Grunn- og hjelpestønad"
+          }
+        }
+      }
+    ],
+    "RPO": [
+      {
+        "gyldigFra": "2017-09-30",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Retting av personopplysninger",
+            "tekst": "Retting av personopplysninger"
+          }
+        }
+      }
+    ],
+    "YRK": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Yrkesskade / Menerstatning",
+            "tekst": "Yrkesskade / Menerstatning"
+          }
+        }
+      }
+    ],
+    "FUL": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Fullmakt",
+            "tekst": "Fullmakt"
+          }
+        }
+      }
+    ],
+    "BID": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "1 - Bidrag",
+            "tekst": "1 - Bidrag"
+          }
+        }
+      }
+    ],
+    "UFM": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Unntak fra medlemskap",
+            "tekst": "Unntak fra medlemskap"
+          }
+        }
+      }
+    ],
+    "UFO": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Uføretrygd",
+            "tekst": "Uføretrygd"
+          }
+        }
+      }
+    ],
+    "MOB": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Mob.stønad",
+            "tekst": "Mob.stønad"
+          }
+        }
+      }
+    ],
+    "BII": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "2 - Bidrag innkreving",
+            "tekst": "2 - Bidrag innkreving"
+          }
+        }
+      }
+    ],
+    "BIL": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Bil",
+            "tekst": "Bil"
+          }
+        }
+      }
+    ],
+    "KOM": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Kommunale tjenester",
+            "tekst": "Kommunale tjenester"
+          }
+        }
+      }
+    ],
+    "FEI": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Feilutbetaling",
+            "tekst": "Feilutbetaling"
+          }
+        }
+      }
+    ],
+    "DAG": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Dagpenger",
+            "tekst": "Dagpenger"
+          }
+        }
+      }
+    ],
+    "KON": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Kontantstøtte",
+            "tekst": "Kontantstøtte"
+          }
+        }
+      }
+    ],
+    "AGR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Ajourhold - Grunnopplysninger",
+            "tekst": "Ajourhold - Grunnopplysninger"
+          }
+        }
+      }
+    ],
+    "HEL": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Helsetjenester og ort. Hjelpemidler",
+            "tekst": "Helsetjenester og ort. Hjelpemidler"
+          }
+        }
+      }
+    ],
+    "OKO": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Økonomi",
+            "tekst": "Økonomi"
+          }
+        }
+      }
+    ],
+    "BAR": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Barnetrygd",
+            "tekst": "Barnetrygd"
+          }
+        }
+      }
+    ],
+    "MOT": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "3 - Skanning",
+            "tekst": "3 - Skanning"
+          }
+        }
+      }
+    ],
+    "REH": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Rehabilitering",
+            "tekst": "Rehabilitering"
+          }
+        }
+      }
+    ],
+    "UKJ": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Ukjent",
+            "tekst": "Ukjent"
+          }
+        }
+      }
+    ],
+    "FAR": [
+      {
+        "gyldigFra": "2018-10-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Farskap",
+            "tekst": "Farskap"
+          }
+        }
+      }
+    ],
+    "TIL": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Tiltak",
+            "tekst": "Tiltak"
+          }
+        }
+      }
+    ],
+    "PEN": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Pensjon",
+            "tekst": "Pensjon"
+          }
+        }
+      }
+    ],
+    "REK": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Rekruttering og Stilling",
+            "tekst": "Rekruttering og Stilling"
+          }
+        }
+      }
+    ],
+    "PER": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Permittering og masseoppsigelser",
+            "tekst": "Permittering og masseoppsigelser"
+          }
+        }
+      }
+    ],
+    "VEN": [
+      {
+        "gyldigFra": "2017-05-01",
+        "gyldigTil": "9999-12-31",
+        "beskrivelser": {
+          "nb": {
+            "term": "Ventelønn",
+            "tekst": "Ventelønn"
+          }
+        }
+      }
+    ]
+  }
+}

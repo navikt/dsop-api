@@ -22,6 +22,7 @@ import no.nav.sbl.dsop.oppslag.dsop.dsop
 
 val CONSUMER_ID = "dsop-api"
 val HTTP_STATUS_CODES_2XX = IntRange(200, 299)
+val KODEVERK_TEMA_CACHE = HashMap<String, String>()
 
 fun main(args: Array<String>) {
     start(webApplication())

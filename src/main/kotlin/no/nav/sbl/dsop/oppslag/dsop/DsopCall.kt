@@ -12,8 +12,10 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import no.nav.sbl.dsop.api.Environment
+import no.nav.sbl.dsop.api.KODEVERK_TEMA_CACHE
 import no.nav.sbl.dsop.api.dto.Sporingslogg
 import no.nav.sbl.dsop.oppslag.ereg.getOrganisasjonsnavn
+import no.nav.sbl.dsop.oppslag.kodeverk.getKodeverk
 
 fun Route.dsop(mockdata: Any? = null) {
     get("get") {
@@ -39,12 +41,15 @@ fun Route.dsop(mockdata: Any? = null) {
             val orgnavnCache = HashMap<String, String>()
             call.respond(
                 sporingslogg2.map {
-                    if (it.mottaker != null && orgnavnCache.get(it.mottaker) == null) {
+                    if (orgnavnCache.get(it.mottaker) == null) {
                         orgnavnCache.put(it.mottaker, getOrganisasjonsnavn(authorization = authorization, orgnr = it.mottaker, environment = env))
+                    }
+                    if (KODEVERK_TEMA_CACHE.get(it.tema) == null) {
+                        KODEVERK_TEMA_CACHE.put(it.tema, getKodeverk(authorization = authorization, kode = it.tema, environment = env))
                     }
 
                     Sporingslogg(
-                        tema = it.tema,
+                        tema = KODEVERK_TEMA_CACHE.get(it.tema) ?: it.tema,
                         uthentingsTidspunkt = it.uthentingsTidspunkt,
                         mottaker = it.mottaker,
                         mottakernavn = orgnavnCache.get(it.mottaker),
