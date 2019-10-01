@@ -21,7 +21,8 @@ fun getKodeverk(authorization: String, kode: String, testClient: HttpClient? = n
         defaultRequest {
             header(environment.apiKeyUsername, environment.dsopApiKodeverkRestApiApikeyPassword)
             header("Authorization", authorization)
-            header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+            //header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+            header("Nav-Call-Id", "test-dsop")
             header("Nav-Consumer-Id", CONSUMER_ID)
         }
         install(JsonFeature)
