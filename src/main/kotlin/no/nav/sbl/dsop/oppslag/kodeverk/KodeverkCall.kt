@@ -33,7 +33,7 @@ fun getKodeverk(authorization: String, kode: String, testClient: HttpClient? = n
         val kodeverk = kodeverkResult.response.receive<Kodeverk>()
         kodeverk.betydninger[kode]?.get(0)?.beskrivelser?.get(spraak)?.term ?: kode
     } else {
-        KLogging().logger.error("Oppslag mot KODEVERK på temakode $kode feilet.")
+        KLogging().logger.error("Oppslag mot KODEVERK på temakode $kode feilet. ".plus(kodeverkResult.response.status.value).plus(" ").plus(kodeverkResult.response.receive<String>()))
         kode
     }
 }
