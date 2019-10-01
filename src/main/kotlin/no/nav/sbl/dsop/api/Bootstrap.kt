@@ -19,6 +19,9 @@ import mu.KotlinLogging
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.concurrent.scheduleAtFixedRate
 
 val CONSUMER_ID = "dsop-api"
 val HTTP_STATUS_CODES_2XX = IntRange(200, 299)
@@ -29,6 +32,11 @@ fun main(args: Array<String>) {
 }
 
 fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
+    val timer = Timer("kodeverk-cache-clear-task", true)
+    timer.scheduleAtFixedRate(10000L, 10000L) {
+        KLogging().logger.info("Clearing cache...")
+        KODEVERK_TEMA_CACHE.clear()
+    }
     return embeddedServer(Netty, port) {
         install(StatusPages) {
             status(HttpStatusCode.NotFound) { cause ->
@@ -58,6 +66,8 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
         }
     }
 }
+
+
 
 object Bootstrap {
     private val log = KotlinLogging.logger { }
