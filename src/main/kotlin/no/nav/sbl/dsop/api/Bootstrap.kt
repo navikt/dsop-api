@@ -22,17 +22,12 @@ import no.nav.sbl.dsop.oppslag.dsop.dsop
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
-
 fun main(args: Array<String>) {
+    startCacheEvictScheduling()
     start(webApplication())
 }
 
 fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
-    val timer = Timer("kodeverk-cache-clear-task", true)
-    timer.scheduleAtFixedRate(KODEVERK_TEMA_CACHE_CLEARING_INTERVAL, KODEVERK_TEMA_CACHE_CLEARING_INTERVAL) {
-        KLogging().logger.info("Clearing cache...")
-        KODEVERK_TEMA_CACHE.clear()
-    }
     return embeddedServer(Netty, port) {
         install(StatusPages) {
             status(HttpStatusCode.NotFound) { cause ->
@@ -63,11 +58,16 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
     }
 }
 
-
+private fun startCacheEvictScheduling() {
+    val timer = Timer("kodeverk-cache-clear-task", true)
+    timer.scheduleAtFixedRate(KODEVERK_TEMA_CACHE_CLEARING_INTERVAL, KODEVERK_TEMA_CACHE_CLEARING_INTERVAL) {
+        KLogging().logger.info("Clearing cache...")
+        KODEVERK_TEMA_CACHE.clear()
+    }
+}
 
 object Bootstrap {
     private val log = KotlinLogging.logger { }
-
     fun start(webApplication: ApplicationEngine) {
         log.info("Starting web application")
         webApplication.start(wait = true)
