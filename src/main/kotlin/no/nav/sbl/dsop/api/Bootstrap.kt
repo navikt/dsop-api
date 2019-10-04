@@ -2,6 +2,9 @@ package no.nav.sbl.dsop.api
 
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.auth.Authentication
+import io.ktor.auth.authenticate
+import io.ktor.auth.jwt.jwt
 import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
@@ -16,6 +19,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import mu.KLogging
 import mu.KotlinLogging
+import no.nav.personbruker.dittnav.api.config.setupOidcAuthentication
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
@@ -27,11 +31,16 @@ fun main(args: Array<String>) {
     start(webApplication())
 }
 
-fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
+fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = Environment()): ApplicationEngine {
     return embeddedServer(Netty, port) {
         install(StatusPages) {
             status(HttpStatusCode.NotFound) { cause ->
                 KLogging().logger.warn(cause.description + ": " + call.request.uri)
+            }
+        }
+        install(Authentication) {
+            jwt {
+                setupOidcAuthentication(env)
             }
         }
         install(ContentNegotiation) {
@@ -52,7 +61,9 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
         routing {
             health()
             route("person/dsop-api/") {
-                dsop(mockdata)
+                authenticate {
+                    dsop(mockdata)
+                }
             }
         }
     }

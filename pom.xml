@@ -78,6 +78,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-auth-jwt</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.github.microutils</groupId>
             <artifactId>kotlin-logging</artifactId>
             <version>${kotlin_loggin_version}</version>
@@ -145,6 +150,11 @@
             <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
             <version>1.2019.07.11-12.31-0b875ec24c4e</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>jwks-rsa</artifactId>
+            <version>0.9.0</version>
         </dependency>
 
     </dependencies>

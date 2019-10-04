@@ -26,7 +26,8 @@ fun Route.dsop(mockdata: Any? = null) {
             val selvbetjeningIdtoken = call.request.cookies["selvbetjening-idtoken"]
             val authorization =
                     if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(selvbetjeningIdtoken)
-                    else call.request.header("Authorization") ?: throw IllegalArgumentException("Kunne ikke hente ut brukers OIDC-token.")
+                    else call.request.header("Authorization")
+                            ?: throw IllegalArgumentException("Kunne ikke hente ut brukers OIDC-token.")
             val dsopClient = HttpClient() {
                 defaultRequest {
                     header(env.apiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
@@ -40,23 +41,23 @@ fun Route.dsop(mockdata: Any? = null) {
 
             val orgnavnCache = HashMap<String, String>()
             call.respond(
-                sporingslogg2.map {
-                    if (orgnavnCache.get(it.mottaker) == null) {
-                        orgnavnCache.put(it.mottaker, getOrganisasjonsnavn(authorization = authorization, orgnr = it.mottaker, environment = env))
-                    }
-                    if (KODEVERK_TEMA_CACHE.get(it.tema) == null) {
-                        KODEVERK_TEMA_CACHE.put(it.tema, getKodeverk(authorization = authorization, kode = it.tema, environment = env))
-                    }
+                    sporingslogg2.map {
+                        if (orgnavnCache.get(it.mottaker) == null) {
+                            orgnavnCache.put(it.mottaker, getOrganisasjonsnavn(authorization = authorization, orgnr = it.mottaker, environment = env))
+                        }
+                        if (KODEVERK_TEMA_CACHE.get(it.tema) == null) {
+                            KODEVERK_TEMA_CACHE.put(it.tema, getKodeverk(authorization = authorization, kode = it.tema, environment = env))
+                        }
 
-                    Sporingslogg(
-                        tema = KODEVERK_TEMA_CACHE.get(it.tema) ?: it.tema,
-                        uthentingsTidspunkt = it.uthentingsTidspunkt,
-                        mottaker = it.mottaker,
-                        mottakernavn = orgnavnCache.get(it.mottaker),
-                        leverteData = it.leverteData,
-                        samtykkeToken = it.samtykkeToken
-                    )
-                }
+                        Sporingslogg(
+                                tema = KODEVERK_TEMA_CACHE.get(it.tema) ?: it.tema,
+                                uthentingsTidspunkt = it.uthentingsTidspunkt,
+                                mottaker = it.mottaker,
+                                mottakernavn = orgnavnCache.get(it.mottaker),
+                                leverteData = it.leverteData,
+                                samtykkeToken = it.samtykkeToken
+                        )
+                    }
             )
         }
     }
