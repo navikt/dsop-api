@@ -17,6 +17,7 @@ fun JWTAuthenticationProvider.Configuration.setupOidcAuthentication(environment:
     realm = "dsop-api"
     validate { credentials ->
         //return@validate Security.validationLogicPerRequest(credentials, environment)
+        KLogging().logger.info("Executing validate...")
         return@validate Security.validationLogicPerRequest(credentials, environment)
     }
 //    skipWhen { call ->
