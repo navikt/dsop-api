@@ -19,7 +19,9 @@ fun JWTAuthenticationProvider.Configuration.setupOidcAuthentication(environment:
         //return@validate Security.validationLogicPerRequest(credentials, environment)
         return@validate Security.validationLogicPerRequest(credentials, environment)
     }
-    skipWhen { call -> true
+    skipWhen { call ->
+        KLogging().logger.info("Executing skipWhen...")
+        true
     }
 }
 
