@@ -16,7 +16,10 @@ fun JWTAuthenticationProvider.Configuration.setupOidcAuthentication(environment:
     verifier(jwkProvider, environment.securityJwksIssuer)
     realm = "dsop-api"
     validate { credentials ->
+        //return@validate Security.validationLogicPerRequest(credentials, environment)
         return@validate Security.validationLogicPerRequest(credentials, environment)
+    }
+    skipWhen { call -> true
     }
 }
 
