@@ -4,6 +4,8 @@
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
     </appender>
     <appender name="METRICS" class="io.prometheus.client.logback.InstrumentedAppender" />
+
+    <logger name="io.ktor.auth.jwt" level="TRACE"/>
     <root level="info">
         <appender-ref ref="stdout_json" />
         <appender-ref ref="METRICS"/>
