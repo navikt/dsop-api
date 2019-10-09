@@ -17,12 +17,12 @@ import no.nav.sbl.dsop.api.dto.Sporingslogg
 import no.nav.sbl.dsop.oppslag.ereg.getOrganisasjonsnavn
 import no.nav.sbl.dsop.oppslag.kodeverk.getKodeverk
 
-fun Route.dsop(mockdata: Any? = null) {
+fun Route.dsop(env: Environment, mockdata: Any? = null) {
     get("get") {
-        if (mockdata != null) {
+        if (env.useMockData) {
+            if (mockdata == null) throw IllegalArgumentException("Mockdata mangler.")
             call.respond(mockdata)
         } else {
-            val env = Environment()
             val selvbetjeningIdtoken = call.request.cookies["selvbetjening-idtoken"]
             val authorization =
                     if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(selvbetjeningIdtoken)

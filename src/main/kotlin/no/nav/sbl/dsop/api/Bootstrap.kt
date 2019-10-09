@@ -62,7 +62,7 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = E
             health()
             route("person/dsop-api/") {
                 authenticate {
-                    dsop(mockdata)
+                    dsop(env, mockdata)
                 }
             }
         }

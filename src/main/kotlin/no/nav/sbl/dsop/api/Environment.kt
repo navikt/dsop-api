@@ -12,5 +12,6 @@ data class Environment(
         val eregApiUrl: String = System.getenv("EREG_API_URL"),
         val securityAudience: String = System.getenv("AUDIENCE") ?: "dummyAudience",
         val securityJwksIssuer: String = System.getenv("JWKS_ISSUER") ?: "dummyIssuer",
-        val securityJwksUri: URL = URL(System.getenv("JWKS_URI") ?: "https://dummyUrl.com")
+        val securityJwksUri: URL = URL(System.getenv("JWKS_URI") ?: "https://dummyUrl.com"),
+        val useMockData: Boolean = false
 )
