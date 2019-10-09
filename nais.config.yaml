@@ -33,4 +33,4 @@ spec:
       memory: 1500Mi
   prometheus:
     enabled: true
-    path: {{baseurl}}/internal/actuator/prometheus
+    path: {{baseurl}}/internal/prometheus

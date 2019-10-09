@@ -19,7 +19,7 @@
         <coroutines_version>1.2.2</coroutines_version>
         <kotlin_loggin_version>1.5.8</kotlin_loggin_version>
         <prometheus.version>0.6.0</prometheus.version>
-        <surefire.version>2.22.0</surefire.version>
+        <surefire.version>2.22.1</surefire.version>
     </properties>
 
     <dependencies>
@@ -45,8 +45,37 @@
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-gson</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
             <artifactId>ktor-client-apache</artifactId>
             <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-mock</artifactId>
+            <version>${ktor_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-mock-jvm</artifactId>
+            <version>${ktor_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-mock-js</artifactId>
+            <version>${ktor_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-mock-native</artifactId>
+            <version>${ktor_version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.microutils</groupId>
@@ -57,6 +86,18 @@
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-core</artifactId>
             <version>${coroutines_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit5</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.prometheus</groupId>
@@ -100,6 +141,12 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
         </dependency>
+        <dependency>
+            <groupId>no.nav.common</groupId>
+            <artifactId>log</artifactId>
+            <version>1.2019.07.11-12.31-0b875ec24c4e</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -164,6 +211,7 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <forkCount>0</forkCount>
                 </configuration>
             </plugin>
         </plugins>
