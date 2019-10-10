@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Sporingslogg (
-        val tema: String? = null,
+        val tema: String,
         val uthentingsTidspunkt: String? = null,
         val mottaker: String,
         val mottakernavn: String? = null,

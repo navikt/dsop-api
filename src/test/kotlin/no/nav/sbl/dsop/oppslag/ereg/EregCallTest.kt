@@ -11,8 +11,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
-import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.EregOrganisasjon
+import no.nav.sbl.dsop.oppslag.emptyTestEnvironment
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
@@ -20,17 +20,6 @@ import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class EregCallTest {
-
-    val env = Environment(
-            apiKeyUsername = "",
-            dsopApiEregApiApikeyPassword = "",
-            dsopApiKodeverkRestApiApikeyPassword = "",
-            dsopApiSporingsloggLesloggerApiKeyPassword = "",
-            eregApiUrl = "",
-            kodeverkReestApiUrl = "",
-            sporingloggLesloggerUrl = ""
-    )
-
     @Test
     fun testJsonDeserialization() {
         val json = InputStreamReader(this.javaClass.getResourceAsStream("/ereg-organisasjon-991003525.json")).readText()
@@ -68,34 +57,27 @@ class EregCallTest {
             }
             install(JsonFeature)
         }
-        val navn = getOrganisasjonsnavn(authorization = "", orgnr = "991003525", testClient = client, environment = env)
+        val navn = getOrganisasjonsnavn(authorization = "", orgnr = "991003525", testClient = client, environment = emptyTestEnvironment)
         assertEquals("ARBEIDS- OG VELFERDSETATEN IKT DRIFT STEINKJER", navn)
     }
 
     @Test
     fun testEregCallWithNonExistingOrgnr() {
         val orgnr = "444555666"
-        val json = InputStreamReader(this.javaClass.getResourceAsStream("/ereg-organisasjon-991003525.json")).readText()
-
         val client = HttpClient(MockEngine) {
             engine {
                 addHandler { request ->
-                    if (request.url.encodedPath.contains("991003525")) {
-                        respond(json,
-                                headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()))
-                    } else {
-                        respond("{\n" +
-                                "  \"melding\": \"Ingen organisasjon med organisasjonsnummer $orgnr ble funnet\"\n" +
-                                "}",
-                                HttpStatusCode.NotFound,
-                                headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()))
-                    }
+                    respond("{\n" +
+                            "  \"melding\": \"Ingen organisasjon med organisasjonsnummer $orgnr ble funnet\"\n" +
+                            "}",
+                            HttpStatusCode.NotFound,
+                            headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()))
                 }
             }
             install(JsonFeature)
             expectSuccess = false
         }
-        val navn = getOrganisasjonsnavn(authorization = "", orgnr = orgnr, testClient = client, environment = env)
+        val navn = getOrganisasjonsnavn(authorization = "", orgnr = orgnr, testClient = client, environment = emptyTestEnvironment)
         assertEquals(orgnr, navn)
     }
 }
