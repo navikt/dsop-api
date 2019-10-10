@@ -4,6 +4,7 @@ import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.authenticate
+import io.ktor.auth.jwt.jwt
 import io.ktor.config.MapApplicationConfig
 import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
@@ -32,7 +33,6 @@ fun main(args: Array<String>) {
 }
 
 fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = Environment()): ApplicationEngine {
-
     return embeddedServer(Netty, port) {
          install(StatusPages) {
             status(HttpStatusCode.NotFound) { cause ->
@@ -49,7 +49,11 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = E
             put("no.nav.security.jwt.issuers.0.cookie_name", OIDC_COOKIE_NAME)
         }
         install(Authentication) {
-            tokenValidationSupport(config = conf)
+            if (env.useMockData) {
+                jwt { skipWhen { true } }
+            } else {
+                tokenValidationSupport(config = conf)
+            }
         }
 
         install(ContentNegotiation) {
@@ -77,8 +81,6 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = E
         }
     }
 }
-
-
 
 private fun startCacheEvictScheduling() {
     val timer = Timer("kodeverk-cache-clear-task", true)
