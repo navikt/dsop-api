@@ -24,6 +24,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-validation-ktor</artifactId>
+            <version>1.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.ktor</groupId>
+                    <artifactId>ktor-auth</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>

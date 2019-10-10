@@ -13,6 +13,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.get
 import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.KODEVERK_TEMA_CACHE
+import no.nav.sbl.dsop.api.OIDC_COOKIE_NAME
 import no.nav.sbl.dsop.api.dto.Sporingslogg
 import no.nav.sbl.dsop.oppslag.ereg.getOrganisasjonsnavn
 import no.nav.sbl.dsop.oppslag.kodeverk.getKodeverk
@@ -23,7 +24,7 @@ fun Route.dsop(env: Environment, mockdata: Any? = null) {
             if (mockdata == null) throw IllegalArgumentException("Mockdata mangler.")
             call.respond(mockdata)
         } else {
-            val selvbetjeningIdtoken = call.request.cookies["selvbetjening-idtoken"]
+            val selvbetjeningIdtoken = call.request.cookies[OIDC_COOKIE_NAME]
             val authorization =
                     if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(selvbetjeningIdtoken)
                     else call.request.header("Authorization")

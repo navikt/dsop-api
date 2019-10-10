@@ -13,5 +13,6 @@ data class Environment(
         val securityAudience: String = System.getenv("AUDIENCE") ?: "dummyAudience",
         val securityJwksIssuer: String = System.getenv("JWKS_ISSUER") ?: "dummyIssuer",
         val securityJwksUri: URL = URL(System.getenv("JWKS_URI") ?: "https://dummyUrl.com"),
+        val securityJwksUrl: String = System.getenv("JWKS_DISCOVERY_URL") ?: "https://dummyUrl.com",
         val useMockData: Boolean = false
 )

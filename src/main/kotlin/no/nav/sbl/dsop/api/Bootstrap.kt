@@ -4,7 +4,7 @@ import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.authenticate
-import io.ktor.auth.jwt.jwt
+import io.ktor.config.MapApplicationConfig
 import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
@@ -19,10 +19,10 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import mu.KLogging
 import mu.KotlinLogging
-import no.nav.personbruker.dittnav.api.config.setupOidcAuthentication
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
+import no.nav.security.token.support.ktor.tokenValidationSupport
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
@@ -32,17 +32,26 @@ fun main(args: Array<String>) {
 }
 
 fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = Environment()): ApplicationEngine {
+
     return embeddedServer(Netty, port) {
-        install(StatusPages) {
+         install(StatusPages) {
             status(HttpStatusCode.NotFound) { cause ->
                 KLogging().logger.warn(cause.description + ": " + call.request.uri)
             }
         }
-        install(Authentication) {
-            jwt {
-                setupOidcAuthentication(env)
-            }
+
+        val conf = this.environment.config
+        (conf as MapApplicationConfig).apply {
+            put("no.nav.security.jwt.issuers.size", "1")
+            put("no.nav.security.jwt.issuers.0.issuer_name", env.securityJwksIssuer)
+            put("no.nav.security.jwt.issuers.0.discoveryurl", env.securityJwksUrl)
+            put("no.nav.security.jwt.issuers.0.accepted_audience", env.securityAudience)
+            put("no.nav.security.jwt.issuers.0.cookie_name", OIDC_COOKIE_NAME)
         }
+        install(Authentication) {
+            tokenValidationSupport(config = conf)
+        }
+
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
@@ -68,6 +77,8 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = E
         }
     }
 }
+
+
 
 private fun startCacheEvictScheduling() {
     val timer = Timer("kodeverk-cache-clear-task", true)
