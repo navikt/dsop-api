@@ -4,7 +4,6 @@ import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.authenticate
-import io.ktor.auth.jwt.jwt
 import io.ktor.config.MapApplicationConfig
 import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
@@ -49,8 +48,9 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = E
             put("no.nav.security.jwt.issuers.0.cookie_name", OIDC_COOKIE_NAME)
         }
         install(Authentication) {
+
             if (env.useMockData) {
-                jwt { skipWhen { true } }
+                provider { skipWhen { true } }
             } else {
                 tokenValidationSupport(config = conf)
             }
