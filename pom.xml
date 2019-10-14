@@ -24,6 +24,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-validation-ktor</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
@@ -145,6 +151,11 @@
             <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
             <version>1.2019.07.11-12.31-0b875ec24c4e</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>jwks-rsa</artifactId>
+            <version>0.9.0</version>
         </dependency>
 
     </dependencies>

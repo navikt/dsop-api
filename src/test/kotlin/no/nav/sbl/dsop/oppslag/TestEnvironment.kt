@@ -9,5 +9,6 @@ val emptyTestEnvironment = Environment(
         dsopApiSporingsloggLesloggerApiKeyPassword = "",
         eregApiUrl = "",
         kodeverkRestApiUrl = "",
-        sporingloggLesloggerUrl = ""
+        sporingloggLesloggerUrl = "",
+        useMockData = true
 )

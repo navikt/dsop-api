@@ -2,6 +2,9 @@ package no.nav.sbl.dsop.api
 
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.auth.Authentication
+import io.ktor.auth.authenticate
+import io.ktor.config.MapApplicationConfig
 import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
@@ -19,6 +22,7 @@ import mu.KotlinLogging
 import no.nav.sbl.dsop.api.Bootstrap.start
 import no.nav.sbl.dsop.api.admin.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
+import no.nav.security.token.support.ktor.tokenValidationSupport
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
@@ -27,13 +31,31 @@ fun main(args: Array<String>) {
     start(webApplication())
 }
 
-fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
+fun webApplication(port: Int = 8080, mockdata: Any? = null, env: Environment = Environment()): ApplicationEngine {
     return embeddedServer(Netty, port) {
-        install(StatusPages) {
+         install(StatusPages) {
             status(HttpStatusCode.NotFound) { cause ->
                 KLogging().logger.warn(cause.description + ": " + call.request.uri)
             }
         }
+
+        val conf = this.environment.config
+        (conf as MapApplicationConfig).apply {
+            put("no.nav.security.jwt.issuers.size", "1")
+            put("no.nav.security.jwt.issuers.0.issuer_name", env.securityJwksIssuer)
+            put("no.nav.security.jwt.issuers.0.discoveryurl", env.securityJwksUrl)
+            put("no.nav.security.jwt.issuers.0.accepted_audience", env.securityAudience)
+            put("no.nav.security.jwt.issuers.0.cookie_name", OIDC_COOKIE_NAME)
+        }
+        install(Authentication) {
+
+            if (env.useMockData) {
+                provider { skipWhen { true } }
+            } else {
+                tokenValidationSupport(config = conf)
+            }
+        }
+
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
@@ -52,7 +74,9 @@ fun webApplication(port: Int = 8080, mockdata: Any? = null): ApplicationEngine {
         routing {
             health()
             route("person/dsop-api/") {
-                dsop(mockdata)
+                authenticate {
+                    dsop(env, mockdata)
+                }
             }
         }
     }
