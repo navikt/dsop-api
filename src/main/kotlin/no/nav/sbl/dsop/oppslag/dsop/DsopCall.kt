@@ -20,7 +20,7 @@ import no.nav.sbl.dsop.oppslag.kodeverk.getKodeverk
 
 fun Route.dsop(env: Environment, mockdata: Any? = null) {
     get("get") {
-        if (env.useMockData) {
+        if (env.isLocalhost()) {
             if (mockdata == null) throw IllegalArgumentException("Mockdata mangler.")
             call.respond(mockdata)
         } else {
