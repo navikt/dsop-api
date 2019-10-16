@@ -68,19 +68,6 @@ fun Application.module() {
             }
         }
     }
-
-//    routing {
-//        authenticate {
-//            get("/hello") {
-//                call.respondText("<b>Authenticated hello</b>", ContentType.Text.Html)
-//            }
-//        }
-//
-//        get("/openhello") {
-//            call.respondText("<b>Hello in the open</b>", ContentType.Text.Html)
-//        }
-//
-//    }
 }
 
 private fun startCacheEvictScheduling() {
