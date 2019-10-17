@@ -12,17 +12,16 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import no.nav.sbl.dsop.api.Environment
-import no.nav.sbl.dsop.api.KODEVERK_TEMA_CACHE
-import no.nav.sbl.dsop.api.OIDC_COOKIE_NAME
+import no.nav.sbl.dsop.api.*
 import no.nav.sbl.dsop.api.dto.Sporingslogg
 import no.nav.sbl.dsop.oppslag.ereg.getOrganisasjonsnavn
 import no.nav.sbl.dsop.oppslag.kodeverk.getKodeverk
 
-fun Route.dsop(env: Environment, mockdata: Any? = null) {
+fun Route.dsop(env: Environment) {
     get("get") {
         val selvbetjeningIdtoken = call.request.cookies[OIDC_COOKIE_NAME]
         val authorization =
-                if (env.isLocalhost()) ""
+                if (env.isMockedEnvironment()) ""
                 else if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(selvbetjeningIdtoken)
                 else call.request.header("Authorization")
                         ?: throw IllegalArgumentException("Kunne ikke hente ut brukers OIDC-token.")

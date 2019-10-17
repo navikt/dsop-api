@@ -36,9 +36,8 @@ fun Application.module() {
     }
 
     val conf = this.environment.config
-
     install(Authentication) {
-        if (env.isLocalhost()) {
+        if (env.isMockedEnvironment()) {
             provider { skipWhen { true } }
         } else {
             tokenValidationSupport(config = conf)

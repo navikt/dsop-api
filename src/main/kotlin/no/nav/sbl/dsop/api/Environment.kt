@@ -14,9 +14,8 @@ data class Environment(
         val securityJwksIssuer: String = System.getenv("JWKS_ISSUER") ?: "dummyIssuer",
         val securityJwksUri: URL = URL(System.getenv("JWKS_URI") ?: "https://dummyUrl.com"),
         val securityJwksUrl: String = System.getenv("JWKS_DISCOVERY_URL") ?: "https://dummyUrl.com"//,
-        //val useMockData: Boolean = false
 ) {
-    open fun isLocalhost(): Boolean {
+    open fun isMockedEnvironment(): Boolean {
         return apiKeyUsername.isNullOrEmpty()
     }
 }
