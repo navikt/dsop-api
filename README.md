@@ -23,7 +23,8 @@ Godkjenn produksjonssettingen i [CircleCI](https://circleci.com/gh/navikt/workfl
 
 ## Lokal Kjøring
 
-For å kjøre opp løsningen lokalt, kjør [DevBootstrap](https://github.com/navikt/dsop-api/blob/master/src/test/kotlin/no/nav/sbl/dsop/api/DevBootstrap.kt).
+For å kjøre opp løsningen lokalt, kjør main-funksjonen i [DevApplication](https://github.com/navikt/dsop-api/blob/master/src/test/kotlin/no/nav/sbl/dsop/api/DevApplication.kt).
+Denne vil by-passe autentisering, mens endepunkter mot dsop, ereg og kodeverk vil mockes ut. Appen vil da svare på endepunktet http://localhost:8080/person/dsop-api/get. 
 
 ## Logging
 

@@ -11,8 +11,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
+import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.EregOrganisasjon
-import no.nav.sbl.dsop.oppslag.emptyTestEnvironment
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
@@ -57,7 +57,7 @@ class EregCallTest {
             }
             install(JsonFeature)
         }
-        val navn = getOrganisasjonsnavn(authorization = "", orgnr = "991003525", testClient = client, environment = emptyTestEnvironment)
+        val navn = getOrganisasjonsnavn(authorization = "", orgnr = "991003525", testClient = client, environment = Environment())
         assertEquals("ARBEIDS- OG VELFERDSETATEN IKT DRIFT STEINKJER", navn)
     }
 
@@ -77,7 +77,7 @@ class EregCallTest {
             install(JsonFeature)
             expectSuccess = false
         }
-        val navn = getOrganisasjonsnavn(authorization = "", orgnr = orgnr, testClient = client, environment = emptyTestEnvironment)
+        val navn = getOrganisasjonsnavn(authorization = "", orgnr = orgnr, testClient = client, environment = Environment())
         assertEquals(orgnr, navn)
     }
 }

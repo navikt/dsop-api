@@ -8,7 +8,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
-import no.nav.sbl.dsop.oppslag.emptyTestEnvironment
+import no.nav.sbl.dsop.api.Environment
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.InputStreamReader
@@ -28,9 +28,9 @@ class KodeverkCallTest {
             }
             install(JsonFeature)
         }
-        var navn = getKodeverk(authorization = "", kode = "AAP", testClient = client, environment = emptyTestEnvironment)
+        var navn = getKodeverk(authorization = "", kode = "AAP", testClient = client, environment = Environment())
         assertEquals("Arbeidsavklaringspenger", navn)
-        navn = getKodeverk(authorization = "", kode = "XYZ", testClient = client, environment = emptyTestEnvironment)
+        navn = getKodeverk(authorization = "", kode = "XYZ", testClient = client, environment = Environment())
         assertEquals("XYZ", navn)
     }
 
@@ -47,7 +47,7 @@ class KodeverkCallTest {
             install(JsonFeature)
             expectSuccess = false
         }
-        val navn = getKodeverk(authorization = "", kode = "AAP", testClient = client, environment = emptyTestEnvironment)
+        val navn = getKodeverk(authorization = "", kode = "AAP", testClient = client, environment = Environment())
         assertEquals("AAP", navn)
     }
 }
