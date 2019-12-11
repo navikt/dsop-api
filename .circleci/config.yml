@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build:
+  build-app:
     docker:
       - image: circleci/openjdk:8-jdk
     steps:
@@ -24,7 +24,7 @@ jobs:
           paths:
             - target/*
 
-  deploy-til-dev:
+  build-docker:
     docker:
       - image: navikt/deployment-cli:latest
     steps:
@@ -43,10 +43,46 @@ jobs:
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $IMAGE_NAME
+
+  deploy-til-q6:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
       - deploy:
-          til: dev-sbs
-          ingress1: https://$REPO_NAME.nais.oera-q.local
-          ingress2: https://www-q0.nav.no/person/$REPO_NAME
+          cluster: dev-sbs
+          namespace: q6
+
+  deploy-til-q2:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - deploy:
+          cluster: dev-sbs
+          namespace: q2
+
+  deploy-til-q1:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - deploy:
+          cluster: dev-sbs
+          namespace: q1
+
+  deploy-til-q0:
+    docker:
+      - image: navikt/deployment-cli:latest
+    steps:
+      - checkout
+      - sett-miljovariabler
+      - deploy:
+          cluster: dev-sbs
+          namespace: q0
 
   deploy-til-prod:
     docker:
@@ -55,32 +91,47 @@ jobs:
       - checkout
       - sett-miljovariabler
       - deploy:
-          til: prod-sbs
-          ingress1: https://$REPO_NAME.nais.oera.no
-          ingress2: https://www.nav.no/person/$REPO_NAME
+          cluster: prod-sbs
+          namespace: default
 
 commands:
   deploy:
     parameters:
-      til:
+      cluster:
         type: string
-      ingress1:
-        type: string
-      ingress2:
+      namespace:
         type: string
     steps:
       - run:
-          name: Deployer til << parameters.til >>
+          name: Definerer ingresser for dev-sbs
+          command: |
+            jq -n '{
+                "ingresses": [
+                  "'https://$REPO_NAME-<< parameters.namespace >>.nais.oera-q.local'",
+                  "'https://www-<< parameters.namespace >>.nav.no/person/$REPO_NAME'"
+            ]}' | tee nais.dev-sbs.vars.json
+
+      - run:
+          name: Definerer ingresser for prod-sbs
+          command: |
+            jq -n '{
+                "ingresses": [
+                  "'https://$REPO_NAME.nais.oera.no'",
+                  "'https://www.nav.no/person/$REPO_NAME'"
+             ]}' | tee nais.prod-sbs.vars.json
+
+      - run:
+          name: Deployer til << parameters.cluster >>, namespace << parameters.namespace >>
           command: |
             echo $GH_DEPLOY_KEY | base64 -d | dos2unix > gh_deploy_key.pem
             deployment-cli deploy create \
                 --team=personbruker \
-                --resource=nais.config.yaml \
-                --cluster=<< parameters.til >> \
+                --resource=.nais/config.yaml \
+                --cluster=<< parameters.cluster >> \
                 --repository=$CIRCLE_PROJECT_USERNAME/$REPO_NAME \
+                --vars=nais.<< parameters.cluster >>.vars.json \
+                --var namespace=<< parameters.namespace >> \
                 --var baseurl=/person/$REPO_NAME \
-                --var ingress1=<< parameters.ingress1 >> \
-                --var ingress2=<< parameters.ingress2 >> \
                 --var reponame=$REPO_NAME \
                 --var version=$IMAGE_VERSION \
                 --key=gh_deploy_key.pem \
@@ -90,7 +141,7 @@ commands:
   sett-miljovariabler:
     steps:
       - run:
-          name:  Definerer git-referanse, versjonsnummer og repo-navn
+          name: Definerer git-referanse, versjonsnummer og repo-navn
           command: |
             echo "export COMMIT_SHORT='$(git rev-parse --short HEAD)'" >> $BASH_ENV
             echo "export IMAGE_VERSION='$CIRCLE_WORKFLOW_ID-${CIRCLE_BRANCH////-}$CIRCLE_TAG'" >> $BASH_ENV
@@ -103,42 +154,57 @@ commands:
 workflows:
   bygg-og-deploy:
     jobs:
-      - build:
+      - build-app:
           filters:
             tags:
               only: /.*/
+
       - bekreft-deploy-til-dev:
           type: approval
           requires:
-            - build
-          filters:
-            branches:
-              ignore: master
-      - deploy-til-dev:
-          name: manuell-deploy-til-dev
+            - build-app
+
+      - build-docker:
+          name: build-docker-dev
           requires:
             - bekreft-deploy-til-dev
-      - deploy-til-dev:
-          name: automatisk-deploy-til-dev
+
+      - deploy-til-q6:
           requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: master
+            - build-docker-dev
+      - deploy-til-q2:
+          requires:
+            - build-docker-dev
+      - deploy-til-q1:
+          requires:
+            - build-docker-dev
+      - deploy-til-q0:
+          requires:
+            - build-docker-dev
+
       - bekreft-deploy-til-prod:
           type: approval
           requires:
-            - automatisk-deploy-til-dev
+            - build-app
           filters:
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - deploy-til-prod:
+
+      - build-docker:
+          name: build-docker-prod
           requires:
             - bekreft-deploy-til-prod
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+      - deploy-til-prod:
+          requires:
+            - build-docker-prod
           filters:
             tags:
               only: /^v.*/

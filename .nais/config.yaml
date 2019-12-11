@@ -3,7 +3,7 @@ apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
   name: {{reponame}}
-  namespace: default
+  namespace: {{namespace}}
   labels:
     team: {{team}}
 spec:
@@ -11,8 +11,9 @@ spec:
   team: {{team}}
   port: 8080
   ingresses:
-    - {{ingress1}}
-    - {{ingress2}}
+  {{#each ingresses }}
+    - {{ this }}
+  {{/each}}
   liveness:
     path: {{baseurl}}/internal/isAlive
     initialDelay: 10
