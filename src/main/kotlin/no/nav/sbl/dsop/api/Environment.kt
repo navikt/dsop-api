@@ -10,7 +10,7 @@ data class Environment(
         val kodeverkRestApiUrl: String = System.getenv("KODEVERK_REST_API_URL") ?: "http://localhost:8090/kodeverk/",
         val dsopApiEregApiApikeyPassword: String = System.getenv("DSOP_API_EREG_API_APIKEY_PASSWORD") ?: "",
         val eregApiUrl: String = System.getenv("EREG_API_URL") ?: "http://localhost:8090/ereg/",
-        val securityJwksIssuer: String = "selvbetjening",
+        val securityJwksIssuer: String = "https://navtestb2c.b2clogin.com/d38f25aa-eab8-4c50-9f28-ebf92c1256f2/v2.0/",
         val securityJwksUri: URL = URL(System.getenv("LOGINSERVICE_IDPORTEN_DISCOVERY_URL") ?: "https://dummyUrl.com"),
         val securityJwksUrl: String = System.getenv("LOGINSERVICE_IDPORTEN_DISCOVERY_URL") ?: "https://dummyUrl.com",
         val securityAudience: String = System.getenv("LOGINSERVICE_IDPORTEN_AUDIENCE") ?: "dummyAudience"
