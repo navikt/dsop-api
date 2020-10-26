@@ -1,0 +1,50 @@
+name: Deploy-to-q1
+on:
+  push:
+    tags:
+      - v*-test
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Define build environment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo ::set-env name=CI::true
+          echo ::set-env name=IMAGE_REGISTRY::docker.pkg.github.com/$(echo ${GITHUB_REPOSITORY})
+          echo ::set-env name=IMAGE_NAME::$(echo ${GITHUB_REPOSITORY##*/})-image
+          echo ::set-env name=IMAGE_VERSION::$(echo ${GITHUB_WORKFLOW})-$(echo ${GITHUB_SHA})
+          echo ::set-env name=GITHUB_TOKEN::$(echo ${GITHUB_TOKEN})
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - run: mvn dependency:go-offline
+      - run: mvn package
+      - name: Docker build and push
+        run: |
+          echo $GITHUB_TOKEN | docker login $IMAGE_REGISTRY -u "x-access-token" --password-stdin
+          docker build -t $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION .
+          docker push $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION
+      - name: Generate nais variables
+        run: |
+          cat > .nais/vars.yaml <<EOF
+          namespace: q1
+          ingresses:
+            - https://www-q1.nav.no/person/arbeidsforhold-api
+          image: $IMAGE_REGISTRY/$IMAGE_NAME
+          version: $IMAGE_VERSION
+          EOF
+      - uses: nais/deploy/actions/deploy@master
+        env:
+          CLUSTER: dev-sbs
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: .nais/config.yaml
+          VARS: .nais/vars.yaml
