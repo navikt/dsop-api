@@ -2,23 +2,23 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-  name: {{reponame}}
+  name: dsop-api
   namespace: {{namespace}}
   labels:
-    team: {{team}}
+    team: personbruker
 spec:
-  image: navikt/{{reponame}}:{{version}}
-  team: {{team}}
+  image: {{image}}:{{version}}
+  team: personbruker
   port: 8080
   ingresses:
-  {{#each ingresses }}
-    - {{ this }}
+  {{#each ingresses as |url|}}
+     - {{url}}
   {{/each}}
   liveness:
-    path: {{baseurl}}/internal/isAlive
+    path: /person/dsop-api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: {{baseurl}}/internal/isAlive
+    path: /person/dsop-api/internal/isAlive
     initialDelay: 10
   vault:
     enabled: true
@@ -32,6 +32,8 @@ spec:
       memory: 1500Mi
     requests:
       memory: 1500Mi
+  envFrom:
+    - configmap: loginservice-idporten
   prometheus:
     enabled: true
-    path: {{baseurl}}/internal/prometheus
+    path: /person/dsop-api/internal/prometheus
