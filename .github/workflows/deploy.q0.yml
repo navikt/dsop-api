@@ -38,8 +38,8 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: q0
           ingresses:
-            - https://arbeidsforhold-api.nais.oera-q.no
-            - https://www-q0.nav.no/person/arbeidsforhold-api
+            - https://dsop-api.nais.oera-q.no
+            - https://www-q0.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF
