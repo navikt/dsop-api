@@ -1,25 +1,33 @@
-[![CircleCI](https://circleci.com/gh/navikt/dsop-api.svg?style=svg)](https://circleci.com/gh/navikt/dsop-api)
-
 # DSOP-Api
+
+![Deploy-to-prod](https://github.com/navikt/dsop-api/workflows/Deploy-to-prod/badge.svg) <br>
+![Deploy-to-q0](https://github.com/navikt/dsop-api/workflows/Deploy-to-q0/badge.svg)
+![Deploy-to-q1](https://github.com/navikt/dsop-api/workflows/Deploy-to-q1/badge.svg)
+![Deploy-to-q2](https://github.com/navikt/dsop-api/workflows/Deploy-to-q2/badge.svg)
+![Deploy-to-q6](https://github.com/navikt/dsop-api/workflows/Deploy-to-q6/badge.svg)
 
 Api bygget på Ktor for å koble seg opp mot DSOP / sporingslogg 
 
 ## Deployering
 
-Applikasjonen bygges automatisk til dev / https://www-q0.nav.no/person/dsop-api ved merge til master eller ved manuell godkjenning i [CircleCI](https://circleci.com/gh/navikt/workflows/dsop-api). <br><br>
-For å lansere applikasjonen til produksjon / https://www.nav.no/person/dsop-api, knytt en commit til en [Git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging):
-
+Q6:
 ```
-git tag -a vX.X.X -m "Din melding"
+git tag -a vX.X.X-dev
+```
+
+Q1, Q2, Q6:
+```
+git tag -a vX.X.X-test
+```
+Q0, prod:
+```
+git tag -a vX.X.X-prod
 ```
 
 Push den nye versjonen til GitHub og merge til master.
-
 ```
-git push --tags
+git push && git push --tags
 ```
-
-Godkjenn produksjonssettingen i [CircleCI](https://circleci.com/gh/navikt/workflows/dsop-api).
 
 ## Lokal Kjøring
 
