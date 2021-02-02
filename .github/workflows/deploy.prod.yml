@@ -39,7 +39,6 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: default
           ingresses:
-            - https://dsop-api.nais.oera.no
             - https://www.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION

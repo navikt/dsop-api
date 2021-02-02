@@ -1,25 +1,17 @@
 # DSOP-Api
 
-![Deploy-to-prod](https://github.com/navikt/dsop-api/workflows/Deploy-to-prod/badge.svg) <br>
-![Deploy-to-q0](https://github.com/navikt/dsop-api/workflows/Deploy-to-q0/badge.svg)
-![Deploy-to-q1](https://github.com/navikt/dsop-api/workflows/Deploy-to-q1/badge.svg)
-![Deploy-to-q2](https://github.com/navikt/dsop-api/workflows/Deploy-to-q2/badge.svg)
-![Deploy-to-q6](https://github.com/navikt/dsop-api/workflows/Deploy-to-q6/badge.svg)
+![Deploy-to-prod](https://github.com/navikt/dsop-api/workflows/Deploy-to-prod/badge.svg) | ![Deploy-to-dev](https://github.com/navikt/dsop-api/workflows/Deploy-to-dev/badge.svg)
 
 Api bygget på Ktor for å koble seg opp mot DSOP / sporingslogg 
 
 ## Deployering
 
-Q6:
+Dev:
 ```
 git tag -a vX.X.X-dev
 ```
 
-Q1, Q2, Q6:
-```
-git tag -a vX.X.X-test
-```
-Q0, prod:
+Prod:
 ```
 git tag -a vX.X.X-prod
 ```

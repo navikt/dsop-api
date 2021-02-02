@@ -1,8 +1,8 @@
-name: Deploy-to-q0
+name: Deploy-to-dev
 on:
   push:
     tags:
-      - v*-prod
+      - v*-dev
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -36,10 +36,9 @@ jobs:
       - name: Generate nais variables
         run: |
           cat > .nais/vars.yaml <<EOF
-          namespace: q0
+          namespace: personbruker
           ingresses:
-            - https://dsop-api.nais.oera-q.no
-            - https://www-q0.nav.no/person/dsop-api
+            - https://www.dev.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF
