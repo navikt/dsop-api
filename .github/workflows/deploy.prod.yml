@@ -37,7 +37,7 @@ jobs:
       - name: Generate nais variables
         run: |
           cat > .nais/vars.yaml <<EOF
-          namespace: default
+          namespace: personbruker
           ingresses:
             - https://www.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
