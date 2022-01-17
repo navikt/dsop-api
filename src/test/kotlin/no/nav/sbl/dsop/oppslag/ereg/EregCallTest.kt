@@ -1,15 +1,12 @@
 package no.nav.sbl.dsop.oppslag.ereg
 
-import io.ktor.client.HttpClient
-import io.ktor.client.call.call
-import io.ktor.client.call.receive
-import io.ktor.client.engine.mock.MockEngine
-import io.ktor.client.engine.mock.respond
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.headersOf
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.mock.*
+import io.ktor.client.features.json.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.dto.EregOrganisasjon
@@ -33,9 +30,9 @@ class EregCallTest {
             install(JsonFeature)
         }
         runBlocking {
-            val result = client.call("http://test.nav.no")
+            val result: HttpResponse = client.request("http://test.nav.no")
             client.close()
-            val eregOrganisasjon = result.response.receive<EregOrganisasjon>()
+            val eregOrganisasjon = result.receive<EregOrganisasjon>()
             assertEquals("ARBEIDS- OG VELFERDSETATEN", eregOrganisasjon.navn.navnelinje1)
             assertEquals("ARBEIDS- OG VELFERDSETATEN IKT DRIFT STEINKJER", eregOrganisasjon.navn.getNavn())
         }

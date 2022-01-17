@@ -14,24 +14,26 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.uri
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import mu.KLogging
 import no.nav.sbl.dsop.api.admin.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
 import no.nav.security.token.support.ktor.tokenValidationSupport
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
+import mu.KotlinLogging
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
+private val logger = KotlinLogging.logger {}
+
 fun Application.module() {
-    KLogging().logger.info("Starting application...")
+    logger.info("Starting application...")
 
     val env = Environment()
     startCacheEvictScheduling()
 
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { cause ->
-            KLogging().logger.warn(cause.description + ": " + call.request.uri)
+            logger.warn(cause.description + ": " + call.request.uri)
         }
     }
 
@@ -72,7 +74,7 @@ fun Application.module() {
 private fun startCacheEvictScheduling() {
     val timer = Timer("kodeverk-cache-clear-task", true)
     timer.scheduleAtFixedRate(KODEVERK_TEMA_CACHE_CLEARING_INTERVAL, KODEVERK_TEMA_CACHE_CLEARING_INTERVAL) {
-        KLogging().logger.info("Clearing cache...")
+        logger.info("Clearing cache...")
         KODEVERK_TEMA_CACHE.clear()
     }
 }

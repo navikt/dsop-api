@@ -13,6 +13,6 @@ data class Environment(
         val securityAudience: String = System.getenv("LOGINSERVICE_IDPORTEN_AUDIENCE") ?: "dummyAudience"
 ) {
     open fun isMockedEnvironment(): Boolean {
-        return apiKeyUsername.isNullOrEmpty()
+        return apiKeyUsername.isEmpty()
     }
 }
