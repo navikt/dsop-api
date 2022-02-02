@@ -20,8 +20,6 @@ spec:
   readiness:
     path: /person/dsop-api/internal/isAlive
     initialDelay: 10
-  vault:
-    enabled: true
   replicas:
     min: 2
     max: 4
@@ -33,7 +31,7 @@ spec:
     requests:
       memory: 1500Mi
   envFrom:
-    - configmap: loginservice-idporten
+    - secret: dsop-api-secret
   prometheus:
     enabled: true
     path: /person/dsop-api/internal/prometheus
