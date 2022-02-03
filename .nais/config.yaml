@@ -18,7 +18,7 @@ spec:
     path: /dsop-api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /dsop-api/internal/isAlive
+    path: /dsop-api/internal/isReady
     initialDelay: 10
   replicas:
     min: 2
