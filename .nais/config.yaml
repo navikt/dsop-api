@@ -15,10 +15,10 @@ spec:
      - {{url}}
   {{/each}}
   liveness:
-    path: /person/dsop-api/internal/isAlive
+    path: /dsop-api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /person/dsop-api/internal/isAlive
+    path: /dsop-api/internal/isAlive
     initialDelay: 10
   replicas:
     min: 2
