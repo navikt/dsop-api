@@ -63,7 +63,7 @@ fun Application.module() {
 
     routing {
         health()
-        route("person/dsop-api/") {
+        route("/") {
             authenticate {
                 dsop(env)
             }

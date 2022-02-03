@@ -34,4 +34,4 @@ spec:
     - secret: dsop-api-secret
   prometheus:
     enabled: true
-    path: /person/dsop-api/internal/prometheus
+    path: /dsop-api/internal/prometheus
