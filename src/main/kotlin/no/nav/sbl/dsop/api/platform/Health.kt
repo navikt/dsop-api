@@ -14,14 +14,14 @@ import io.prometheus.client.hotspot.DefaultExports
 
 
 fun Routing.health(
-        ready: () -> Boolean = { true },
-        alive: () -> Boolean = { true },
-        collectorRegistry: CollectorRegistry = CollectorRegistry.defaultRegistry
+    ready: () -> Boolean = { true },
+    alive: () -> Boolean = { true },
+    collectorRegistry: CollectorRegistry = CollectorRegistry.defaultRegistry
 ) {
 
     DefaultExports.initialize()
 
-    fun statusFor(b: () -> Boolean) = b().let{ if(it) HttpStatusCode.OK else HttpStatusCode.InternalServerError}
+    fun statusFor(b: () -> Boolean) = b().let { if (it) HttpStatusCode.OK else HttpStatusCode.InternalServerError }
 
     route("/internal") {
 
