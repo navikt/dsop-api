@@ -41,8 +41,14 @@ fun Route.dsop(env: Environment) {
                 install(JsonFeature)
             }
 
-            val dsopResult: HttpResponse = dsopClient.request(env.sporingloggLesloggerUrl)
-            val sporingslogg2 = dsopResult.receive<List<Sporingslogg>>()
+            val sporingslogg2: List<Sporingslogg>
+            try {
+                val dsopResult: HttpResponse = dsopClient.request(env.sporingloggLesloggerUrl)
+                sporingslogg2 = dsopResult.receive()
+            } catch (e: Exception) {
+                logger.error("Noe gikk galt ved kall til dsop", e)
+                throw e
+            }
 
             val orgnavnCache = HashMap<String, String>()
             call.respond(
@@ -68,6 +74,7 @@ fun Route.dsop(env: Environment) {
             )
         } catch (e: Exception) {
             logger.error("Noe gikk galt i DsopCall", e)
+            throw e
         }
 
     }
