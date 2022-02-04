@@ -23,7 +23,10 @@ spec:
   replicas:
     min: 2
     max: 4
-  webproxy: true
+  accessPolicy:
+    outbound:
+      external:
+        - host: personopplysninger-proxy.dev-fss-pub.nais.io
   resources:
     limits:
       cpu: '3'
