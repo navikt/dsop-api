@@ -25,6 +25,10 @@ spec:
     max: 4
   webproxy: true
   accessPolicy:
+    rules:
+      - application: personopplysninger-proxy
+        namespace: personopplysninger
+        cluster: dev-fss
     outbound:
       external:
         - host: personopplysninger-proxy.dev-fss-pub.nais.io
