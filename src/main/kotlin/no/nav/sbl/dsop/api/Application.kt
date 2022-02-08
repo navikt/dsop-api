@@ -54,14 +54,11 @@ fun Application.module() {
             setPrettyPrinting()
         }
     }
+
     install(CORS) {
-        host(host = "personopplysninger-q0.nais.oera-q.local", schemes = listOf("https"))
-        host(host = "nav.no", subDomains = listOf("www", "www-q0", "www-q1", "personopplysninger-q"), schemes = listOf("https"))
-        allowSameOrigin = true
+        host(env.corsAllowedOrigins, schemes = listOf(env.corsAllowedSchemes))
         allowCredentials = true
-        allowNonSimpleContentTypes = true
-        header(HttpHeaders.Origin)
-        header(HttpHeaders.Authorization)
+        header(HttpHeaders.ContentType)
     }
 
     routing {
