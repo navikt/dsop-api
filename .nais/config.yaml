@@ -25,7 +25,7 @@ spec:
     max: 4
   webproxy: true
   tokenx:
-    enable: true
+    enabled: true
   accessPolicy:
     rules:
       - application: personopplysninger-proxy
