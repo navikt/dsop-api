@@ -24,10 +24,12 @@ spec:
     min: 2
     max: 4
   webproxy: true
+  tokenx:
+    enable: true
   accessPolicy:
     rules:
       - application: personopplysninger-proxy
-        namespace: personopplysninger
+        namespace: personbruker
         cluster: dev-fss
     outbound:
       external:

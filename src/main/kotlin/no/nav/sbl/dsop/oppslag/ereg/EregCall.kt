@@ -13,15 +13,17 @@ import no.nav.sbl.dsop.api.CONSUMER_ID
 import no.nav.sbl.dsop.api.Environment
 import no.nav.sbl.dsop.api.HTTP_STATUS_CODES_2XX
 import no.nav.sbl.dsop.api.dto.EregOrganisasjon
+import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.MDC
 
 private val logger = KotlinLogging.logger {}
 
 fun getOrganisasjonsnavn(
     authorization: String,
+    selvbetjeningstoken: String,
     orgnr: String,
     testClient: HttpClient? = null,
-    environment: Environment
+    environment: Environment,
 ): String = runBlocking {
     val eregClient = testClient ?: HttpClient {
         defaultRequest {
@@ -29,6 +31,7 @@ fun getOrganisasjonsnavn(
             header("Authorization", authorization)
             header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
             header("Nav-Consumer-Id", CONSUMER_ID)
+            header("Nav-Selvbetjeningstoken", selvbetjeningstoken)
         }
         install(JsonFeature)
         expectSuccess = false

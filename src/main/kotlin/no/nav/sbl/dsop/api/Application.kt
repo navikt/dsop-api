@@ -20,6 +20,7 @@ import no.nav.security.token.support.ktor.tokenValidationSupport
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 import mu.KotlinLogging
+import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -29,6 +30,8 @@ fun Application.module() {
     logger.info("Starting application...")
 
     val env = Environment()
+    val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
+
     startCacheEvictScheduling()
 
     install(StatusPages) {
@@ -65,7 +68,7 @@ fun Application.module() {
         health()
         route("/") {
             authenticate {
-                dsop(env)
+                dsop(env, tokendingsService)
             }
         }
     }
