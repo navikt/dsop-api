@@ -54,7 +54,7 @@ class EregCallTest {
             }
             install(JsonFeature)
         }
-        val navn = getOrganisasjonsnavn(authorization = "", orgnr = "991003525", testClient = client, environment = Environment())
+        val navn = getOrganisasjonsnavn(selvbetjeningstoken = "", authorization = "", orgnr = "991003525", testClient = client, environment = Environment())
         assertEquals("ARBEIDS- OG VELFERDSETATEN IKT DRIFT STEINKJER", navn)
     }
 
@@ -74,7 +74,7 @@ class EregCallTest {
             install(JsonFeature)
             expectSuccess = false
         }
-        val navn = getOrganisasjonsnavn(authorization = "", orgnr = orgnr, testClient = client, environment = Environment())
+        val navn = getOrganisasjonsnavn(selvbetjeningstoken = "", authorization = "", orgnr = orgnr, testClient = client, environment = Environment())
         assertEquals(orgnr, navn)
     }
 }
