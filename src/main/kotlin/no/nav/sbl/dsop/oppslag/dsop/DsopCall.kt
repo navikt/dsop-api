@@ -47,9 +47,10 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
             val sporingslogg2: List<Sporingslogg>
             try {
                 val dsopResult: HttpResponse = dsopClient.request(env.sporingloggLesloggerUrl)
+                logger.info("Kall til sporingslogg, status: ${dsopResult.status}")
                 sporingslogg2 = dsopResult.receive()
             } catch (e: Exception) {
-                logger.error("Noe gikk galt ved kall til dsop", e)
+                logger.error("Noe gikk galt ved kall til ${env.sporingloggLesloggerUrl}", e)
                 throw e
             }
 
