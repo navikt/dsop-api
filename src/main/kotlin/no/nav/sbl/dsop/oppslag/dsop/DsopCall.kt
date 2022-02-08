@@ -29,7 +29,7 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
     get("get") {
         try {
             val selvbetjeningIdtoken = call.request.cookies[OIDC_COOKIE_NAME]
-            val tokenxToken = tokendingsService.exchangeToken(selvbetjeningIdtoken!!, "dev-fss:personbruker:personopplysninger-proxy")
+            val tokenxToken = tokendingsService.exchangeToken(selvbetjeningIdtoken!!, env.personopplysningerProxyTargetApp)
             val authorization =
                 if (env.isMockedEnvironment()) ""
                 else if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(tokenxToken)
