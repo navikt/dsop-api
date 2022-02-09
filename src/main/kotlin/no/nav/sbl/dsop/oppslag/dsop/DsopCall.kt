@@ -42,6 +42,7 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
                     header("Nav-Selvbetjeningstoken", selvbetjeningIdtoken)
                 }
                 install(JsonFeature)
+                expectSuccess = false
             }
 
             val sporingslogg2: List<Sporingslogg>
