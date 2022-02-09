@@ -173,6 +173,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- skal fjernes -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>oauth2-oidc-sdk</artifactId>
+            <version>9.22.2</version>
+        </dependency>
     </dependencies>
 
     <build>
