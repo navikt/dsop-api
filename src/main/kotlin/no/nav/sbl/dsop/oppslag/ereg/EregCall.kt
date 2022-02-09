@@ -27,7 +27,6 @@ fun getOrganisasjonsnavn(
 ): String = runBlocking {
     val eregClient = testClient ?: HttpClient {
         defaultRequest {
-            header(environment.apiKeyUsername, environment.dsopApiEregApiApikeyPassword)
             header("Authorization", authorization)
             header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
             header("Nav-Consumer-Id", CONSUMER_ID)

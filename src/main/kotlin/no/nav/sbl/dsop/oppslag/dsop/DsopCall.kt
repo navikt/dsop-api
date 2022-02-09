@@ -37,7 +37,6 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
                     ?: throw IllegalArgumentException("Kunne ikke hente ut brukers OIDC-token.")
             val dsopClient = HttpClient {
                 defaultRequest {
-                    header(env.apiKeyUsername, env.dsopApiSporingsloggLesloggerApiKeyPassword)
                     header("Authorization", authorization)
                     header("Nav-Selvbetjeningstoken", selvbetjeningIdtoken)
                 }

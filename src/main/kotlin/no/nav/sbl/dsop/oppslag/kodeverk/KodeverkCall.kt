@@ -20,7 +20,6 @@ fun getKodeverk(authorization: String, kode: String, testClient: HttpClient? = n
         val spraak = "nb"
         val kodeverkClient = testClient ?: HttpClient {
             defaultRequest {
-                header(environment.apiKeyUsername, environment.dsopApiKodeverkRestApiApikeyPassword)
                 header("Authorization", authorization)
                 header("Nav-Call-Id", "dsop-api-temakode $kode")
                 header("Nav-Consumer-Id", CONSUMER_ID)
