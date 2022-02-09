@@ -35,7 +35,7 @@ fun getOrganisasjonsnavn(
         install(JsonFeature)
         expectSuccess = false
     }
-    val eregResult: HttpResponse = eregClient.request(environment.eregApiUrl.plus("v1/organisasjon/$orgnr/noekkelinfo"))
+    val eregResult: HttpResponse = eregClient.request(environment.eregApiUrl.plus("/v1/organisasjon/$orgnr/noekkelinfo"))
     eregClient.close()
     if (HTTP_STATUS_CODES_2XX.contains(eregResult.status.value)) {
         val eregOrganisasjon = eregResult.receive<EregOrganisasjon>()

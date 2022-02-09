@@ -29,7 +29,7 @@ fun getKodeverk(authorization: String, kode: String, testClient: HttpClient? = n
         }
         val kodeverkResult: HttpResponse = kodeverkClient.request(
             environment.kodeverkRestApiUrl
-                .plus("v1/kodeverk/Tema/koder/betydninger?ekskluderUgyldige=true&spraak=$spraak")
+                .plus("/v1/kodeverk/Tema/koder/betydninger?ekskluderUgyldige=true&spraak=$spraak")
         )
         kodeverkClient.close()
         if (HTTP_STATUS_CODES_2XX.contains(kodeverkResult.status.value)) {
