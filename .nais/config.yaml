@@ -42,6 +42,7 @@ spec:
       memory: 1500Mi
   envFrom:
     - secret: dsop-api-secret
+    - configmap: loginservice-idporten
   prometheus:
     enabled: true
     path: /dsop-api/internal/prometheus
