@@ -14,7 +14,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.uri
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import no.nav.sbl.dsop.api.admin.platform.health
+import no.nav.sbl.dsop.api.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
 import no.nav.security.token.support.ktor.tokenValidationSupport
 import java.util.*

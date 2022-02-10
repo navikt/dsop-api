@@ -1,4 +1,4 @@
-package no.nav.sbl.dsop.api.admin.platform
+package no.nav.sbl.dsop.api.platform
 
 import io.ktor.application.call
 import io.ktor.http.ContentType
