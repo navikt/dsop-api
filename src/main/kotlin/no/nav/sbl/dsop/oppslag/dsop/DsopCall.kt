@@ -81,12 +81,13 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
                 )
             } else {
                 logger.warn("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.receive<String>()}")
-                call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
+                call.response.
+                call.respond(HttpStatusCode.InternalServerError)
             }
 
         } catch (e: Exception) {
             logger.error("Noe gikk galt i DsopCall", e)
-            call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
+            call.respond(HttpStatusCode.InternalServerError)
         }
     }
 }
