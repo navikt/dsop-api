@@ -43,38 +43,47 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
                     header("Nav-Selvbetjeningstoken", selvbetjeningIdtoken)
                 }
                 install(JsonFeature)
+                expectSuccess = false
             }
 
             val dsopResult: HttpResponse = dsopClient.request(env.sporingloggLesloggerUrl)
-            val sporingslogg: List<Sporingslogg> = dsopResult.receive()
 
-            val orgnavnCache = HashMap<String, String>()
-            call.respond(
-                sporingslogg.map {
-                    if (orgnavnCache[it.mottaker] == null) {
-                        orgnavnCache[it.mottaker] =
-                            getOrganisasjonsnavn(
-                                selvbetjeningstoken = selvbetjeningIdtoken,
-                                authorization = authorization,
-                                orgnr = it.mottaker,
-                                environment = env
-                            )
-                    }
-                    if (KODEVERK_TEMA_CACHE[it.tema] == null) {
-                        KODEVERK_TEMA_CACHE[it.tema] =
-                            getKodeverk(authorization = authorization, kode = it.tema, environment = env)
-                    }
+            if (dsopResult.status.isSuccess()) {
+                val sporingslogg: List<Sporingslogg> = dsopResult.receive()
 
-                    Sporingslogg(
-                        tema = KODEVERK_TEMA_CACHE[it.tema] ?: it.tema,
-                        uthentingsTidspunkt = it.uthentingsTidspunkt,
-                        mottaker = it.mottaker,
-                        mottakernavn = orgnavnCache[it.mottaker],
-                        leverteData = it.leverteData,
-                        samtykkeToken = it.samtykkeToken
-                    )
-                }
-            )
+                val orgnavnCache = HashMap<String, String>()
+
+                call.respond(
+                    sporingslogg.map {
+                        if (orgnavnCache[it.mottaker] == null) {
+                            orgnavnCache[it.mottaker] =
+                                getOrganisasjonsnavn(
+                                    selvbetjeningstoken = selvbetjeningIdtoken,
+                                    authorization = authorization,
+                                    orgnr = it.mottaker,
+                                    environment = env
+                                )
+                        }
+                        if (KODEVERK_TEMA_CACHE[it.tema] == null) {
+                            KODEVERK_TEMA_CACHE[it.tema] =
+                                getKodeverk(authorization = authorization, kode = it.tema, environment = env)
+                        }
+
+                        Sporingslogg(
+                            tema = KODEVERK_TEMA_CACHE[it.tema] ?: it.tema,
+                            uthentingsTidspunkt = it.uthentingsTidspunkt,
+                            mottaker = it.mottaker,
+                            mottakernavn = orgnavnCache[it.mottaker],
+                            leverteData = it.leverteData,
+                            samtykkeToken = it.samtykkeToken
+                        )
+                    }
+                )
+            } else {
+                logger.warn("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.receive<String>()}")
+                call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
+            }
+
         } catch (e: Exception) {
             logger.error("Noe gikk galt i DsopCall", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
