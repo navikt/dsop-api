@@ -6,6 +6,7 @@ import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.common.log.MDCConstants
@@ -37,7 +38,7 @@ fun getOrganisasjonsnavn(
     }
     val eregResult: HttpResponse = eregClient.request(environment.eregApiUrl.plus("/v1/organisasjon/$orgnr/noekkelinfo"))
     eregClient.close()
-    if (HTTP_STATUS_CODES_2XX.contains(eregResult.status.value)) {
+    if (eregResult.status.isSuccess()) {
         val eregOrganisasjon = eregResult.receive<EregOrganisasjon>()
         eregOrganisasjon.navn.getNavn()
     } else {

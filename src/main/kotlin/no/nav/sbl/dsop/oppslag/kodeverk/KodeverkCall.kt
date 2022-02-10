@@ -6,6 +6,7 @@ import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.sbl.dsop.api.CONSUMER_ID
@@ -32,7 +33,7 @@ fun getKodeverk(authorization: String, kode: String, testClient: HttpClient? = n
                 .plus("/v1/kodeverk/Tema/koder/betydninger?ekskluderUgyldige=true&spraak=$spraak")
         )
         kodeverkClient.close()
-        if (HTTP_STATUS_CODES_2XX.contains(kodeverkResult.status.value)) {
+        if (kodeverkResult.status.isSuccess()) {
             val kodeverk = kodeverkResult.receive<Kodeverk>()
             kodeverk.betydninger[kode]?.get(0)?.beskrivelser?.get(spraak)?.term ?: kode
         } else {

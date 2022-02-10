@@ -173,7 +173,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- skal fjernes -->
+        <!-- Nødvendig for å unngå kollisjon mellom token-validation-ktor og token-support-tokendings-exchange -->
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>oauth2-oidc-sdk</artifactId>

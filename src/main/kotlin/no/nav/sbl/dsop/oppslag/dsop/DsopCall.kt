@@ -7,6 +7,7 @@ import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -29,7 +30,8 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
     get("get") {
         try {
             val selvbetjeningIdtoken = call.request.cookies[OIDC_COOKIE_NAME]
-            val tokenxToken = tokendingsService.exchangeToken(selvbetjeningIdtoken!!, env.personopplysningerProxyTargetApp)
+            val tokenxToken =
+                tokendingsService.exchangeToken(selvbetjeningIdtoken!!, env.personopplysningerProxyTargetApp)
             val authorization =
                 if (env.isMockedEnvironment()) ""
                 else if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(tokenxToken)
@@ -41,25 +43,22 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
                     header("Nav-Selvbetjeningstoken", selvbetjeningIdtoken)
                 }
                 install(JsonFeature)
-                expectSuccess = false
             }
 
-            val sporingslogg2: List<Sporingslogg>
-            try {
-                val dsopResult: HttpResponse = dsopClient.request(env.sporingloggLesloggerUrl)
-                logger.info("Kall til sporingslogg, status: ${dsopResult.status}")
-                sporingslogg2 = dsopResult.receive()
-            } catch (e: Exception) {
-                logger.error("Noe gikk galt ved kall til ${env.sporingloggLesloggerUrl}", e)
-                throw e
-            }
+            val dsopResult: HttpResponse = dsopClient.request(env.sporingloggLesloggerUrl)
+            val sporingslogg: List<Sporingslogg> = dsopResult.receive()
 
             val orgnavnCache = HashMap<String, String>()
             call.respond(
-                sporingslogg2.map {
+                sporingslogg.map {
                     if (orgnavnCache[it.mottaker] == null) {
                         orgnavnCache[it.mottaker] =
-                            getOrganisasjonsnavn(selvbetjeningstoken = selvbetjeningIdtoken, authorization = authorization, orgnr = it.mottaker, environment = env)
+                            getOrganisasjonsnavn(
+                                selvbetjeningstoken = selvbetjeningIdtoken,
+                                authorization = authorization,
+                                orgnr = it.mottaker,
+                                environment = env
+                            )
                     }
                     if (KODEVERK_TEMA_CACHE[it.tema] == null) {
                         KODEVERK_TEMA_CACHE[it.tema] =
@@ -78,7 +77,7 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
             )
         } catch (e: Exception) {
             logger.error("Noe gikk galt i DsopCall", e)
-            throw e
+            call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)
         }
     }
 }
