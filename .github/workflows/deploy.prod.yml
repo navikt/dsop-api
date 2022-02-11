@@ -43,6 +43,7 @@ jobs:
           namespace: personbruker
           ingresses:
             - https://www.nav.no/person/dsop-api
+            - https://person.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF
