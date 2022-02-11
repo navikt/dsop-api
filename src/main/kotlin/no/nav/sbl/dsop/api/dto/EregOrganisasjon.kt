@@ -9,11 +9,11 @@ data class EregOrganisasjon (
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Navn(
-        val navnelinje1: kotlin.String? = null,
-        val navnelinje2: kotlin.String? = null,
-        val navnelinje3: kotlin.String? = null,
-        val navnelinje4: kotlin.String? = null,
-        val navnelinje5: kotlin.String? = null
+        val navnelinje1: String? = null,
+        val navnelinje2: String? = null,
+        val navnelinje3: String? = null,
+        val navnelinje4: String? = null,
+        val navnelinje5: String? = null
 ) {
     fun getNavn(): String {
         var navn = navnelinje1 ?: ""

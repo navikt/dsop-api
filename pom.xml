@@ -9,24 +9,36 @@
 
     <properties>
         <main.class>no.nav.sbl.dsop.api.ApplicationKt</main.class>
-        <kotlin.version>1.4.0</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <logback.version>1.1.3</logback.version>
-        <assertj.version>3.7.0</assertj.version>
-        <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
-        <junit-jupiter.version>5.3.2</junit-jupiter.version>
-        <ktor_version>1.2.4</ktor_version>
-        <coroutines_version>1.3.2</coroutines_version>
-        <kotlin_loggin_version>1.5.8</kotlin_loggin_version>
-        <prometheus.version>0.6.0</prometheus.version>
+        <assertj.version>3.22.0</assertj.version>
+        <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
+        <ktor_version>1.6.7</ktor_version>
+        <coroutines_version>1.6.0</coroutines_version>
+        <kotlin_loggin_version>2.1.21</kotlin_loggin_version>
+        <prometheus.version>0.14.1</prometheus.version>
         <surefire.version>2.22.1</surefire.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>token-validation-ktor</artifactId>
-            <version>1.3.1</version>
+            <version>1.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.navikt.tms-ktor-token-support</groupId>
+            <artifactId>token-support-tokendings-exchange</artifactId>
+            <version>2022.02.07-remove-clientid-validation</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -74,12 +86,12 @@
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-mock-native</artifactId>
-            <version>${ktor_version}</version>
+            <version>1.3.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.microutils</groupId>
-            <artifactId>kotlin-logging</artifactId>
+            <artifactId>kotlin-logging-jvm</artifactId>
             <version>${kotlin_loggin_version}</version>
         </dependency>
         <dependency>
@@ -129,33 +141,28 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logstash-logback-encoder.version}</version>
+            <version>1.2.10</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.35</version>
         </dependency>
         <dependency>
             <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
-            <version>1.2019.07.11-12.31-0b875ec24c4e</version>
+            <version>2.2022.01.21_08.02-cd96965058ef</version>
         </dependency>
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>jwks-rsa</artifactId>
-            <version>0.9.0</version>
+            <version>0.20.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock</artifactId>
-            <version>2.25.0</version>
+            <version>2.27.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -166,6 +173,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Nødvendig for å unngå kollisjon mellom token-validation-ktor og token-support-tokendings-exchange -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>oauth2-oidc-sdk</artifactId>
+            <version>9.22.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -218,7 +231,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.9.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>

@@ -14,24 +14,29 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.uri
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import mu.KLogging
-import no.nav.sbl.dsop.api.admin.platform.health
+import no.nav.sbl.dsop.api.platform.health
 import no.nav.sbl.dsop.oppslag.dsop.dsop
 import no.nav.security.token.support.ktor.tokenValidationSupport
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
+import mu.KotlinLogging
+import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
+private val logger = KotlinLogging.logger {}
+
 fun Application.module() {
-    KLogging().logger.info("Starting application...")
+    logger.info("Starting application...")
 
     val env = Environment()
+    val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
+
     startCacheEvictScheduling()
 
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { cause ->
-            KLogging().logger.warn(cause.description + ": " + call.request.uri)
+            logger.warn(cause.description + ": " + call.request.uri)
         }
     }
 
@@ -49,21 +54,18 @@ fun Application.module() {
             setPrettyPrinting()
         }
     }
+
     install(CORS) {
-        host(host = "personopplysninger-q0.nais.oera-q.local", schemes = listOf("https"))
-        host(host = "nav.no", subDomains = listOf("www", "www-q0", "www-q1", "personopplysninger-q"), schemes = listOf("https"))
-        allowSameOrigin = true
+        host(env.corsAllowedOrigins, schemes = listOf(env.corsAllowedSchemes))
         allowCredentials = true
-        allowNonSimpleContentTypes = true
-        header(HttpHeaders.Origin)
-        header(HttpHeaders.Authorization)
+        header(HttpHeaders.ContentType)
     }
 
     routing {
         health()
-        route("person/dsop-api/") {
+        route("/") {
             authenticate {
-                dsop(env)
+                dsop(env, tokendingsService)
             }
         }
     }
@@ -72,7 +74,7 @@ fun Application.module() {
 private fun startCacheEvictScheduling() {
     val timer = Timer("kodeverk-cache-clear-task", true)
     timer.scheduleAtFixedRate(KODEVERK_TEMA_CACHE_CLEARING_INTERVAL, KODEVERK_TEMA_CACHE_CLEARING_INTERVAL) {
-        KLogging().logger.info("Clearing cache...")
+        logger.info("Clearing cache...")
         KODEVERK_TEMA_CACHE.clear()
     }
 }

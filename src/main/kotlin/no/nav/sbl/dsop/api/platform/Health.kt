@@ -1,4 +1,4 @@
-package no.nav.sbl.dsop.api.admin.platform
+package no.nav.sbl.dsop.api.platform
 
 import io.ktor.application.call
 import io.ktor.http.ContentType
@@ -14,26 +14,26 @@ import io.prometheus.client.hotspot.DefaultExports
 
 
 fun Routing.health(
-        ready: () -> Boolean = { true },
-        alive: () -> Boolean = { true },
-        collectorRegistry: CollectorRegistry = CollectorRegistry.defaultRegistry
+    ready: () -> Boolean = { true },
+    alive: () -> Boolean = { true },
+    collectorRegistry: CollectorRegistry = CollectorRegistry.defaultRegistry
 ) {
 
     DefaultExports.initialize()
 
-    fun statusFor(b: () -> Boolean) = b().let{ if(it) HttpStatusCode.OK else HttpStatusCode.InternalServerError}
+    fun statusFor(b: () -> Boolean) = b().let { if (it) HttpStatusCode.OK else HttpStatusCode.InternalServerError }
 
-    route("person/dsop-api/internal") {
+    route("/internal") {
 
-        get("isReady") {
+        get("/isReady") {
             statusFor(ready).let { call.respondText("Ready: $it", status = it) }
         }
 
-        get("isAlive") {
+        get("/isAlive") {
             statusFor(alive).let { call.respondText("Alive: $it", status = it) }
         }
 
-        get("prometheus") {
+        get("/prometheus") {
             val names = call.request.queryParameters.getAll("name")?.toSet() ?: setOf()
             call.respondTextWriter(ContentType.parse(TextFormat.CONTENT_TYPE_004)) {
                 TextFormat.write004(this, collectorRegistry.filteredMetricFamilySamples(names))

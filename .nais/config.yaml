@@ -15,17 +15,25 @@ spec:
      - {{url}}
   {{/each}}
   liveness:
-    path: /person/dsop-api/internal/isAlive
+    path: /dsop-api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /person/dsop-api/internal/isAlive
+    path: /dsop-api/internal/isReady
     initialDelay: 10
-  vault:
-    enabled: true
   replicas:
     min: 2
     max: 4
   webproxy: true
+  tokenx:
+    enabled: true
+  accessPolicy:
+    rules:
+      - application: personopplysninger-proxy
+        namespace: personbruker
+        cluster: dev-fss
+    outbound:
+      external:
+        - host: personopplysninger-proxy.dev-fss-pub.nais.io
   resources:
     limits:
       cpu: '3'
@@ -33,7 +41,8 @@ spec:
     requests:
       memory: 1500Mi
   envFrom:
+    - secret: dsop-api-secret
     - configmap: loginservice-idporten
   prometheus:
     enabled: true
-    path: /person/dsop-api/internal/prometheus
+    path: /dsop-api/internal/prometheus

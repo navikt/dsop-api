@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 
 
 fun main(args: Array<String>) {
-    val server: WireMockServer = WireMockServer(wireMockConfig().port(8090))
+    val server = WireMockServer(wireMockConfig().port(8090))
     server.start()
     configureFor(server.port())
     stubFor(any(urlPathEqualTo("/sporingslogg/")).willReturn(okJson(Testdata.sporingsloggJson())))
