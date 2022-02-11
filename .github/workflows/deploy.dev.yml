@@ -46,4 +46,4 @@ jobs:
           CLUSTER: dev-gcp
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
-          VARS: .nais/vars.yaml
+          VARS: ./nais/dev-gcp/personbruker.json
