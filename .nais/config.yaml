@@ -30,7 +30,7 @@ spec:
     rules:
       - application: personopplysninger-proxy
         namespace: personbruker
-        cluster: {{ gcp-cluster }}
+        cluster: {{ fss-cluster }}
     outbound:
       external:
         - host: {{ personopplysninger-host }}

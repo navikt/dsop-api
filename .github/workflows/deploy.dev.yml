@@ -41,7 +41,7 @@ jobs:
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           personopplysninger-host: https://personopplysninger-proxy.dev-fss-pub.nais.io,
-          gcp-cluster: dev-gcp
+          fss-cluster: dev-fss
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
