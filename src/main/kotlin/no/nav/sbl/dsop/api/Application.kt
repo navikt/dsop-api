@@ -63,7 +63,7 @@ fun Application.module() {
 
     routing {
         health()
-        route("/") {
+        route(env.rootPath) {
             authenticate {
                 dsop(env, tokendingsService)
             }
