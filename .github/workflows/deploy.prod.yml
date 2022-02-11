@@ -46,10 +46,12 @@ jobs:
             - https://person.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
+          personopplysninger-host: https://personopplysninger-proxy.prod-fss-pub.nais.io,
+          gcp-cluster: prod-gcp
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
           CLUSTER: prod-gcp
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
-          VARS: ./.nais/prod-gcp/personbruker.json
+          VARS: .nais/vars.yaml
