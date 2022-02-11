@@ -15,10 +15,10 @@ spec:
      - {{url}}
   {{/each}}
   liveness:
-    path: /dsop-api/internal/isAlive
+    path: /person/dsop-api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /dsop-api/internal/isReady
+    path: /person/dsop-api/internal/isAlive
     initialDelay: 10
   replicas:
     min: 2
@@ -45,4 +45,4 @@ spec:
     - configmap: loginservice-idporten
   prometheus:
     enabled: true
-    path: /dsop-api/internal/prometheus
+    path: /person/dsop-api/internal/prometheus
