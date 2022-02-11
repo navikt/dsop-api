@@ -1,0 +1,4 @@
+{
+  "personopplysninger-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
+  "gcp-cluster": "dev-gcp"
+}
