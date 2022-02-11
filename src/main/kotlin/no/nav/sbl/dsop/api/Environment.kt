@@ -11,7 +11,6 @@ data class Environment(
     val securityJwksUrl: String = System.getenv("LOGINSERVICE_IDPORTEN_DISCOVERY_URL") ?: "https://dummyUrl.com",
     val securityAudience: String = System.getenv("LOGINSERVICE_IDPORTEN_AUDIENCE") ?: "dummyAudience",
     val personopplysningerProxyTargetApp: String = System.getenv("PERSONOPPLYSNINGER_PROXY_TARGET_APP") ?: "",
-    val rootPath: String = System.getenv("ROOT_PATH") ?: ""
 ) {
     fun isMockedEnvironment(): Boolean {
         return corsAllowedOrigins.isEmpty()
