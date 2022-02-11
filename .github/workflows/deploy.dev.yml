@@ -37,7 +37,7 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: personbruker
           ingresses:
-            - https://person.dev.nav.no/dsop-api
+            - https://person.dev.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           personopplysninger-host: https://personopplysninger-proxy.dev-fss-pub.nais.io,
