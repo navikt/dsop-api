@@ -12,9 +12,7 @@ import mu.KotlinLogging
 import no.nav.common.log.MDCConstants
 import no.nav.sbl.dsop.api.CONSUMER_ID
 import no.nav.sbl.dsop.api.Environment
-import no.nav.sbl.dsop.api.HTTP_STATUS_CODES_2XX
 import no.nav.sbl.dsop.api.dto.EregOrganisasjon
-import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.slf4j.MDC
 
 private val logger = KotlinLogging.logger {}
@@ -31,7 +29,7 @@ fun getOrganisasjonsnavn(
             header("Authorization", authorization)
             header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
             header("Nav-Consumer-Id", CONSUMER_ID)
-            header("Nav-Selvbetjeningstoken", selvbetjeningstoken)
+            header("Nav-Consumer-Token", selvbetjeningstoken)
         }
         install(JsonFeature)
         expectSuccess = false
