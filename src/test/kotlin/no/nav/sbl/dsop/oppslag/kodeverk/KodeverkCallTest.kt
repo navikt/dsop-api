@@ -19,9 +19,9 @@ class KodeverkCallTest {
         val client1 = createTestClient(json)
         val client2 = createTestClient(json)
 
-        var navn = getKodeverk(authorization = "", kode = "AAP", testClient = client1, environment = Environment())
+        var navn = getKodeverk(kode = "AAP", testClient = client1, environment = Environment())
         assertEquals("Arbeidsavklaringspenger", navn)
-        navn = getKodeverk(authorization = "", kode = "XYZ", testClient = client2, environment = Environment())
+        navn = getKodeverk(kode = "XYZ", testClient = client2, environment = Environment())
         assertEquals("XYZ", navn)
     }
 
@@ -40,7 +40,7 @@ class KodeverkCallTest {
             install(JsonFeature)
             expectSuccess = false
         }
-        val navn = getKodeverk(authorization = "", kode = "AAP", testClient = client, environment = Environment())
+        val navn = getKodeverk(kode = "AAP", testClient = client, environment = Environment())
         assertEquals("AAP", navn)
     }
 
