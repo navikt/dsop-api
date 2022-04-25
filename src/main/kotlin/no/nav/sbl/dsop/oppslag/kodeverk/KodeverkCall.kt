@@ -11,17 +11,15 @@ import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.sbl.dsop.api.CONSUMER_ID
 import no.nav.sbl.dsop.api.Environment
-import no.nav.sbl.dsop.api.HTTP_STATUS_CODES_2XX
 import no.nav.sbl.dsop.api.dto.Kodeverk
 
 private val logger = KotlinLogging.logger {}
 
-fun getKodeverk(authorization: String, kode: String, testClient: HttpClient? = null, environment: Environment): String =
+fun getKodeverk(kode: String, testClient: HttpClient? = null, environment: Environment): String =
     runBlocking {
         val spraak = "nb"
         val kodeverkClient = testClient ?: HttpClient {
             defaultRequest {
-                header("Authorization", authorization)
                 header("Nav-Call-Id", "dsop-api-temakode $kode")
                 header("Nav-Consumer-Id", CONSUMER_ID)
             }

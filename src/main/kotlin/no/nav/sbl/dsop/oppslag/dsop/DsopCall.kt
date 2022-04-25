@@ -63,7 +63,7 @@ fun Route.dsop(env: Environment, tokendingsService: TokendingsService) {
                         }
                         if (KODEVERK_TEMA_CACHE[it.tema] == null) {
                             KODEVERK_TEMA_CACHE[it.tema] =
-                                getKodeverk(authorization = authorization, kode = it.tema, environment = env)
+                                getKodeverk(kode = it.tema, environment = env)
                         }
 
                         Sporingslogg(
