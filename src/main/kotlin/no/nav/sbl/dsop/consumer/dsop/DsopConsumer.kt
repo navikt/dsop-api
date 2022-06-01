@@ -1,0 +1,36 @@
+package no.nav.sbl.dsop.consumer.dsop
+
+import io.ktor.client.HttpClient
+import io.ktor.client.call.receive
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.isSuccess
+import kotlinx.coroutines.runBlocking
+import mu.KotlinLogging
+import no.nav.sbl.dsop.config.Environment
+import no.nav.sbl.dsop.consumer.dsop.dto.Sporingslogg
+
+
+class DsopConsumer(private val client: HttpClient, private val environment: Environment) {
+
+    private val logger = KotlinLogging.logger {}
+
+    fun getSporingslogg(
+        authorization: String,
+        selvbetjeningstoken: String,
+    ): List<Sporingslogg> =
+        runBlocking {
+            val dsopResult: HttpResponse = client.get(environment.sporingloggLesloggerUrl) {
+                header("Authorization", authorization)
+                header("Nav-Consumer-Token", selvbetjeningstoken)
+            }
+
+            if (dsopResult.status.isSuccess()) {
+                dsopResult.receive()
+            } else {
+                logger.warn("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.receive<String>()}")
+                throw RuntimeException("Feil ved henting av sporingslogg")
+            }
+        }
+}

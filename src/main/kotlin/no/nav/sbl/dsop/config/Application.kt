@@ -1,4 +1,4 @@
-package no.nav.sbl.dsop.api
+package no.nav.sbl.dsop.config
 
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -14,13 +14,17 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.uri
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import no.nav.sbl.dsop.api.platform.health
-import no.nav.sbl.dsop.oppslag.dsop.dsop
+import mu.KotlinLogging
+import no.nav.sbl.dsop.consumer.dsop.DsopConsumer
+import no.nav.sbl.dsop.consumer.ereg.EregConsumer
+import no.nav.sbl.dsop.consumer.kodeverk.KodeverkConsumer
+import no.nav.sbl.dsop.health.health
+import no.nav.sbl.dsop.routes.dsop
+import no.nav.sbl.dsop.service.DsopService
 import no.nav.security.token.support.ktor.tokenValidationSupport
+import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
-import mu.KotlinLogging
-import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -30,7 +34,13 @@ fun Application.module() {
     logger.info("Starting application...")
 
     val env = Environment()
+    val httpClient = HttpClientBuilder.build()
+
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
+    val dsopConsumer = DsopConsumer(httpClient, env)
+    val eregConsumer = EregConsumer(httpClient, env)
+    val kodeverkConsumer = KodeverkConsumer(httpClient, env)
+    val dsopService = DsopService(dsopConsumer, eregConsumer, kodeverkConsumer)
 
     startCacheEvictScheduling()
 
@@ -42,11 +52,7 @@ fun Application.module() {
 
     val conf = this.environment.config
     install(Authentication) {
-        if (env.isMockedEnvironment()) {
-            provider { skipWhen { true } }
-        } else {
-            tokenValidationSupport(config = conf)
-        }
+        tokenValidationSupport(config = conf)
     }
 
     install(ContentNegotiation) {
@@ -65,7 +71,7 @@ fun Application.module() {
         health()
         route("/") {
             authenticate {
-                dsop(env, tokendingsService)
+                dsop(env, tokendingsService, dsopService)
             }
         }
     }

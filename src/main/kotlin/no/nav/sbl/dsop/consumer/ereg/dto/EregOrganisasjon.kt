@@ -1,4 +1,4 @@
-package no.nav.sbl.dsop.api.dto
+package no.nav.sbl.dsop.consumer.ereg.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
