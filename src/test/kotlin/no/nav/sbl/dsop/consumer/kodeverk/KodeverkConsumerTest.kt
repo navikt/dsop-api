@@ -9,24 +9,20 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.headersOf
 import no.nav.sbl.dsop.config.Environment
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class KodeverkConsumerTest {
+internal class KodeverkConsumerTest {
+
+    private val kodeverkConsumer = KodeverkConsumer(setupMockedClient(), Environment())
 
     @Test
     fun testOppslagPaaTema() {
-        val kodeverkConsumer = KodeverkConsumer(setupMockedClient(), Environment())
-
         val navn = kodeverkConsumer.getKodeverk("AAP")
         assertEquals("Arbeidsavklaringspenger", navn)
     }
 
     @Test
     fun testOppslagPaaTemaIkkeFunnet() {
-        val kodeverkConsumer = KodeverkConsumer(setupMockedClient(), Environment())
-
         val navn = kodeverkConsumer.getKodeverk("XYZ")
         assertEquals("XYZ", navn)
     }

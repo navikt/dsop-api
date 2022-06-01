@@ -11,16 +11,14 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import no.nav.sbl.dsop.config.Environment
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EregConsumerTest {
+internal class EregConsumerTest {
+
+    private val eregConsumer = EregConsumer(setupMockedClient(), Environment())
 
     @Test
     fun testEregCallWithExistingOrgnr() {
-        val eregConsumer = EregConsumer(setupMockedClient(), Environment())
-
         val navn = eregConsumer.getOrganisasjonsnavn(selvbetjeningstoken = "", authorization = "", orgnr = "991003525")
         assertEquals("ARBEIDS- OG VELFERDSETATEN IKT DRIFT STEINKJER", navn)
     }
@@ -28,9 +26,6 @@ class EregConsumerTest {
     @Test
     fun testEregCallWithNonExistingOrgnr() {
         val orgnr = "444555666"
-
-        val eregConsumer = EregConsumer(setupMockedClient(), Environment())
-
         val navn = eregConsumer.getOrganisasjonsnavn(selvbetjeningstoken = "", authorization = "", orgnr = orgnr)
         assertEquals(orgnr, navn)
     }

@@ -11,12 +11,10 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import no.nav.sbl.dsop.config.Environment
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SporingsloggConsumerTest {
+internal class SporingsloggConsumerTest {
 
     @Test
     fun testSporingsloggSuccess() {
