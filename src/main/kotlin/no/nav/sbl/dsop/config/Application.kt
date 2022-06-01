@@ -15,9 +15,9 @@ import io.ktor.request.uri
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import mu.KotlinLogging
-import no.nav.sbl.dsop.consumer.dsop.DsopConsumer
 import no.nav.sbl.dsop.consumer.ereg.EregConsumer
 import no.nav.sbl.dsop.consumer.kodeverk.KodeverkConsumer
+import no.nav.sbl.dsop.consumer.sporingslogg.SporingsloggConsumer
 import no.nav.sbl.dsop.health.health
 import no.nav.sbl.dsop.routes.dsop
 import no.nav.sbl.dsop.service.DsopService
@@ -37,10 +37,10 @@ fun Application.module() {
     val httpClient = HttpClientBuilder.build()
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
-    val dsopConsumer = DsopConsumer(httpClient, env)
+    val sporingsloggConsumer = SporingsloggConsumer(httpClient, env)
     val eregConsumer = EregConsumer(httpClient, env)
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
-    val dsopService = DsopService(dsopConsumer, eregConsumer, kodeverkConsumer)
+    val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
 
     startCacheEvictScheduling()
 

@@ -1,4 +1,4 @@
-package no.nav.sbl.dsop.consumer.dsop.dto
+package no.nav.sbl.dsop.consumer.sporingslogg.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 

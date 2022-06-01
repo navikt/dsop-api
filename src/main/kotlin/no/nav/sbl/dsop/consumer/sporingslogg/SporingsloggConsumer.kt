@@ -1,4 +1,4 @@
-package no.nav.sbl.dsop.consumer.dsop
+package no.nav.sbl.dsop.consumer.sporingslogg
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
@@ -9,10 +9,10 @@ import io.ktor.http.isSuccess
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import no.nav.sbl.dsop.config.Environment
-import no.nav.sbl.dsop.consumer.dsop.dto.Sporingslogg
+import no.nav.sbl.dsop.consumer.sporingslogg.dto.Sporingslogg
 
 
-class DsopConsumer(private val client: HttpClient, private val environment: Environment) {
+class SporingsloggConsumer(private val client: HttpClient, private val environment: Environment) {
 
     private val logger = KotlinLogging.logger {}
 
