@@ -18,8 +18,10 @@ internal class DsopServiceTest {
 
     private val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
 
+
+    // TODO: Skrive flere tester etter cache-endringer
     @Test
-    fun `should do something`() {
+    fun `skall til enhetstest`() {
         coEvery { eregConsumer.getOrganisasjonsnavn(any(), any(), any()) } returns ""
         coEvery { kodeverkConsumer.getKodeverk(any()) } returns ""
         coEvery { sporingsloggConsumer.getSporingslogg(any(), any()) } returns singletonList(
