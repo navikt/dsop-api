@@ -23,8 +23,6 @@ import no.nav.sbl.dsop.routes.dsop
 import no.nav.sbl.dsop.service.DsopService
 import no.nav.security.token.support.ktor.tokenValidationSupport
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
-import java.util.*
-import kotlin.concurrent.scheduleAtFixedRate
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -41,8 +39,6 @@ fun Application.module() {
     val eregConsumer = EregConsumer(httpClient, env)
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
     val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
-
-    startCacheEvictScheduling()
 
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { cause ->
@@ -74,13 +70,5 @@ fun Application.module() {
                 dsop(env, tokendingsService, dsopService)
             }
         }
-    }
-}
-
-private fun startCacheEvictScheduling() {
-    val timer = Timer("kodeverk-cache-clear-task", true)
-    timer.scheduleAtFixedRate(KODEVERK_TEMA_CACHE_CLEARING_INTERVAL, KODEVERK_TEMA_CACHE_CLEARING_INTERVAL) {
-        logger.info("Clearing cache...")
-        KODEVERK_TEMA_CACHE.clear()
     }
 }

@@ -6,32 +6,58 @@ import no.nav.sbl.dsop.consumer.ereg.EregConsumer
 import no.nav.sbl.dsop.consumer.kodeverk.KodeverkConsumer
 import no.nav.sbl.dsop.consumer.sporingslogg.SporingsloggConsumer
 import no.nav.sbl.dsop.consumer.sporingslogg.dto.Sporingslogg
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.Collections.singletonList
 import kotlin.test.assertEquals
 
 internal class DsopServiceTest {
 
+    private val orgnavn = "orgnavn"
+    private val tema = "tema"
+    private val temaKode = "temaKode"
+    private val uthentingsTidspunkt = "uthentingsTidspunkt"
+    private val mottaker = "mottaker"
+    private val mottakernavn = "mottakernavn"
+    private val behandlingsgrunnlag = "behandlingsgrunnlag"
+    private val leverteData = "leverteData"
+    private val samtykkeToken = "samtykkeToken"
+
     private val eregConsumer: EregConsumer = mockk()
     private val kodeverkConsumer: KodeverkConsumer = mockk()
+
     private val sporingsloggConsumer: SporingsloggConsumer = mockk()
 
     private val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
 
-
-    // TODO: Skrive flere tester etter cache-endringer
     @Test
-    fun `skall til enhetstest`() {
-        coEvery { eregConsumer.getOrganisasjonsnavn(any(), any(), any()) } returns ""
-        coEvery { kodeverkConsumer.getKodeverk(any()) } returns ""
-        coEvery { sporingsloggConsumer.getSporingslogg(any(), any()) } returns singletonList(
-            Sporingslogg(
-                tema = "",
-                mottaker = ""
-            )
-        )
+    fun `skal returnere sporingslogg`() {
+        coEvery { eregConsumer.getOrganisasjonsnavn(any(), any(), any()) } returns orgnavn
+        coEvery { kodeverkConsumer.getKodeverk(any()) } returns tema
+        coEvery { sporingsloggConsumer.getSporingslogg(any(), any()) } returns singletonList(buildSporingslogg())
 
-        val sporingslogg = dsopService.getDsop("", "")
-        assertEquals(1, sporingslogg.size)
+        val sporingsloggList = dsopService.getDsop("", "")
+        assertEquals(1, sporingsloggList.size)
+
+        val sporingslogg = sporingsloggList[0]
+
+        assertThat(sporingslogg.tema).isEqualTo(tema)
+        assertThat(sporingslogg.uthentingsTidspunkt).isEqualTo(uthentingsTidspunkt)
+        assertThat(sporingslogg.mottaker).isEqualTo(mottaker)
+        assertThat(sporingslogg.mottakernavn).isEqualTo(orgnavn)
+        assertThat(sporingslogg.leverteData).isEqualTo(leverteData)
+        assertThat(sporingslogg.samtykkeToken).isEqualTo(samtykkeToken)
+    }
+
+    private fun buildSporingslogg(): Sporingslogg {
+        return Sporingslogg(
+            tema = temaKode,
+            mottaker = mottaker,
+            uthentingsTidspunkt = uthentingsTidspunkt,
+            mottakernavn = mottakernavn,
+            behandlingsgrunnlag = behandlingsgrunnlag,
+            leverteData = leverteData,
+            samtykkeToken = samtykkeToken
+        )
     }
 }
