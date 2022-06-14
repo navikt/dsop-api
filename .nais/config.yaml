@@ -43,6 +43,3 @@ spec:
   envFrom:
     - secret: dsop-api-secret
     - configmap: loginservice-idporten
-  prometheus:
-    enabled: true
-    path: /person/dsop-api/internal/prometheus

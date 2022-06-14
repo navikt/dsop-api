@@ -1,4 +1,4 @@
-package no.nav.sbl.dsop.api
+package no.nav.sbl.dsop.config
 
 data class Environment(
     val corsAllowedOrigins: String = System.getenv("CORS_ALLOWED_ORIGINS") ?: "",
@@ -11,8 +11,4 @@ data class Environment(
     val securityJwksUrl: String = System.getenv("LOGINSERVICE_IDPORTEN_DISCOVERY_URL") ?: "https://dummyUrl.com",
     val securityAudience: String = System.getenv("LOGINSERVICE_IDPORTEN_AUDIENCE") ?: "dummyAudience",
     val personopplysningerProxyTargetApp: String = System.getenv("PERSONOPPLYSNINGER_PROXY_TARGET_APP") ?: "",
-) {
-    fun isMockedEnvironment(): Boolean {
-        return corsAllowedOrigins.isEmpty()
-    }
-}
+)
