@@ -24,6 +24,7 @@ class KodeverkConsumer(private val client: HttpClient, private val environment: 
                 environment.kodeverkRestApiUrl
                     .plus("/api/v1/kodeverk/Tema/koder/betydninger?ekskluderUgyldige=true&spraak=$spraak")
             ) {
+                logger.info("Call-id: " + MDC.get(MDCConstants.MDC_CALL_ID))
                 header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
             }
             if (kodeverkResult.status.isSuccess()) {
