@@ -12,6 +12,7 @@ import no.nav.common.log.MDCConstants
 import no.nav.sbl.dsop.config.Environment
 import no.nav.sbl.dsop.consumer.kodeverk.dto.Kodeverk
 import org.slf4j.MDC
+import java.util.*
 
 class KodeverkConsumer(private val client: HttpClient, private val environment: Environment) {
 
@@ -24,8 +25,7 @@ class KodeverkConsumer(private val client: HttpClient, private val environment: 
                 environment.kodeverkRestApiUrl
                     .plus("/api/v1/kodeverk/Tema/koder/betydninger?ekskluderUgyldige=true&spraak=$spraak")
             ) {
-                logger.info("Call-id: " + MDC.get(MDCConstants.MDC_CALL_ID))
-                header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
+                header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID) ?: UUID.randomUUID())
             }
             if (kodeverkResult.status.isSuccess()) {
                 val kodeverk = kodeverkResult.receive<Kodeverk>()
