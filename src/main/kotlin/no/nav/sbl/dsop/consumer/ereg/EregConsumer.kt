@@ -8,8 +8,10 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
+import no.nav.common.log.MDCConstants
 import no.nav.sbl.dsop.config.Environment
 import no.nav.sbl.dsop.consumer.ereg.dto.EregOrganisasjon
+import org.slf4j.MDC
 
 
 class EregConsumer(private val client: HttpClient, private val environment: Environment) {
@@ -26,6 +28,7 @@ class EregConsumer(private val client: HttpClient, private val environment: Envi
                 client.get(environment.eregApiUrl.plus("/v1/organisasjon/$orgnr/noekkelinfo")) {
                     header("Authorization", authorization)
                     header("Nav-Consumer-Token", selvbetjeningstoken)
+                    header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID))
                 }
             if (eregResult.status.isSuccess()) {
                 val eregOrganisasjon = eregResult.receive<EregOrganisasjon>()
