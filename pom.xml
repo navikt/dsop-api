@@ -10,16 +10,16 @@
     <properties>
         <main.class>no.nav.sbl.dsop.config.ApplicationKt</main.class>
         <java.version>17</java.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.7.0</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <logback.version>1.1.3</logback.version>
-        <assertj.version>3.22.0</assertj.version>
+        <logback.version>1.2.11</logback.version>
+        <assertj.version>3.23.1</assertj.version>
         <mockk.version>1.12.4</mockk.version>
-        <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
+        <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
-        <ktor_version>1.6.8</ktor_version>
-        <coroutines_version>1.6.0</coroutines_version>
-        <kotlin_loggin_version>2.1.21</kotlin_loggin_version>
+        <ktor_version>2.0.2</ktor_version>
+        <coroutines_version>1.6.3</coroutines_version>
+        <kotlin_loggin_version>2.1.23</kotlin_loggin_version>
         <surefire.version>2.22.1</surefire.version>
     </properties>
 
@@ -33,13 +33,8 @@
     <dependencies>
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>token-validation-ktor</artifactId>
-            <version>2.0.20</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.navikt.tms-ktor-token-support</groupId>
-            <artifactId>token-support-tokendings-exchange</artifactId>
-            <version>2022.02.07-remove-clientid-validation</version>
+            <artifactId>token-validation-ktor-v2</artifactId>
+            <version>2.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -48,46 +43,58 @@
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-netty</artifactId>
+            <artifactId>ktor-server-netty-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-gson</artifactId>
+            <artifactId>ktor-server-core-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-gson</artifactId>
+            <artifactId>ktor-serialization-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-apache</artifactId>
+            <artifactId>ktor-serialization-gson-jvm</artifactId>
             <version>${ktor_version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-mock</artifactId>
+            <artifactId>ktor-server-cors-jvm</artifactId>
             <version>${ktor_version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-status-pages-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-content-negotiation-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-auth-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-content-negotiation-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-apache-jvm</artifactId>
+            <version>${ktor_version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-mock-jvm</artifactId>
             <version>${ktor_version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-mock-js</artifactId>
-            <version>${ktor_version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-mock-native</artifactId>
-            <version>1.3.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -143,19 +150,24 @@
         <dependency>
             <groupId>no.nav.common</groupId>
             <artifactId>log</artifactId>
-            <version>2.2022.05.13_07.24-6eadb37dec31</version>
+            <version>2.2022.06.07_07.02-b553e2a2f691</version>
         </dependency>
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>jwks-rsa</artifactId>
             <version>0.21.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.navikt.tms-ktor-token-support</groupId>
+            <artifactId>token-support-tokendings-exchange</artifactId>
+            <version>2022.05.19-09.32-5076b2435b0a</version>
+        </dependency>
 
         <!-- Nødvendig for å unngå kollisjon mellom token-validation-ktor og token-support-tokendings-exchange -->
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>oauth2-oidc-sdk</artifactId>
-            <version>9.35</version>
+            <version>9.37.2</version>
         </dependency>
     </dependencies>
 

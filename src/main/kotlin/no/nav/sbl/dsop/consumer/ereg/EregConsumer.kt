@@ -1,7 +1,7 @@
 package no.nav.sbl.dsop.consumer.ereg
 
 import io.ktor.client.HttpClient
-import io.ktor.client.call.receive
+import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
@@ -28,10 +28,10 @@ class EregConsumer(private val client: HttpClient, private val environment: Envi
                     header("Nav-Consumer-Token", selvbetjeningstoken)
                 }
             if (eregResult.status.isSuccess()) {
-                val eregOrganisasjon = eregResult.receive<EregOrganisasjon>()
+                val eregOrganisasjon = eregResult.body<EregOrganisasjon>()
                 eregOrganisasjon.navn.getNavn()
             } else {
-                logger.error("Oppslag mot EREG på organisasjonsnummer $orgnr feilet med melding: ".plus(eregResult.receive<String>()))
+                logger.error("Oppslag mot EREG på organisasjonsnummer $orgnr feilet med melding: ".plus(eregResult.body<String>()))
                 orgnr
             }
         }
