@@ -7,9 +7,12 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.authenticate
+import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.path
 import io.ktor.server.request.uri
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
