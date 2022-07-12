@@ -7,14 +7,11 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.runBlocking
-import mu.KotlinLogging
 import no.nav.sbl.dsop.config.Environment
 import no.nav.sbl.dsop.consumer.sporingslogg.dto.Sporingslogg
 
 
 class SporingsloggConsumer(private val client: HttpClient, private val environment: Environment) {
-
-    private val logger = KotlinLogging.logger {}
 
     fun getSporingslogg(
         authorization: String,
@@ -29,8 +26,7 @@ class SporingsloggConsumer(private val client: HttpClient, private val environme
             if (dsopResult.status.isSuccess()) {
                 dsopResult.body()
             } else {
-                logger.warn("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.body<String>()}")
-                throw RuntimeException("Feil ved henting av sporingslogg")
+                throw RuntimeException("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.body<String>()}")
             }
         }
 }

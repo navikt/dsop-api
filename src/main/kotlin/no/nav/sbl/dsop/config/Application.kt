@@ -48,6 +48,16 @@ fun Application.module() {
         tokenValidationSupport(config = conf)
     }
 
+    install(CallLogging) {
+        filter { call -> !call.request.path().contains("internal") }
+        format { call ->
+            val status = call.response.status()
+            val httpMethod = call.request.httpMethod.value
+            val path = call.request.path()
+            "$status - $httpMethod $path"
+        }
+    }
+
     install(ContentNegotiation) {
         gson {
             setPrettyPrinting()

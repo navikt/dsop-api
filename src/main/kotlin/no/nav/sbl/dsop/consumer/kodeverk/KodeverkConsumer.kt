@@ -31,7 +31,7 @@ class KodeverkConsumer(private val client: HttpClient, private val environment: 
                 val kodeverk = kodeverkResult.body<Kodeverk>()
                 kodeverk.betydninger[kode]?.get(0)?.beskrivelser?.get(spraak)?.term ?: kode
             } else {
-                logger.error(
+                logger.warn(
                     "Oppslag mot KODEVERK på temakode $kode feilet. "
                         .plus(kodeverkResult.status.value).plus(" ")
                         .plus(kodeverkResult.body<String>())
