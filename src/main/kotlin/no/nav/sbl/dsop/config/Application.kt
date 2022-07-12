@@ -6,11 +6,14 @@ import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.authenticate
 import io.ktor.features.CORS
+import io.ktor.features.CallLogging
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.gson.gson
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
+import io.ktor.request.httpMethod
+import io.ktor.request.path
 import io.ktor.request.uri
 import io.ktor.routing.route
 import io.ktor.routing.routing
@@ -49,6 +52,16 @@ fun Application.module() {
     val conf = this.environment.config
     install(Authentication) {
         tokenValidationSupport(config = conf)
+    }
+
+    install(CallLogging) {
+        filter { call -> !call.request.path().contains("internal") }
+        format { call ->
+            val status = call.response.status()
+            val httpMethod = call.request.httpMethod.value
+            val path = call.request.path()
+            "$status - $httpMethod $path"
+        }
     }
 
     install(ContentNegotiation) {

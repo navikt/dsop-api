@@ -31,7 +31,7 @@ class EregConsumer(private val client: HttpClient, private val environment: Envi
                 val eregOrganisasjon = eregResult.receive<EregOrganisasjon>()
                 eregOrganisasjon.navn.getNavn()
             } else {
-                logger.error("Oppslag mot EREG på organisasjonsnummer $orgnr feilet med melding: ".plus(eregResult.receive<String>()))
+                logger.warn("Oppslag mot EREG på organisasjonsnummer $orgnr feilet med melding: ".plus(eregResult.receive<String>()))
                 orgnr
             }
         }
