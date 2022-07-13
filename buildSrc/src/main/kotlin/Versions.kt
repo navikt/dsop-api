@@ -25,7 +25,7 @@ object Junit {
 }
 
 object Kotlin {
-    const val version = "1.6.21"
+    const val version = "1.7.10"
 }
 
 object Kotlinx {
@@ -35,7 +35,7 @@ object Kotlinx {
 }
 
 object Ktor {
-    private const val version = "2.0.2"
+    private const val version = "2.0.3"
     private const val groupId = "io.ktor"
 
     const val serverNetty = "$groupId:ktor-server-netty:$version"
@@ -63,7 +63,7 @@ object Mockk {
 }
 
 object NAV {
-    const val tokenValidatorKtor = "no.nav.security:token-validation-ktor-v2:2.1.1"
+    const val tokenValidatorKtor = "no.nav.security:token-validation-ktor-v2:2.1.2"
 }
 
 object Shadow {
