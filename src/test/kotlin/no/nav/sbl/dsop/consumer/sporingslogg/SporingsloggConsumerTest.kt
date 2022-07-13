@@ -11,9 +11,9 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.gson.gson
 import no.nav.sbl.dsop.config.Environment
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 internal class SporingsloggConsumerTest {
 

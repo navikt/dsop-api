@@ -7,14 +7,14 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.runBlocking
-import mu.KotlinLogging
 import no.nav.sbl.dsop.config.Environment
 import no.nav.sbl.dsop.consumer.ereg.dto.EregOrganisasjon
+import org.slf4j.LoggerFactory
 
 
 class EregConsumer(private val client: HttpClient, private val environment: Environment) {
 
-    private val logger = KotlinLogging.logger {}
+    private val logger = LoggerFactory.getLogger(EregConsumer::class.java)
 
     fun getOrganisasjonsnavn(
         authorization: String,

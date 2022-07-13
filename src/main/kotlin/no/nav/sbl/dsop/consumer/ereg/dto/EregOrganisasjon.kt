@@ -1,13 +1,9 @@
 package no.nav.sbl.dsop.consumer.ereg.dto
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class EregOrganisasjon (
         val navn: Navn
 )
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class Navn(
         val navnelinje1: String? = null,
         val navnelinje2: String? = null,

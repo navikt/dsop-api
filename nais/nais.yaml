@@ -1,19 +1,13 @@
----
-apiVersion: nais.io/v1alpha1
-kind: Application
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
 metadata:
   name: dsop-api
-  namespace: {{namespace}}
+  namespace: personbruker
   labels:
     team: personbruker
 spec:
-  image: {{image}}:{{version}}
-  team: personbruker
+  image: {{version}}
   port: 8080
-  ingresses:
-  {{#each ingresses as |url|}}
-     - {{url}}
-  {{/each}}
   liveness:
     path: /person/dsop-api/internal/isAlive
     initialDelay: 10
@@ -34,12 +28,17 @@ spec:
     outbound:
       external:
         - host: {{ personopplysninger-host }}
+  ingresses:
+  {{#each ingresses}}
+     - "{{this}}"
+         {{/each}}
+  envFrom:
+    - configmap: loginservice-idporten
+    - secret: dsop-api-secret
   resources:
     limits:
-      cpu: '3'
-      memory: 1500Mi
+      cpu: "3"
+      memory: 768Mi
     requests:
-      memory: 1500Mi
-  envFrom:
-    - secret: dsop-api-secret
-    - configmap: loginservice-idporten
+      cpu: "500m"
+      memory: 384Mi

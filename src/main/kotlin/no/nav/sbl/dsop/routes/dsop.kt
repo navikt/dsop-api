@@ -6,13 +6,13 @@ import io.ktor.server.request.header
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
-import mu.KotlinLogging
 import no.nav.sbl.dsop.config.Environment
 import no.nav.sbl.dsop.config.OIDC_COOKIE_NAME
 import no.nav.sbl.dsop.service.DsopService
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
+import org.slf4j.LoggerFactory
 
-private val logger = KotlinLogging.logger {}
+private val logger = LoggerFactory.getLogger("dsopRoute")
 
 fun Route.dsop(env: Environment, tokendingsService: TokendingsService, dsopService: DsopService) {
     get("get") {

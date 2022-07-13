@@ -1,4 +1,7 @@
 FROM navikt/java:17
-COPY target/dsop-api-*-jar-with-dependencies.jar /app/app.jar
-ENV APPD_ENABLED=true
-EXPOSE 8080
+COPY build/libs/dsop-api-all.jar /app/app.jar
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=75 \
+               -XX:+HeapDumpOnOutOfMemoryError \
+               -XX:HeapDumpPath=/oom-dump.hprof"
+ENV PORT=8080
+EXPOSE $PORT

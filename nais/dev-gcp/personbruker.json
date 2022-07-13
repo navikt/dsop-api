@@ -1,0 +1,7 @@
+{
+  "ingresses": [
+    "https://person.dev.nav.no/person/dsop-api"
+  ],
+  "personopplysninger-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
+  "fss-cluster": "dev-fss"
+}

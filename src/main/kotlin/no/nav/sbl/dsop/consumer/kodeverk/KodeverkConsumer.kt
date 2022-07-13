@@ -7,16 +7,17 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.runBlocking
-import mu.KotlinLogging
-import no.nav.common.log.MDCConstants
 import no.nav.sbl.dsop.config.Environment
 import no.nav.sbl.dsop.consumer.kodeverk.dto.Kodeverk
+import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import java.util.*
 
 class KodeverkConsumer(private val client: HttpClient, private val environment: Environment) {
 
-    private val logger = KotlinLogging.logger {}
+    private val MDC_CALL_ID = "callId"
+
+    private val logger = LoggerFactory.getLogger(KodeverkConsumer::class.java)
 
     fun getKodeverk(kode: String): String =
         runBlocking {
@@ -25,7 +26,7 @@ class KodeverkConsumer(private val client: HttpClient, private val environment: 
                 environment.kodeverkRestApiUrl
                     .plus("/api/v1/kodeverk/Tema/koder/betydninger?ekskluderUgyldige=true&spraak=$spraak")
             ) {
-                header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID) ?: UUID.randomUUID())
+                header("Nav-Call-Id", MDC.get(MDC_CALL_ID) ?: UUID.randomUUID())
             }
             if (kodeverkResult.status.isSuccess()) {
                 val kodeverk = kodeverkResult.body<Kodeverk>()
