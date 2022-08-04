@@ -9,6 +9,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
+import io.mockk.coEvery
 import no.nav.sbl.dsop.config.Environment
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 import org.junit.jupiter.api.Test
@@ -17,9 +18,13 @@ import kotlin.test.assertEquals
 
 internal class SporingsloggConsumerTest {
 
+    val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
+
     @Test
     suspend fun testSporingsloggSuccess() {
-        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = true), Environment(), TokendingsServiceBuilder.buildTokendingsService())
+        coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
+
+        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = true), Environment(), tokendingsService)
 
         val sporingslogg = sporingsloggConsumer.getSporingslogg(selvbetjeningstoken = "")
         assertEquals(1, sporingslogg.size)
@@ -27,7 +32,9 @@ internal class SporingsloggConsumerTest {
 
     @Test
     suspend fun testSporingsloggError() {
-        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = false), Environment(), TokendingsServiceBuilder.buildTokendingsService())
+        coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
+
+        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = false), Environment(), tokendingsService)
 
         assertThrows<RuntimeException> { sporingsloggConsumer.getSporingslogg(selvbetjeningstoken = "") }
     }
