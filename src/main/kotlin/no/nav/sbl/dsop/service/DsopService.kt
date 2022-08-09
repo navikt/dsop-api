@@ -10,20 +10,16 @@ class DsopService(
     private val eregConsumer: EregConsumer,
     private val kodeverkConsumer: KodeverkConsumer
 ) {
-    fun getDsop(authorization: String, selvbetjeningIdtoken: String): List<Sporingslogg> {
+    suspend fun getDsop(selvbetjeningIdtoken: String): List<Sporingslogg> {
 
-        val sporingslogg = sporingsloggConsumer.getSporingslogg(authorization, selvbetjeningIdtoken)
+        val sporingslogg = sporingsloggConsumer.getSporingslogg(selvbetjeningIdtoken)
 
         return sporingslogg.map {
             Sporingslogg(
                 tema = kodeverkConsumer.getKodeverk(kode = it.tema),
                 uthentingsTidspunkt = it.uthentingsTidspunkt,
                 mottaker = it.mottaker,
-                mottakernavn = eregConsumer.getOrganisasjonsnavn(
-                    selvbetjeningstoken = selvbetjeningIdtoken,
-                    authorization = authorization,
-                    orgnr = it.mottaker,
-                ),
+                mottakernavn = eregConsumer.getOrganisasjonsnavn(it.mottaker),
                 leverteData = it.leverteData,
                 samtykkeToken = it.samtykkeToken
             )

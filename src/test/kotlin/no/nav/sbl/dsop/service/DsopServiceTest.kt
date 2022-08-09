@@ -31,12 +31,12 @@ internal class DsopServiceTest {
     private val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
 
     @Test
-    fun `skal returnere sporingslogg`() {
-        coEvery { eregConsumer.getOrganisasjonsnavn(any(), any(), any()) } returns orgnavn
+    suspend fun `skal returnere sporingslogg`() {
+        coEvery { eregConsumer.getOrganisasjonsnavn(any()) } returns orgnavn
         coEvery { kodeverkConsumer.getKodeverk(any()) } returns tema
-        coEvery { sporingsloggConsumer.getSporingslogg(any(), any()) } returns singletonList(buildSporingslogg())
+        coEvery { sporingsloggConsumer.getSporingslogg(any()) } returns singletonList(buildSporingslogg())
 
-        val sporingsloggList = dsopService.getDsop("", "")
+        val sporingsloggList = dsopService.getDsop("")
         assertEquals(1, sporingsloggList.size)
 
         val sporingslogg = sporingsloggList[0]
