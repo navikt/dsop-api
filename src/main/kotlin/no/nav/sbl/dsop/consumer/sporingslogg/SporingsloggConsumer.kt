@@ -6,27 +6,27 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
-import kotlinx.coroutines.runBlocking
 import no.nav.sbl.dsop.config.Environment
 import no.nav.sbl.dsop.consumer.sporingslogg.dto.Sporingslogg
+import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 
 
-class SporingsloggConsumer(private val client: HttpClient, private val environment: Environment) {
+class SporingsloggConsumer(
+    private val client: HttpClient,
+    private val environment: Environment,
+    private val tokendingsService: TokendingsService
+) {
 
-    fun getSporingslogg(
-        authorization: String,
-        selvbetjeningstoken: String,
-    ): List<Sporingslogg> =
-        runBlocking {
-            val dsopResult: HttpResponse = client.get(environment.sporingloggLesloggerUrl) {
-                header("Authorization", authorization)
-                header("Nav-Consumer-Token", selvbetjeningstoken)
-            }
-
-            if (dsopResult.status.isSuccess()) {
-                dsopResult.body()
-            } else {
-                throw RuntimeException("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.body<String>()}")
-            }
+    suspend fun getSporingslogg(selvbetjeningstoken: String): List<Sporingslogg> {
+        val accessToken = tokendingsService.exchangeToken(selvbetjeningstoken, environment.sporingsloggTargetApp)
+        val dsopResult: HttpResponse = client.get(environment.sporingloggLesloggerUrl) {
+            header("Authorization", "Bearer $accessToken")
         }
+
+        return if (dsopResult.status.isSuccess()) {
+            dsopResult.body()
+        } else {
+            throw RuntimeException("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.body<String>()}")
+        }
+    }
 }

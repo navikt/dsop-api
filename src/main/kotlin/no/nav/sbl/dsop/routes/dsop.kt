@@ -2,7 +2,6 @@ package no.nav.sbl.dsop.routes
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
-import io.ktor.server.request.header
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
@@ -14,18 +13,12 @@ import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("dsopRoute")
 
-fun Route.dsop(env: Environment, tokendingsService: TokendingsService, dsopService: DsopService) {
+fun Route.dsop(dsopService: DsopService) {
     get("get") {
         try {
-            val selvbetjeningIdtoken = call.request.cookies[OIDC_COOKIE_NAME]
-            val tokenxToken =
-                tokendingsService.exchangeToken(selvbetjeningIdtoken!!, env.personopplysningerProxyTargetApp)
-            val authorization =
-                if (!selvbetjeningIdtoken.isNullOrEmpty()) "Bearer ".plus(tokenxToken)
-                else call.request.header("Authorization")
-                    ?: throw IllegalArgumentException("Kunne ikke hente ut brukers OIDC-token.")
+            val selvbetjeningIdtoken = call.request.cookies[OIDC_COOKIE_NAME]!!
 
-            call.respond(dsopService.getDsop(authorization, selvbetjeningIdtoken))
+            call.respond(dsopService.getDsop(selvbetjeningIdtoken))
 
         } catch (e: Exception) {
             logger.error("Noe gikk galt i DsopCall", e)
