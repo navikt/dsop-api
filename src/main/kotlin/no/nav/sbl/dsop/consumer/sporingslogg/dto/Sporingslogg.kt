@@ -1,8 +1,5 @@
 package no.nav.sbl.dsop.consumer.sporingslogg.dto
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class Sporingslogg (
         val tema: String,
         val uthentingsTidspunkt: String? = null,

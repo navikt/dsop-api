@@ -7,9 +7,9 @@ import no.nav.sbl.dsop.consumer.kodeverk.KodeverkConsumer
 import no.nav.sbl.dsop.consumer.sporingslogg.SporingsloggConsumer
 import no.nav.sbl.dsop.consumer.sporingslogg.dto.Sporingslogg
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.Collections.singletonList
-import kotlin.test.assertEquals
 
 internal class DsopServiceTest {
 

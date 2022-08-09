@@ -1,9 +1,11 @@
 package no.nav.sbl.dsop.config
 
+import io.ktor.client.HttpClient
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.gson.gson
 import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationStopping
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.authenticate
@@ -14,31 +16,15 @@ import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.request.uri
-import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
-import mu.KotlinLogging
-import no.nav.sbl.dsop.consumer.ereg.EregConsumer
-import no.nav.sbl.dsop.consumer.kodeverk.KodeverkConsumer
-import no.nav.sbl.dsop.consumer.sporingslogg.SporingsloggConsumer
 import no.nav.sbl.dsop.health.health
 import no.nav.sbl.dsop.routes.dsop
-import no.nav.sbl.dsop.service.DsopService
 import no.nav.security.token.support.v2.tokenValidationSupport
-import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
+import org.slf4j.LoggerFactory
 
-private val logger = KotlinLogging.logger {}
+private val logger = LoggerFactory.getLogger("dsop-api")
 
-fun Application.module() {
-    logger.info("Starting application...")
-
-    val env = Environment()
-    val httpClient = HttpClientBuilder.build()
-
-    val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
-    val sporingsloggConsumer = SporingsloggConsumer(httpClient, env, tokendingsService)
-    val eregConsumer = EregConsumer(httpClient, env)
-    val kodeverkConsumer = KodeverkConsumer(httpClient, env)
-    val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
+fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()) {
 
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { cause ->
@@ -68,17 +54,23 @@ fun Application.module() {
     }
 
     install(CORS) {
-        allowHost(env.corsAllowedOrigins, schemes = listOf(env.corsAllowedSchemes))
+        allowHost(appContext.env.corsAllowedOrigins, schemes = listOf(appContext.env.corsAllowedSchemes))
         allowCredentials = true
         allowHeader(HttpHeaders.ContentType)
     }
 
     routing {
         health()
-        route("/") {
-            authenticate {
-                dsop(dsopService)
-            }
+        authenticate {
+            dsop(appContext.dsopService)
         }
+    }
+
+    configureShutdownHook(appContext.httpClient)
+}
+
+private fun Application.configureShutdownHook(httpClient: HttpClient) {
+    environment.monitor.subscribe(ApplicationStopping) {
+        httpClient.close()
     }
 }

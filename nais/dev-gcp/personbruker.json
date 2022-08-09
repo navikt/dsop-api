@@ -1,0 +1,8 @@
+{
+  "ingresses": [
+    "https://person.dev.nav.no/person/dsop-api"
+  ],
+  "sporingslogg-host": "https://sporingslogg-q2.dev-fss-pub.nais.io",
+  "sporingslogg-name": "sporingslogg-q2",
+  "fss-cluster": "dev-fss"
+}
