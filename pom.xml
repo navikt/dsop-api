@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <main.class>no.nav.sbl.dsop.config.ApplicationKt</main.class>
+        <main.class>io.ktor.server.netty.EngineMain</main.class>
         <java.version>17</java.version>
         <kotlin.version>1.7.0</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
