@@ -1,7 +1,7 @@
 package no.nav.sbl.dsop.consumer.sporingslogg
 
 import io.ktor.client.HttpClient
-import io.ktor.client.call.receive
+import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
@@ -24,9 +24,9 @@ class SporingsloggConsumer(
         }
 
         return if (dsopResult.status.isSuccess()) {
-            dsopResult.receive()
+            dsopResult.body()
         } else {
-            throw RuntimeException("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.receive<String>()}")
+            throw RuntimeException("Kall til sporingslogg feilet med status ${dsopResult.status}: ${dsopResult.body<String>()}")
         }
     }
 }
