@@ -4,37 +4,39 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.features.json.JsonFeature
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
-import io.ktor.serialization.gson.gson
+import io.mockk.coEvery
 import no.nav.sbl.dsop.config.Environment
+import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 internal class SporingsloggConsumerTest {
 
-    @Test
-    fun testSporingsloggSuccess() {
-        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = true), Environment())
+    val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
 
-        val sporingslogg = sporingsloggConsumer.getSporingslogg(selvbetjeningstoken = "", authorization = "")
+    @Test
+    suspend fun testSporingsloggSuccess() {
+        coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
+
+        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = true), Environment(), tokendingsService)
+
+        val sporingslogg = sporingsloggConsumer.getSporingslogg(selvbetjeningstoken = "")
         assertEquals(1, sporingslogg.size)
     }
 
     @Test
-    fun testSporingsloggError() {
-        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = false), Environment())
+    suspend fun testSporingsloggError() {
+        coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
 
-        assertThrows<RuntimeException> {
-            sporingsloggConsumer.getSporingslogg(
-                selvbetjeningstoken = "",
-                authorization = ""
-            )
-        }
+        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = false), Environment(), tokendingsService)
+
+        assertThrows<RuntimeException> { sporingsloggConsumer.getSporingslogg(selvbetjeningstoken = "") }
     }
 
     private fun setupMockedClient(success: Boolean): HttpClient {
@@ -42,7 +44,7 @@ internal class SporingsloggConsumerTest {
 
         return HttpClient(MockEngine) {
             engine {
-                addHandler {
+                addHandler { request ->
                     if (success) {
                         respond(
                             json,
@@ -53,9 +55,7 @@ internal class SporingsloggConsumerTest {
                     }
                 }
             }
-            install(ContentNegotiation) {
-                gson()
-            }
+            install(JsonFeature)
             expectSuccess = false
         }
     }

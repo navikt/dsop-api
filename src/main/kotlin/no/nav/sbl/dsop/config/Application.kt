@@ -35,7 +35,7 @@ fun Application.module() {
     val httpClient = HttpClientBuilder.build()
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
-    val sporingsloggConsumer = SporingsloggConsumer(httpClient, env)
+    val sporingsloggConsumer = SporingsloggConsumer(httpClient, env, tokendingsService)
     val eregConsumer = EregConsumer(httpClient, env)
     val kodeverkConsumer = KodeverkConsumer(httpClient, env)
     val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
@@ -77,7 +77,7 @@ fun Application.module() {
         health()
         route("/") {
             authenticate {
-                dsop(env, tokendingsService, dsopService)
+                dsop(dsopService)
             }
         }
     }

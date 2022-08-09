@@ -46,7 +46,8 @@ jobs:
             - https://person.nav.no/person/dsop-api
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
-          personopplysninger-host: https://personopplysninger-proxy.prod-fss-pub.nais.io,
+          sporingslogg-host: https://sporingslogg.prod-fss-pub.nais.io,
+          sporingslogg-name: sporingslogg,
           fss-cluster: prod-fss
           EOF
       - uses: nais/deploy/actions/deploy@master

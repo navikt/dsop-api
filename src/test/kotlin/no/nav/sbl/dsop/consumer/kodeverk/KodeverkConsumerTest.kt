@@ -17,13 +17,13 @@ internal class KodeverkConsumerTest {
     private val kodeverkConsumer = KodeverkConsumer(setupMockedClient(), Environment())
 
     @Test
-    fun testOppslagPaaTema() {
+    suspend fun testOppslagPaaTema() {
         val navn = kodeverkConsumer.getKodeverk("AAP")
         assertEquals("Arbeidsavklaringspenger", navn)
     }
 
     @Test
-    fun testOppslagPaaTemaIkkeFunnet() {
+    suspend fun testOppslagPaaTemaIkkeFunnet() {
         val navn = kodeverkConsumer.getKodeverk("XYZ")
         assertEquals("XYZ", navn)
     }

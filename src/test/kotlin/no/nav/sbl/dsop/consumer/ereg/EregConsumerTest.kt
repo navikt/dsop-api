@@ -19,15 +19,15 @@ internal class EregConsumerTest {
     private val eregConsumer = EregConsumer(setupMockedClient(), Environment())
 
     @Test
-    fun testEregCallWithExistingOrgnr() {
-        val navn = eregConsumer.getOrganisasjonsnavn(selvbetjeningstoken = "", authorization = "", orgnr = "991003525")
+    suspend fun testEregCallWithExistingOrgnr() {
+        val navn = eregConsumer.getOrganisasjonsnavn(orgnr = "991003525")
         assertEquals("ARBEIDS- OG VELFERDSETATEN IKT DRIFT STEINKJER", navn)
     }
 
     @Test
-    fun testEregCallWithNonExistingOrgnr() {
+    suspend fun testEregCallWithNonExistingOrgnr() {
         val orgnr = "444555666"
-        val navn = eregConsumer.getOrganisasjonsnavn(selvbetjeningstoken = "", authorization = "", orgnr = orgnr)
+        val navn = eregConsumer.getOrganisasjonsnavn(orgnr = orgnr)
         assertEquals(orgnr, navn)
     }
 
@@ -38,7 +38,10 @@ internal class EregConsumerTest {
             engine {
                 addHandler { request ->
                     if (request.url.encodedPath.contains("991003525")) {
-                        respond(json, headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()))
+                        respond(
+                            json,
+                            headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+                        )
                     } else {
                         respondError(HttpStatusCode.NotFound)
                     }
