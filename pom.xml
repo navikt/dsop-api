@@ -165,7 +165,7 @@
         <dependency>
             <groupId>com.github.navikt.tms-ktor-token-support</groupId>
             <artifactId>token-support-tokendings-exchange</artifactId>
-            <version>2022.05.19-09.32-5076b2435b0a</version>
+            <version>2.0.0</version>
         </dependency>
 
         <!-- Nødvendig for å unngå kollisjon mellom token-validation-ktor og token-support-tokendings-exchange -->
