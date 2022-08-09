@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory
 private val logger = LoggerFactory.getLogger("dsop-api")
 
 fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()) {
-    val environment = Environment()
 
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { cause ->
@@ -55,7 +54,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     }
 
     install(CORS) {
-        allowHost(environment.corsAllowedOrigins, schemes = listOf(environment.corsAllowedSchemes))
+        allowHost(appContext.env.corsAllowedOrigins, schemes = listOf(appContext.env.corsAllowedSchemes))
         allowCredentials = true
         allowHeader(HttpHeaders.ContentType)
     }
@@ -63,7 +62,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
     routing {
         health()
         authenticate {
-            dsop(appContext.env, appContext.tokendingsService, appContext.dsopService)
+            dsop(appContext.dsopService)
         }
     }
 

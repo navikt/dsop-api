@@ -2,6 +2,7 @@
   "ingresses": [
     "https://person.dev.nav.no/person/dsop-api"
   ],
-  "personopplysninger-host": "https://personopplysninger-proxy.dev-fss-pub.nais.io",
+  "sporingslogg-host": "https://sporingslogg-q2.dev-fss-pub.nais.io",
+  "sporingslogg-name": "sporingslogg-q2",
   "fss-cluster": "dev-fss"
 }

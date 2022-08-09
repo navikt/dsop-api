@@ -22,12 +22,12 @@ spec:
     enabled: true
   accessPolicy:
     rules:
-      - application: personopplysninger-proxy
-        namespace: personbruker
+      - application: {{ sporingslogg-name }}
+        namespace: pensjonsamhandling
         cluster: {{ fss-cluster }}
     outbound:
       external:
-        - host: {{ personopplysninger-host }}
+        - host: {{ sporingslogg-host }}
   ingresses:
   {{#each ingresses}}
      - "{{this}}"

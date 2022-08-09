@@ -13,9 +13,9 @@ import io.ktor.serialization.gson.gson
 import io.mockk.coEvery
 import no.nav.sbl.dsop.config.Environment
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 internal class SporingsloggConsumerTest {
 
