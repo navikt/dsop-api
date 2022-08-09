@@ -1,22 +1,21 @@
 package no.nav.sbl.dsop.config
 
-import io.ktor.application.Application
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.auth.Authentication
-import io.ktor.auth.authenticate
-import io.ktor.features.CORS
-import io.ktor.features.CallLogging
-import io.ktor.features.ContentNegotiation
-import io.ktor.features.StatusPages
-import io.ktor.gson.gson
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.httpMethod
-import io.ktor.request.path
-import io.ktor.request.uri
-import io.ktor.routing.route
-import io.ktor.routing.routing
+import io.ktor.serialization.gson.gson
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.authenticate
+import io.ktor.server.plugins.callloging.CallLogging
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.path
+import io.ktor.server.request.uri
+import io.ktor.server.routing.route
+import io.ktor.server.routing.routing
 import mu.KotlinLogging
 import no.nav.sbl.dsop.consumer.ereg.EregConsumer
 import no.nav.sbl.dsop.consumer.kodeverk.KodeverkConsumer
@@ -24,10 +23,8 @@ import no.nav.sbl.dsop.consumer.sporingslogg.SporingsloggConsumer
 import no.nav.sbl.dsop.health.health
 import no.nav.sbl.dsop.routes.dsop
 import no.nav.sbl.dsop.service.DsopService
-import no.nav.security.token.support.ktor.tokenValidationSupport
+import no.nav.security.token.support.v2.tokenValidationSupport
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
-
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 private val logger = KotlinLogging.logger {}
 
@@ -71,9 +68,9 @@ fun Application.module() {
     }
 
     install(CORS) {
-        host(env.corsAllowedOrigins, schemes = listOf(env.corsAllowedSchemes))
+        allowHost(env.corsAllowedOrigins, schemes = listOf(env.corsAllowedSchemes))
         allowCredentials = true
-        header(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.ContentType)
     }
 
     routing {

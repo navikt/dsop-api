@@ -1,9 +1,10 @@
 package no.nav.sbl.dsop.config
 
 import io.ktor.client.HttpClient
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
+import io.ktor.serialization.gson.gson
 
 object HttpClientBuilder {
 
@@ -12,7 +13,9 @@ object HttpClientBuilder {
             defaultRequest {
                 header("Nav-Consumer-Id", CONSUMER_ID)
             }
-            install(JsonFeature)
+            install(ContentNegotiation) {
+                gson()
+            }
             expectSuccess = false
         }
     }

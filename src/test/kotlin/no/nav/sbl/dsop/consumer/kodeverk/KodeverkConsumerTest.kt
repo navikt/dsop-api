@@ -3,10 +3,11 @@ package no.nav.sbl.dsop.consumer.kodeverk
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
-import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.headersOf
+import io.ktor.serialization.gson.gson
 import no.nav.sbl.dsop.config.Environment
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -36,7 +37,10 @@ internal class KodeverkConsumerTest {
                     respond(json, headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()))
                 }
             }
-            install(JsonFeature)
+            install(ContentNegotiation) {
+                gson()
+                expectSuccess = false
+            }
         }
     }
 }

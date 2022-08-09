@@ -4,11 +4,12 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
-import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
+import io.ktor.serialization.gson.gson
 import io.mockk.coEvery
 import no.nav.sbl.dsop.config.Environment
 import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
@@ -24,7 +25,8 @@ internal class SporingsloggConsumerTest {
     suspend fun testSporingsloggSuccess() {
         coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
 
-        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = true), Environment(), tokendingsService)
+        val sporingsloggConsumer =
+            SporingsloggConsumer(setupMockedClient(success = true), Environment(), tokendingsService)
 
         val sporingslogg = sporingsloggConsumer.getSporingslogg(selvbetjeningstoken = "")
         assertEquals(1, sporingslogg.size)
@@ -34,7 +36,8 @@ internal class SporingsloggConsumerTest {
     suspend fun testSporingsloggError() {
         coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
 
-        val sporingsloggConsumer = SporingsloggConsumer(setupMockedClient(success = false), Environment(), tokendingsService)
+        val sporingsloggConsumer =
+            SporingsloggConsumer(setupMockedClient(success = false), Environment(), tokendingsService)
 
         assertThrows<RuntimeException> { sporingsloggConsumer.getSporingslogg(selvbetjeningstoken = "") }
     }
@@ -44,7 +47,7 @@ internal class SporingsloggConsumerTest {
 
         return HttpClient(MockEngine) {
             engine {
-                addHandler { request ->
+                addHandler {
                     if (success) {
                         respond(
                             json,
@@ -55,7 +58,9 @@ internal class SporingsloggConsumerTest {
                     }
                 }
             }
-            install(JsonFeature)
+            install(ContentNegotiation) {
+                gson()
+            }
             expectSuccess = false
         }
     }

@@ -1,10 +1,10 @@
 package no.nav.sbl.dsop.routes
 
-import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.respond
-import io.ktor.routing.Route
-import io.ktor.routing.get
+import io.ktor.server.application.call
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
 import mu.KotlinLogging
 import no.nav.sbl.dsop.config.OIDC_COOKIE_NAME
 import no.nav.sbl.dsop.service.DsopService

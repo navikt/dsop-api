@@ -1,7 +1,7 @@
 package no.nav.sbl.dsop.consumer.kodeverk
 
 import io.ktor.client.HttpClient
-import io.ktor.client.call.receive
+import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
@@ -26,13 +26,13 @@ class KodeverkConsumer(private val client: HttpClient, private val environment: 
             header("Nav-Call-Id", MDC.get(MDCConstants.MDC_CALL_ID) ?: UUID.randomUUID())
         }
         return if (kodeverkResult.status.isSuccess()) {
-            val kodeverk = kodeverkResult.receive<Kodeverk>()
+            val kodeverk = kodeverkResult.body<Kodeverk>()
             kodeverk.betydninger[kode]?.get(0)?.beskrivelser?.get(spraak)?.term ?: kode
         } else {
             logger.warn(
                 "Oppslag mot KODEVERK på temakode $kode feilet. "
                     .plus(kodeverkResult.status.value).plus(" ")
-                    .plus(kodeverkResult.receive<String>())
+                    .plus(kodeverkResult.body<String>())
             )
             kode
         }

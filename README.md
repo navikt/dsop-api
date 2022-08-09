@@ -23,8 +23,7 @@ git push && git push --tags
 
 ## Lokal Kjøring
 
-For å kjøre opp løsningen lokalt, kjør main-funksjonen i [DevApplication](https://github.com/navikt/dsop-api/blob/master/src/test/kotlin/no/nav/sbl/dsop/api/DevApplication.kt).
-Denne vil by-passe autentisering, mens endepunkter mot dsop, ereg og kodeverk vil mockes ut. Appen vil da svare på endepunktet http://localhost:8080/person/dsop-api/get. 
+TODO
 
 ## Logging
 
