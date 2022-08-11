@@ -10,6 +10,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.gson.gson
+import kotlinx.coroutines.runBlocking
 import no.nav.dsop.config.Environment
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -19,13 +20,13 @@ internal class EregConsumerTest {
     private val eregConsumer = EregConsumer(setupMockedClient(), Environment())
 
     @Test
-    suspend fun testEregCallWithExistingOrgnr() {
+    fun testEregCallWithExistingOrgnr(): Unit = runBlocking {
         val navn = eregConsumer.getOrganisasjonsnavn(orgnr = "991003525")
         assertEquals("ARBEIDS- OG VELFERDSETATEN IKT DRIFT STEINKJER", navn)
     }
 
     @Test
-    suspend fun testEregCallWithNonExistingOrgnr() {
+    fun testEregCallWithNonExistingOrgnr(): Unit = runBlocking {
         val orgnr = "444555666"
         val navn = eregConsumer.getOrganisasjonsnavn(orgnr = orgnr)
         assertEquals(orgnr, navn)

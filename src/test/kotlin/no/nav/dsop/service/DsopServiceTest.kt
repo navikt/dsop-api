@@ -2,6 +2,7 @@ package no.nav.dsop.service
 
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
 import no.nav.dsop.consumer.ereg.EregConsumer
 import no.nav.dsop.consumer.kodeverk.KodeverkConsumer
 import no.nav.dsop.consumer.sporingslogg.SporingsloggConsumer
@@ -31,7 +32,7 @@ internal class DsopServiceTest {
     private val dsopService = DsopService(sporingsloggConsumer, eregConsumer, kodeverkConsumer)
 
     @Test
-    suspend fun `skal returnere sporingslogg`() {
+    fun `skal returnere sporingslogg`(): Unit = runBlocking {
         coEvery { eregConsumer.getOrganisasjonsnavn(any()) } returns orgnavn
         coEvery { kodeverkConsumer.getKodeverk(any()) } returns tema
         coEvery { sporingsloggConsumer.getSporingslogg(any()) } returns singletonList(buildSporingslogg())
