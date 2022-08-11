@@ -8,6 +8,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.headersOf
 import io.ktor.serialization.gson.gson
+import kotlinx.coroutines.runBlocking
 import no.nav.dsop.config.Environment
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -17,13 +18,13 @@ internal class KodeverkConsumerTest {
     private val kodeverkConsumer = KodeverkConsumer(setupMockedClient(), Environment())
 
     @Test
-    suspend fun testOppslagPaaTema() {
+    fun testOppslagPaaTema(): Unit = runBlocking {
         val navn = kodeverkConsumer.getKodeverk("AAP")
         assertEquals("Arbeidsavklaringspenger", navn)
     }
 
     @Test
-    suspend fun testOppslagPaaTemaIkkeFunnet() {
+    fun testOppslagPaaTemaIkkeFunnet(): Unit = runBlocking {
         val navn = kodeverkConsumer.getKodeverk("XYZ")
         assertEquals("XYZ", navn)
     }

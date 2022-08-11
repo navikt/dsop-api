@@ -11,18 +11,20 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.gson.gson
 import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
 import no.nav.dsop.config.Environment
-import no.nav.tms.token.support.tokendings.exchange.TokendingsServiceBuilder
+import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 internal class SporingsloggConsumerTest {
 
-    val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
+    val tokendingsService: TokendingsService = mockk()
 
     @Test
-    suspend fun testSporingsloggSuccess() {
+    fun testSporingsloggSuccess(): Unit = runBlocking {
         coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
 
         val sporingsloggConsumer =
@@ -33,7 +35,7 @@ internal class SporingsloggConsumerTest {
     }
 
     @Test
-    suspend fun testSporingsloggError() {
+    fun testSporingsloggError(): Unit = runBlocking {
         coEvery { tokendingsService.exchangeToken(any(), any()) } returns ""
 
         val sporingsloggConsumer =
