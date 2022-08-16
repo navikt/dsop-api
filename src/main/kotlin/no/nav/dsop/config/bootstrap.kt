@@ -19,6 +19,7 @@ import io.ktor.server.request.uri
 import io.ktor.server.routing.routing
 import no.nav.dsop.health.health
 import no.nav.dsop.routes.dsop
+import no.nav.security.token.support.v2.RequiredClaims
 import no.nav.security.token.support.v2.tokenValidationSupport
 import org.slf4j.LoggerFactory
 
@@ -34,7 +35,13 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
 
     val conf = this.environment.config
     install(Authentication) {
-        tokenValidationSupport(config = conf)
+        tokenValidationSupport(
+            config = conf,
+            requiredClaims = RequiredClaims(
+                issuer = "loginservice",
+                claimMap = arrayOf("acr=Level4")
+            )
+        )
     }
 
     install(CallLogging) {
