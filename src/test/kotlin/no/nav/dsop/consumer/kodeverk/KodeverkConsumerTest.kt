@@ -30,7 +30,7 @@ internal class KodeverkConsumerTest {
     }
 
     private fun setupMockedClient(): HttpClient {
-        val json = this.javaClass.getResource("/kodeverk-tema.json")?.readText()!!
+        val json = this.javaClass.getResource("/json/kodeverk-tema.json")?.readText()!!
 
         return HttpClient(MockEngine) {
             engine {

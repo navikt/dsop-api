@@ -33,7 +33,7 @@ internal class EregConsumerTest {
     }
 
     private fun setupMockedClient(): HttpClient {
-        val json = this.javaClass.getResource("/ereg-organisasjon-991003525.json")?.readText()!!
+        val json = this.javaClass.getResource("/json/ereg-organisasjon.json")?.readText()!!
 
         return HttpClient(MockEngine) {
             engine {

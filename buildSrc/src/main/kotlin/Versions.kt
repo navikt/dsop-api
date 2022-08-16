@@ -6,6 +6,13 @@ object Assertj {
 
 }
 
+object Auth0 {
+    private const val version = "4.0.0"
+    private const val groupId = "com.auth0"
+
+    const val jwt = "$groupId:java-jwt:$version"
+}
+
 object DittNAV {
 
     object Common {
@@ -47,6 +54,7 @@ object Ktor {
     const val serverStatusPages = "$groupId:ktor-server-status-pages:$version"
     const val serverContentNegotiation = "$groupId:ktor-server-content-negotiation:$version"
     const val serverAuth = "$groupId:ktor-server-auth:$version"
+    const val serverTestHost = "$groupId:ktor-server-test-host:$version"
     const val clientContentNegotiation = "$groupId:ktor-client-content-negotiation:$version"
     const val clientApache = "$groupId:ktor-client-apache:$version"
     const val clientMock = "$groupId:ktor-client-mock:$version"
