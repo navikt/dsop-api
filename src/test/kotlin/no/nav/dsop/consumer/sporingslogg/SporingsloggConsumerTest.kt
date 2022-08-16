@@ -45,7 +45,7 @@ internal class SporingsloggConsumerTest {
     }
 
     private fun setupMockedClient(success: Boolean): HttpClient {
-        val json = this.javaClass.getResource("/sporingslogg.json")?.readText()!!
+        val json = this.javaClass.getResource("/json/sporingslogg.json")?.readText()!!
 
         return HttpClient(MockEngine) {
             engine {
