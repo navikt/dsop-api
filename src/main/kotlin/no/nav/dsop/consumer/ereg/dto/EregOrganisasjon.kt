@@ -1,15 +1,19 @@
 package no.nav.dsop.consumer.ereg.dto
 
-data class EregOrganisasjon (
-        val navn: Navn
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class EregOrganisasjon(
+    val navn: Navn
 )
 
+@Serializable
 data class Navn(
-        val navnelinje1: String? = null,
-        val navnelinje2: String? = null,
-        val navnelinje3: String? = null,
-        val navnelinje4: String? = null,
-        val navnelinje5: String? = null
+    val navnelinje1: String? = null,
+    val navnelinje2: String? = null,
+    val navnelinje3: String? = null,
+    val navnelinje4: String? = null,
+    val navnelinje5: String? = null
 ) {
     fun getNavn(): String {
         var navn = navnelinje1 ?: ""

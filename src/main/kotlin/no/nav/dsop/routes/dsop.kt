@@ -5,8 +5,8 @@ import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
-import no.nav.dsop.config.OIDC_COOKIE_NAME
 import no.nav.dsop.service.DsopService
+import no.nav.dsop.util.getSelvbetjeningTokenFromCall
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("dsopRoute")
@@ -14,7 +14,7 @@ private val logger = LoggerFactory.getLogger("dsopRoute")
 fun Route.dsop(dsopService: DsopService) {
     get("get") {
         try {
-            val selvbetjeningIdtoken = call.request.cookies[OIDC_COOKIE_NAME]!!
+            val selvbetjeningIdtoken = getSelvbetjeningTokenFromCall(call)
 
             call.respond(dsopService.getDsop(selvbetjeningIdtoken))
 

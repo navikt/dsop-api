@@ -1,14 +1,19 @@
 package no.nav.dsop.consumer.kodeverk.dto
 
-data class Kodeverk (
-        val betydninger: Map<String, List<Betydning>>
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Kodeverk(
+    val betydninger: Map<String, List<Betydning>>
 )
 
-data class Betydning (
-        val beskrivelser: Map<String, Beskrivelse>
+@Serializable
+data class Betydning(
+    val beskrivelser: Map<String, Beskrivelse>
 )
 
-data class Beskrivelse (
-        val tekst: String,
-        val term: String
+@Serializable
+data class Beskrivelse(
+    val tekst: String,
+    val term: String
 )

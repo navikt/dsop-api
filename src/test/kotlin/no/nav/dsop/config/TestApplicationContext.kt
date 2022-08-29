@@ -8,8 +8,14 @@ import no.nav.dsop.service.DsopService
 
 class TestApplicationContext(httpClient: HttpClient) {
 
-    val env = Environment()
-
+    val env = Environment(
+        corsAllowedOrigins = "",
+        corsAllowedSchemes = "https",
+        sporingloggLesloggerUrl = "https://sporingslogg",
+        kodeverkRestApiUrl = "https://kodeverk",
+        eregApiUrl = "https://ereg",
+        sporingsloggTargetApp = ""
+    )
     val tokendingsService = DummyTokendingsService()
     val sporingsloggConsumer = SporingsloggConsumer(httpClient, env, tokendingsService)
     val eregConsumer = EregConsumer(httpClient, env)
