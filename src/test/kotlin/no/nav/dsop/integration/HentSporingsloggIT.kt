@@ -2,7 +2,7 @@ package no.nav.dsop.integration
 
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
 import no.nav.dsop.config.mock.setupMockedClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -13,7 +13,7 @@ class HentSporingsloggIT : IntegrationTest() {
 
     @Test
     fun hentSporingslogg200() = integrationTest(setupMockedClient()) {
-        val client = createClient { install(ContentNegotiation) { gson() } }
+        val client = createClient { install(ContentNegotiation) { json() } }
 
         val response = get(client, HENT_SPORINGSLOGG_PATH)
 
@@ -23,7 +23,7 @@ class HentSporingsloggIT : IntegrationTest() {
     @Test
     fun feilMotEregSkalGi200() =
         integrationTest(setupMockedClient(eregStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { gson() } }
+            val client = createClient { install(ContentNegotiation) { json() } }
 
             val response = get(client, HENT_SPORINGSLOGG_PATH)
 
@@ -33,7 +33,7 @@ class HentSporingsloggIT : IntegrationTest() {
     @Test
     fun feilMotSporingsloggSkalGi500() =
         integrationTest(setupMockedClient(sporingsloggStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { gson() } }
+            val client = createClient { install(ContentNegotiation) { json() } }
 
             val response = get(client, HENT_SPORINGSLOGG_PATH)
 
@@ -43,7 +43,7 @@ class HentSporingsloggIT : IntegrationTest() {
     @Test
     fun feilMotKodeverkSkalGi200() =
         integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { gson() } }
+            val client = createClient { install(ContentNegotiation) { json() } }
 
             val response = get(client, HENT_SPORINGSLOGG_PATH)
 

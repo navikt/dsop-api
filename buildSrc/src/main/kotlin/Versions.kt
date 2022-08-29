@@ -49,7 +49,7 @@ object Ktor {
     const val serverCallLogging = "$groupId:ktor-server-call-logging:$version"
     const val serverCore = "$groupId:ktor-server-core:$version"
     const val serialization = "$groupId:ktor-serialization:$version"
-    const val serializationGson = "$groupId:ktor-serialization-gson:$version"
+    const val serializationKotlinx = "$groupId:ktor-serialization-kotlinx-json:$version"
     const val serverCors = "$groupId:ktor-server-cors:$version"
     const val serverStatusPages = "$groupId:ktor-server-status-pages:$version"
     const val serverContentNegotiation = "$groupId:ktor-server-content-negotiation:$version"

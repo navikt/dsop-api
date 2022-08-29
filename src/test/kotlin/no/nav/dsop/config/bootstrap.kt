@@ -1,6 +1,6 @@
 package no.nav.dsop.config
 
-import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.callloging.CallLogging
@@ -14,9 +14,7 @@ import no.nav.dsop.routes.dsop
 fun Application.testModule(appContext: TestApplicationContext) {
 
     install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
-        }
+        json(jsonConfig())
     }
 
     install(CallLogging) {
