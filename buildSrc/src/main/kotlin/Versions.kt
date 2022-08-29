@@ -42,7 +42,7 @@ object Kotlinx {
 }
 
 object Ktor {
-    private const val version = "2.0.3"
+    private const val version = "2.1.0"
     private const val groupId = "io.ktor"
 
     const val serverNetty = "$groupId:ktor-server-netty:$version"
@@ -61,17 +61,17 @@ object Ktor {
 }
 
 object Logback {
-    private const val version = "1.2.11"
+    private const val version = "1.4.0"
     const val classic = "ch.qos.logback:logback-classic:$version"
 }
 
 object Mockk {
-    private const val version = "1.12.5"
+    private const val version = "1.12.7"
     const val mockk = "io.mockk:mockk:$version"
 }
 
 object NAV {
-    const val tokenValidatorKtor = "no.nav.security:token-validation-ktor-v2:2.1.3"
+    const val tokenValidatorKtor = "no.nav.security:token-validation-ktor-v2:2.1.4"
 }
 
 object Shadow {
