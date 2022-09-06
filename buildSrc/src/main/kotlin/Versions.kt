@@ -45,6 +45,7 @@ object Ktor {
     private const val version = "2.1.0"
     private const val groupId = "io.ktor"
 
+    const val metricsMicrometer = "$groupId:ktor-server-metrics-micrometer:$version"
     const val serverNetty = "$groupId:ktor-server-netty:$version"
     const val serverCallLogging = "$groupId:ktor-server-call-logging:$version"
     const val serverCore = "$groupId:ktor-server-core:$version"
@@ -63,6 +64,11 @@ object Ktor {
 object Logback {
     private const val version = "1.2.11" // Logger tilsynelatende ingenting med versjon 1.4.0
     const val classic = "ch.qos.logback:logback-classic:$version"
+}
+
+object Micrometer {
+    private const val version = "1.9.2"
+    const val registryPrometheus = "io.micrometer:micrometer-registry-prometheus:$version"
 }
 
 object Mockk {

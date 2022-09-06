@@ -1,5 +1,7 @@
 package no.nav.dsop.config
 
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.nav.dsop.consumer.ereg.EregConsumer
 import no.nav.dsop.consumer.kodeverk.KodeverkConsumer
 import no.nav.dsop.consumer.sporingslogg.SporingsloggConsumer
@@ -10,6 +12,8 @@ class ApplicationContext {
 
     val env = Environment()
     val httpClient = HttpClientBuilder.build()
+
+    val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
 
     val tokendingsService = TokendingsServiceBuilder.buildTokendingsService()
     val sporingsloggConsumer = SporingsloggConsumer(httpClient, env, tokendingsService)
