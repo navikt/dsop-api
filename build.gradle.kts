@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
     implementation(Auth0.jwt)
-    implementation(DittNAV.Common.logging)
     implementation(Ktor.serverNetty)
     implementation(Ktor.serverCallLogging)
     implementation(Ktor.serverCore)
@@ -39,13 +38,13 @@ dependencies {
     implementation(Micrometer.registryPrometheus)
     implementation(Kotlinx.coroutines)
     implementation(Logback.classic)
+    implementation(Logstash.logbackEncoder)
     implementation(NAV.tokenValidatorKtor)
     implementation(TmsKtorTokenSupport.tokendingsExchange)
+    testImplementation(Kotlin.junit5)
     testImplementation(Assertj.core)
     testImplementation(Ktor.clientMock)
     testImplementation(Ktor.serverTestHost)
-    testImplementation(Junit.api)
-    testImplementation(Junit.engine)
     testImplementation(Mockk.mockk)
 }
 
