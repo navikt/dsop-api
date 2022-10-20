@@ -7,7 +7,7 @@ object Assertj {
 }
 
 object Auth0 {
-    private const val version = "4.0.0"
+    private const val version = "4.1.0"
     private const val groupId = "com.auth0"
 
     const val jwt = "$groupId:java-jwt:$version"
@@ -47,7 +47,7 @@ object Ktor {
 }
 
 object Logback {
-    private const val version = "1.4.3"
+    private const val version = "1.4.4"
     const val classic = "ch.qos.logback:logback-classic:$version"
 }
 
@@ -57,7 +57,7 @@ object Logstash {
 }
 
 object Micrometer {
-    private const val version = "1.9.4"
+    private const val version = "1.9.5"
     const val registryPrometheus = "io.micrometer:micrometer-registry-prometheus:$version"
 }
 
@@ -83,6 +83,6 @@ object TmsKtorTokenSupport {
 }
 
 object Versions {
-    const val version = "0.42.0"
+    const val version = "0.43.0"
     const val pluginId = "com.github.ben-manes.versions"
 }
