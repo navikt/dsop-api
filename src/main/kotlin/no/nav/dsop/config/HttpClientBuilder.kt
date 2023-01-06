@@ -19,9 +19,11 @@ object HttpClientBuilder {
                 json(jsonConfig())
             }
             install(HttpRequestRetry) {
-                retryOnExceptionOrServerErrors(maxRetries = 5)
+                retryOnExceptionOrServerErrors(maxRetries = 3)
             }
-            install(HttpTimeout)
+            install(HttpTimeout) {
+                requestTimeoutMillis = 3000
+            }
             expectSuccess = false
         }
     }
