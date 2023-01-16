@@ -19,7 +19,8 @@ object HttpClientBuilder {
                 json(jsonConfig())
             }
             install(HttpRequestRetry) {
-                retryOnExceptionOrServerErrors(maxRetries = 3)
+                retryOnServerErrors(maxRetries = 3)
+                retryOnException(maxRetries = 3, retryOnTimeout = true)
             }
             install(HttpTimeout) {
                 requestTimeoutMillis = 3000
