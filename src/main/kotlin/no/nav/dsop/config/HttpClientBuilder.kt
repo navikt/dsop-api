@@ -2,7 +2,6 @@ package no.nav.dsop.config
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpRequestRetry
-import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
@@ -19,11 +18,8 @@ object HttpClientBuilder {
                 json(jsonConfig())
             }
             install(HttpRequestRetry) {
-                retryOnServerErrors(maxRetries = 3)
-                retryOnException(maxRetries = 3, retryOnTimeout = true)
-            }
-            install(HttpTimeout) {
-                requestTimeoutMillis = 3000
+                retryOnExceptionOrServerErrors(maxRetries = 3)
+                constantDelay(3000L)
             }
             expectSuccess = false
         }
