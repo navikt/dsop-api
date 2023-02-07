@@ -4,5 +4,7 @@
   ],
   "sporingslogg-host": "https://sporingslogg-q2.dev-fss-pub.nais.io",
   "sporingslogg-name": "sporingslogg-q2",
-  "fss-cluster": "dev-fss"
+  "fss-cluster": "dev-fss",
+  "min-replicas": 1,
+  "max-replicas": 1
 }

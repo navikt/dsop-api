@@ -5,5 +5,7 @@
   ],
   "sporingslogg-host": "https://sporingslogg.prod-fss-pub.nais.io",
   "sporingslogg-name": "sporingslogg",
-  "fss-cluster": "prod-fss"
+  "fss-cluster": "prod-fss",
+  "min-replicas": 2,
+  "max-replicas": 4
 }

@@ -18,8 +18,8 @@ spec:
     enabled: true
     path: /person/dsop-api/internal/metrics
   replicas:
-    min: 2
-    max: 4
+    min: {{ min-replicas }}
+    max: {{ max-replicas }}
   webproxy: true
   tokenx:
     enabled: true
@@ -40,8 +40,8 @@ spec:
     - secret: dsop-api-secret
   resources:
     limits:
-      cpu: "3"
+      cpu: 300m
       memory: 768Mi
     requests:
-      cpu: "500m"
+      cpu: 100m
       memory: 384Mi
