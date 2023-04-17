@@ -24,13 +24,11 @@ spec:
   tokenx:
     enabled: true
   accessPolicy:
-    rules:
-      - application: {{ sporingslogg-name }}
-        namespace: pensjonsamhandling
-        cluster: {{ fss-cluster }}
     outbound:
       external:
         - host: {{ sporingslogg-host }}
+        - host: {{ kodeverk-api-host }}
+        - host: {{ ereg-host }}
   ingresses:
   {{#each ingresses}}
      - "{{this}}"
