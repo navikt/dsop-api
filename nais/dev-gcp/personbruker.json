@@ -1,6 +1,6 @@
 {
   "ingresses": [
-    "https://person.ekstern.dev.nav.no/person/dsop-api"
+    "https://www.intern.dev.nav.no/person/dsop-api"
   ],
   "sporingslogg-host": "https://sporingslogg-q2.dev-fss-pub.nais.io",
   "kodeverk-api-host": "https://kodeverk.dev-fss-pub.nais.io",
