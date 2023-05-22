@@ -23,6 +23,10 @@ spec:
   webproxy: true
   tokenx:
     enabled: true
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
   accessPolicy:
     outbound:
       external:

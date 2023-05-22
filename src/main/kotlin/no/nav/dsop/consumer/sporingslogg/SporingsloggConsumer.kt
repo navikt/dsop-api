@@ -17,8 +17,8 @@ class SporingsloggConsumer(
     private val tokendingsService: TokendingsService
 ) {
 
-    suspend fun getSporingslogg(selvbetjeningstoken: String): List<Sporingslogg> {
-        val accessToken = tokendingsService.exchangeToken(selvbetjeningstoken, environment.sporingsloggTargetApp)
+    suspend fun getSporingslogg(authToken: String): List<Sporingslogg> {
+        val accessToken = tokendingsService.exchangeToken(authToken, environment.sporingsloggTargetApp)
         val dsopResult: HttpResponse = client.get(environment.sporingloggLesloggerUrl) {
             header("Authorization", "Bearer $accessToken")
         }
