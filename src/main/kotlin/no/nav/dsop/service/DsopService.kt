@@ -10,9 +10,9 @@ class DsopService(
     private val eregConsumer: EregConsumer,
     private val kodeverkConsumer: KodeverkConsumer
 ) {
-    suspend fun getDsop(selvbetjeningIdtoken: String): List<Sporingslogg> {
+    suspend fun getDsop(authToken: String): List<Sporingslogg> {
 
-        val sporingslogg = sporingsloggConsumer.getSporingslogg(selvbetjeningIdtoken)
+        val sporingslogg = sporingsloggConsumer.getSporingslogg(authToken)
 
         return sporingslogg.map {
             Sporingslogg(
