@@ -40,7 +40,8 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
             config = conf,
             requiredClaims = RequiredClaims(
                 issuer = "idporten",
-                claimMap = arrayOf("acr=Level4")
+                claimMap = arrayOf("acr=Level4", "acr=idporten-loa-high"),
+                combineWithOr = true
             )
         )
     }
