@@ -1,12 +1,18 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    kotlin("jvm") version("1.8.21")
-    kotlin("plugin.allopen") version("1.8.21")
-    kotlin("plugin.serialization") version("1.8.21")
+    val versions = object {
+        val kotlin = "1.9.0"
+        val shadow = "8.1.1"
+        val versions = "0.47.0"
+    }
 
-    id("com.github.johnrengelman.shadow") version("8.1.1")
-    id("com.github.ben-manes.versions") version("0.46.0") // ./gradlew dependencyUpdates to check for new versions
+    kotlin("jvm") version(versions.kotlin)
+    kotlin("plugin.allopen") version(versions.kotlin)
+    kotlin("plugin.serialization") version(versions.kotlin)
+
+    id("com.github.johnrengelman.shadow") version(versions.shadow)
+    id("com.github.ben-manes.versions") version(versions.versions) // ./gradlew dependencyUpdates to check for new versions
     application
 }
 
@@ -23,15 +29,15 @@ dependencies {
     val versions = object {
         val assertj = "3.24.2"
         val auth0Jwt = "4.4.0"
-        val kotlin = "1.8.21"
-        val kotlinxCoroutines = "1.7.1"
-        val ktor = "2.3.1"
-        val logback = "1.4.7"
-        val logstash = "7.3"
-        val micrometer = "1.11.0"
+        val kotlin = "1.9.0"
+        val kotlinxCoroutines = "1.7.3"
+        val ktor = "2.3.2"
+        val logback = "1.4.8"
+        val logstash = "7.4"
+        val micrometer = "1.11.2"
         val mockk = "1.13.5"
         val navSecurity = "3.1.0"
-        val tmsKtorTokenSupport = "2.0.1"
+        val tmsKtorTokenSupport = "2.1.3"
     }
 
     implementation("com.auth0:java-jwt:${versions.auth0Jwt}")
