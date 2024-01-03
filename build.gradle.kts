@@ -27,7 +27,6 @@ repositories {
 
 dependencies {
     val versions = object {
-        val assertj = "3.25.1"
         val auth0Jwt = "4.4.0"
         val kotlin = "1.9.22"
         val kotlinxCoroutines = "1.7.3"
@@ -60,7 +59,6 @@ dependencies {
     implementation("no.nav.security:token-validation-ktor-v2:${versions.navSecurity}")
     implementation("com.github.navikt.tms-ktor-token-support:tokendings-exchange:${versions.tmsKtorTokenSupport}")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:${versions.kotlin}")
-    testImplementation("org.assertj:assertj-core:${versions.assertj}")
     testImplementation("io.ktor:ktor-client-mock:${versions.ktor}")
     testImplementation("io.ktor:ktor-server-test-host:${versions.ktor}")
     testImplementation("io.mockk:mockk:${versions.mockk}")

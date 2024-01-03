@@ -7,7 +7,6 @@ import no.nav.dsop.consumer.ereg.EregConsumer
 import no.nav.dsop.consumer.kodeverk.KodeverkConsumer
 import no.nav.dsop.consumer.sporingslogg.SporingsloggConsumer
 import no.nav.dsop.consumer.sporingslogg.dto.Sporingslogg
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.Collections.singletonList
@@ -42,12 +41,12 @@ internal class DsopServiceTest {
 
         val sporingslogg = sporingsloggList[0]
 
-        assertThat(sporingslogg.tema).isEqualTo(tema)
-        assertThat(sporingslogg.uthentingsTidspunkt).isEqualTo(uthentingsTidspunkt)
-        assertThat(sporingslogg.mottaker).isEqualTo(mottaker)
-        assertThat(sporingslogg.mottakernavn).isEqualTo(orgnavn)
-        assertThat(sporingslogg.leverteData).isEqualTo(leverteData)
-        assertThat(sporingslogg.samtykkeToken).isEqualTo(samtykkeToken)
+        assertEquals(tema, sporingslogg.tema)
+        assertEquals(uthentingsTidspunkt, sporingslogg.uthentingsTidspunkt)
+        assertEquals(mottaker, sporingslogg.mottaker)
+        assertEquals(orgnavn, sporingslogg.mottakernavn)
+        assertEquals(leverteData, sporingslogg.leverteData)
+        assertEquals(samtykkeToken, sporingslogg.samtykkeToken)
     }
 
     private fun buildSporingslogg(): Sporingslogg {
