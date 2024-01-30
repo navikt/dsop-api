@@ -3,7 +3,6 @@
     "https://www.intern.dev.nav.no/person/dsop-api"
   ],
   "sporingslogg-host": "sporingslogg-q2.dev-fss-pub.nais.io",
-  "kodeverk-api-host": "kodeverk.dev-fss-pub.nais.io",
   "ereg-host": "ereg-services.dev-fss-pub.nais.io",
   "min-replicas": 1,
   "max-replicas": 1
