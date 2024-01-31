@@ -4,7 +4,7 @@ plugins {
     val versions = object {
         val kotlin = "1.9.22"
         val shadow = "8.1.1"
-        val versions = "0.50.0"
+        val versions = "0.51.0"
     }
 
     kotlin("jvm") version(versions.kotlin)
@@ -17,7 +17,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 repositories {
@@ -33,9 +33,9 @@ dependencies {
         val ktor = "2.3.7"
         val logback = "1.4.14"
         val logstash = "7.4"
-        val micrometer = "1.12.1"
-        val mockk = "1.13.8"
-        val navSecurity = "3.2.0"
+        val micrometer = "1.12.2"
+        val mockk = "1.13.9"
+        val navSecurity = "4.1.0"
         val tmsKtorTokenSupport = "4.0.0"
     }
 

@@ -30,8 +30,8 @@ spec:
   accessPolicy:
     outbound:
       external:
+        - host: kodeverk-api.nav.no
         - host: {{ sporingslogg-host }}
-        - host: {{ kodeverk-api-host }}
         - host: {{ ereg-host }}
   ingresses:
   {{#each ingresses}}
