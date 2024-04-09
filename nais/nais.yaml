@@ -41,7 +41,6 @@ spec:
     - secret: dsop-api-secret
   resources:
     limits:
-      cpu: 300m
       memory: 768Mi
     requests:
       cpu: 100m
