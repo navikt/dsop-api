@@ -1,6 +1,6 @@
 {
   "ingresses": [
-    "https://www.intern.dev.nav.no/person/dsop-api"
+    "https://www.ansatt.dev.nav.no/person/dsop-api"
   ],
   "sporingslogg-host": "sporingslogg-q2.dev-fss-pub.nais.io",
   "ereg-host": "ereg-services.dev-fss-pub.nais.io",
