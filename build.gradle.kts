@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
     val auth0JwtVersion = "4.4.0"
-    val kotlinVersion = "1.9.23"
+    val kotlinVersion = "2.0.0"
     val kotlinxCoroutinesVersion = "1.8.1"
     val ktorVersion = "2.3.11"
     val logbackVersion = "1.5.6"
@@ -33,7 +33,7 @@ dependencies {
     val micrometerVersion = "1.12.5"
     val mockkVersion = "1.13.11"
     val navSecurityVersion = "4.1.7"
-    val tmsKtorTokenSupportVersion = "4.0.0"
+    val tmsKtorTokenSupportVersion = "4.1.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
@@ -53,7 +53,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
-    implementation("com.github.navikt.tms-ktor-token-support:tokendings-exchange:$tmsKtorTokenSupportVersion")
+    implementation("no.nav.tms.token.support:tokendings-exchange:$tmsKtorTokenSupportVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
