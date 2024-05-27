@@ -1,7 +1,7 @@
 package no.nav.dsop.config
 
-import io.micrometer.prometheus.PrometheusConfig
-import io.micrometer.prometheus.PrometheusMeterRegistry
+import io.micrometer.prometheusmetrics.PrometheusConfig
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import no.nav.dsop.consumer.ereg.EregConsumer
 import no.nav.dsop.consumer.kodeverk.KodeverkConsumer
 import no.nav.dsop.consumer.sporingslogg.SporingsloggConsumer
