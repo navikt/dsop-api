@@ -38,7 +38,7 @@ dependencies {
     val logstashVersion = "7.4"
     val micrometerVersion = "1.13.0"
     val mockkVersion = "1.13.11"
-    val navSecurityVersion = "4.1.7"
+    val navSecurityVersion = "4.1.8"
     val tmsKtorTokenSupportVersion = "4.1.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
