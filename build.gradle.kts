@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    val kotlinVersion = "2.0.0"
+    val kotlinVersion = "2.0.10"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.51.0"
 
@@ -33,12 +33,12 @@ dependencies {
     val auth0JwtVersion = "4.4.0"
     val kotlinVersion = "2.0.0"
     val kotlinxCoroutinesVersion = "1.8.1"
-    val ktorVersion = "2.3.11"
+    val ktorVersion = "2.3.12"
     val logbackVersion = "1.5.6"
-    val logstashVersion = "7.4"
-    val micrometerVersion = "1.13.0"
-    val mockkVersion = "1.13.11"
-    val navSecurityVersion = "4.1.7"
+    val logstashVersion = "8.0"
+    val micrometerVersion = "1.13.3"
+    val mockkVersion = "1.13.12"
+    val navSecurityVersion = "5.0.2"
     val tmsKtorTokenSupportVersion = "4.1.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
