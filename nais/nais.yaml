@@ -23,6 +23,9 @@ spec:
   webproxy: true
   tokenx:
     enabled: true
+  azure:
+    application:
+      enabled: true
   idporten:
     enabled: true
     sidecar:

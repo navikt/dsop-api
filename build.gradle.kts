@@ -60,6 +60,7 @@ dependencies {
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
     implementation("no.nav.tms.token.support:tokendings-exchange:$tmsKtorTokenSupportVersion")
+    implementation("no.nav.tms.token.support:azure-exchange:$tmsKtorTokenSupportVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
