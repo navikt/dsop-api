@@ -9,4 +9,5 @@ data class Environment(
     val eregApiUrl: String = System.getenv("EREG_API_URL"),
 
     val sporingsloggTargetApp: String = System.getenv("SPORINGSLOGG_TARGET_APP"),
+    val kodeverkTargetApp: String = System.getenv("KODEVERK_TARGET_APP"),
 )
