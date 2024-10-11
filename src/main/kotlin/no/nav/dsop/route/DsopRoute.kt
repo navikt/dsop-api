@@ -1,4 +1,4 @@
-package no.nav.dsop.routes
+package no.nav.dsop.route
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -6,7 +6,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import no.nav.dsop.service.DsopService
-import no.nav.dsop.util.getAuthTokenFromRequest
+import no.nav.dsop.utils.getAuthTokenFromRequest
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("dsopRoute")

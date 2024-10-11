@@ -1,4 +1,4 @@
-package no.nav.dsop.util
+package no.nav.dsop.utils
 
 import io.ktor.server.request.ApplicationRequest
 import io.ktor.server.request.authorization

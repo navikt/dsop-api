@@ -19,7 +19,7 @@ import io.ktor.server.request.path
 import io.ktor.server.request.uri
 import io.ktor.server.routing.routing
 import no.nav.dsop.health.health
-import no.nav.dsop.routes.dsop
+import no.nav.dsop.route.dsop
 import no.nav.security.token.support.v2.RequiredClaims
 import no.nav.security.token.support.v2.tokenValidationSupport
 import org.slf4j.LoggerFactory

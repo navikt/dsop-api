@@ -8,7 +8,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
 import io.ktor.server.routing.routing
-import no.nav.dsop.routes.dsop
+import no.nav.dsop.route.dsop
 
 fun Application.testModule(appContext: TestApplicationContext) {
 
