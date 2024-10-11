@@ -1,0 +1,10 @@
+[
+  {
+    "tema": "Sykepenger",
+    "uthentingsTidspunkt": "uthentingsTidspunkt",
+    "mottaker": "mottaker",
+    "mottakernavn": "mottaker",
+    "leverteData": "leverteData",
+    "samtykkeToken": "samtykkeToken"
+  }
+]

@@ -32,14 +32,15 @@ repositories {
 dependencies {
     val auth0JwtVersion = "4.4.0"
     val kotlinVersion = "2.0.0"
-    val kotlinxCoroutinesVersion = "1.8.1"
-    val ktorVersion = "2.3.12"
-    val logbackVersion = "1.5.7"
+    val kotlinxCoroutinesVersion = "1.9.0"
+    val ktorVersion = "3.0.0"
+    val logbackVersion = "1.5.9"
     val logstashVersion = "8.0"
     val micrometerVersion = "1.13.3"
     val mockkVersion = "1.13.12"
     val navSecurityVersion = "5.0.5"
     val tmsKtorTokenSupportVersion = "4.1.1"
+    val kotestVersion = "5.9.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
@@ -65,6 +66,8 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-json:$kotestVersion")
 }
 
 application {

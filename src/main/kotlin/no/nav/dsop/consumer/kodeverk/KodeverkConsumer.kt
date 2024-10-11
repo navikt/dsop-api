@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.parameter
 import io.ktor.http.isSuccess
 import no.nav.dsop.config.BEARER
 import no.nav.dsop.config.Environment
@@ -24,9 +25,11 @@ class KodeverkConsumer(
 
     private val kodeverkEndpoint = environment.kodeverkRestApiUrl + KODEVERK_TEMA_PATH
 
-    suspend fun getKodeverk(kode: String): String {
+    suspend fun getKodeverk(kode: String, ekskluderUgyldige: Boolean = true): String {
         azureService.getAccessToken(environment.kodeverkTargetApp).let { accessToken ->
             client.get(kodeverkEndpoint) {
+                parameter(PARAM_SPRAAK, NORSK_BOKMAAL)
+                parameter(PARAM_EKSKLUDER_UGYLDIGE, ekskluderUgyldige)
                 header(HEADER_AUTHORIZATION, BEARER + accessToken)
                 header(HEADER_NAV_CALL_ID, MDC.get(MDC_CALL_ID) ?: UUID.randomUUID())
             }.let { result ->
@@ -41,13 +44,14 @@ class KodeverkConsumer(
     }
 
     private fun Kodeverk.termBy(kode: String, spraak: String = NORSK_BOKMAAL): String {
-        return betydninger[kode]?.get(0)?.beskrivelser?.get(spraak)?.term ?: kode
+        return betydninger[kode]?.firstOrNull()?.beskrivelser?.get(spraak)?.term ?: kode
     }
 
     companion object {
         private const val MDC_CALL_ID = "callId"
         private const val NORSK_BOKMAAL = "nb"
-        private const val KODEVERK_TEMA_PATH =
-            "/api/v1/kodeverk/Tema/koder/betydninger?ekskluderUgyldige=true&spraak=$NORSK_BOKMAAL"
+        private const val KODEVERK_TEMA_PATH = "/api/v1/kodeverk/Tema/koder/betydninger"
+        private const val PARAM_SPRAAK = "spraak"
+        private const val PARAM_EKSKLUDER_UGYLDIGE = "ekskluderUgyldige"
     }
 }

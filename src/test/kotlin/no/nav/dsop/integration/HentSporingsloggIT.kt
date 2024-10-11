@@ -1,10 +1,11 @@
 package no.nav.dsop.integration
 
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.kotest.assertions.json.shouldEqualJson
+import io.kotest.matchers.shouldBe
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
-import no.nav.dsop.config.mock.setupMockedClient
-import org.junit.jupiter.api.Assertions.assertEquals
+import no.nav.dsop.config.setupMockedClient
+import no.nav.dsop.testutils.readJsonFile
 import org.junit.jupiter.api.Test
 
 class HentSporingsloggIT : IntegrationTest() {
@@ -12,41 +13,41 @@ class HentSporingsloggIT : IntegrationTest() {
     val HENT_SPORINGSLOGG_PATH = "/get"
 
     @Test
-    fun hentSporingslogg200() = integrationTest(setupMockedClient()) {
-        val client = createClient { install(ContentNegotiation) { json() } }
+    fun hentSporingslogg200() {
+        integrationTest(setupMockedClient()) {
+            val response = get(HENT_SPORINGSLOGG_PATH)
 
-        val response = get(client, HENT_SPORINGSLOGG_PATH)
-
-        assertEquals(HttpStatusCode.OK, response.status)
+            response.status shouldBe HttpStatusCode.OK
+            response.bodyAsText() shouldEqualJson readJsonFile("/json/expected-response/sporingslogg.json")
+        }
     }
 
     @Test
-    fun feilMotEregSkalGi200() =
+    fun feilMotEregSkalGi200() {
         integrationTest(setupMockedClient(eregStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val response = get(HENT_SPORINGSLOGG_PATH)
 
-            val response = get(client, HENT_SPORINGSLOGG_PATH)
-
-            assertEquals(HttpStatusCode.OK, response.status)
+            response.status shouldBe HttpStatusCode.OK
+            response.bodyAsText() shouldEqualJson readJsonFile("/json/expected-response/sporingslogg-with-ereg-error.json")
         }
+    }
 
     @Test
-    fun feilMotSporingsloggSkalGi500() =
-        integrationTest(setupMockedClient(sporingsloggStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
-
-            val response = get(client, HENT_SPORINGSLOGG_PATH)
-
-            assertEquals(HttpStatusCode.InternalServerError, response.status)
-        }
-
-    @Test
-    fun feilMotKodeverkSkalGi200() =
+    fun feilMotKodeverkSkalGi200() {
         integrationTest(setupMockedClient(kodeverkStatus = HttpStatusCode.InternalServerError)) {
-            val client = createClient { install(ContentNegotiation) { json() } }
+            val response = get(HENT_SPORINGSLOGG_PATH)
 
-            val response = get(client, HENT_SPORINGSLOGG_PATH)
-
-            assertEquals(HttpStatusCode.OK, response.status)
+            response.status shouldBe HttpStatusCode.OK
+            response.bodyAsText() shouldEqualJson readJsonFile("/json/expected-response/sporingslogg-with-kodeverk-error.json")
         }
+    }
+
+    @Test
+    fun feilMotSporingsloggSkalGi500() {
+        integrationTest(setupMockedClient(sporingsloggStatus = HttpStatusCode.InternalServerError)) {
+            val response = get(HENT_SPORINGSLOGG_PATH)
+
+            response.status shouldBe HttpStatusCode.InternalServerError
+        }
+    }
 }
