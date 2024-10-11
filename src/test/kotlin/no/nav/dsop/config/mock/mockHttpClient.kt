@@ -9,7 +9,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import no.nav.dsop.config.jsonConfig
 
-
 fun setupMockedClient(
     eregStatus: HttpStatusCode = HttpStatusCode.OK,
     kodeverkStatus: HttpStatusCode = HttpStatusCode.OK,

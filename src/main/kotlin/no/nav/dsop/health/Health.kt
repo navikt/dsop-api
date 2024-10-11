@@ -9,7 +9,6 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.route
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 
-
 fun Routing.health(
     collectorRegistry: PrometheusMeterRegistry,
     ready: () -> Boolean = { true },

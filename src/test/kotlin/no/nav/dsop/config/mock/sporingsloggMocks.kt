@@ -9,7 +9,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.http.isSuccess
 
-
 fun MockRequestHandleScope.mockSporingslogg(status: HttpStatusCode) =
     if (status.isSuccess()) {
         respond(

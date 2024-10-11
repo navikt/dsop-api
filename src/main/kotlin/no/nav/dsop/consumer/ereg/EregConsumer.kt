@@ -9,7 +9,6 @@ import no.nav.dsop.config.Environment
 import no.nav.dsop.consumer.ereg.dto.EregOrganisasjon
 import org.slf4j.LoggerFactory
 
-
 class EregConsumer(private val client: HttpClient, private val environment: Environment) {
 
     private val logger = LoggerFactory.getLogger(EregConsumer::class.java)

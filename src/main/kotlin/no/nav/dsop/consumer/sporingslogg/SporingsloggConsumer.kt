@@ -12,7 +12,6 @@ import no.nav.dsop.config.HEADER_AUTHORIZATION
 import no.nav.dsop.consumer.sporingslogg.dto.Sporingslogg
 import no.nav.tms.token.support.tokendings.exchange.TokendingsService
 
-
 class SporingsloggConsumer(
     private val client: HttpClient,
     private val environment: Environment,
