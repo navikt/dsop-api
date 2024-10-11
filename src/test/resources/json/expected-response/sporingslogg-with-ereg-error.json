@@ -4,7 +4,6 @@
     "uthentingsTidspunkt": "uthentingsTidspunkt",
     "mottaker": "mottaker",
     "mottakernavn": "mottaker",
-    "behandlingsgrunnlag": null,
     "leverteData": "leverteData",
     "samtykkeToken": "samtykkeToken"
   }

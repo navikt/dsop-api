@@ -8,7 +8,6 @@ data class Sporingslogg(
     val uthentingsTidspunkt: String? = null,
     val mottaker: String,
     val mottakernavn: String? = null,
-    val behandlingsgrunnlag: String? = null, //todo: fjern
     val leverteData: String? = null,
     val samtykkeToken: String? = null
 )
