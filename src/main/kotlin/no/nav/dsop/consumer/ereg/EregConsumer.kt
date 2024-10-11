@@ -18,7 +18,7 @@ class EregConsumer(private val client: HttpClient, private val environment: Envi
             client.get(environment.eregApiUrl.plus("/v1/organisasjon/$orgnr/noekkelinfo"))
         return if (eregResult.status.isSuccess()) {
             val eregOrganisasjon = eregResult.body<EregOrganisasjon>()
-            eregOrganisasjon.navn.getNavn()
+            eregOrganisasjon.navn.joinedToString()
         } else {
             logger.warn("Oppslag mot EREG på organisasjonsnummer $orgnr feilet med melding: ".plus(eregResult.body<String>()))
             orgnr
