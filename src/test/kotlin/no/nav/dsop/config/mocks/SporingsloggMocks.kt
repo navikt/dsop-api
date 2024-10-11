@@ -14,7 +14,7 @@ import no.nav.dsop.testutils.readJsonFile
 fun MockRequestHandleScope.mockSporingslogg(status: HttpStatusCode): HttpResponseData {
     return if (status.isSuccess()) {
         respond(
-            content = readJsonFile("/json/sporingslogg.json"),
+            content = readJsonFile("/json/mocks/sporingslogg.json"),
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
         )
     } else {

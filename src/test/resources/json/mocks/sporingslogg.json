@@ -1,0 +1,11 @@
+[
+  {
+    "tema": "tema",
+    "uthentingsTidspunkt": "uthentingsTidspunkt",
+    "mottaker": "mottaker",
+    "mottakernavn": "mottakernavn",
+    "behandlingsgrunnlag": "behandlingsgrunnlag",
+    "leverteData": "leverteData",
+    "samtykkeToken": "samtykkeToken"
+  }
+]

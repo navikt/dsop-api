@@ -14,7 +14,7 @@ import no.nav.dsop.testutils.readJsonFile
 fun MockRequestHandleScope.mockKodeverk(status: HttpStatusCode): HttpResponseData {
     return if (status.isSuccess()) {
         respond(
-            content = readJsonFile("/json/kodeverk-tema.json"),
+            content = readJsonFile("/json/mocks/kodeverk-tema.json"),
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
         )
     } else {

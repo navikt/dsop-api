@@ -14,7 +14,7 @@ import no.nav.dsop.testutils.readJsonFile
 fun MockRequestHandleScope.mockEreg(status: HttpStatusCode): HttpResponseData {
     return if (status.isSuccess()) {
         respond(
-            content = readJsonFile("/json/ereg-organisasjon.json"),
+            content = readJsonFile("/json/mocks/ereg-organisasjon.json"),
             headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
         )
     } else {

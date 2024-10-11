@@ -14,6 +14,7 @@ class DsopService(
 
         val sporingslogg = sporingsloggConsumer.getSporingslogg(authToken)
 
+        // todo: bruk copy her
         return sporingslogg.map {
             Sporingslogg(
                 tema = kodeverkConsumer.getKodeverk(kode = it.tema),
