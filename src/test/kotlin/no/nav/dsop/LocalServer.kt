@@ -5,7 +5,7 @@ import io.ktor.server.netty.Netty
 import io.mockk.coEvery
 import io.mockk.mockkStatic
 import no.nav.dsop.config.TestApplicationContext
-import no.nav.dsop.config.mock.setupMockedClient
+import no.nav.dsop.config.setupMockedClient
 import no.nav.dsop.config.testModule
 import no.nav.dsop.utils.getAuthTokenFromRequest
 

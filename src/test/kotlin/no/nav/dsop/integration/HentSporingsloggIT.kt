@@ -3,7 +3,7 @@ package no.nav.dsop.integration
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
-import no.nav.dsop.config.mock.setupMockedClient
+import no.nav.dsop.config.setupMockedClient
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
