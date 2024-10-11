@@ -3,20 +3,16 @@ package no.nav.dsop.service
 import no.nav.dsop.consumer.ereg.EregConsumer
 import no.nav.dsop.consumer.kodeverk.KodeverkConsumer
 import no.nav.dsop.consumer.sporingslogg.SporingsloggConsumer
-import no.nav.dsop.consumer.sporingslogg.dto.Sporingslogg
+import no.nav.dsop.dto.SporingsloggOutbound
 
 class DsopService(
     private val sporingsloggConsumer: SporingsloggConsumer,
     private val eregConsumer: EregConsumer,
     private val kodeverkConsumer: KodeverkConsumer
 ) {
-    suspend fun getDsop(authToken: String): List<Sporingslogg> {
-
-        val sporingslogg = sporingsloggConsumer.getSporingslogg(authToken)
-
-        // todo: bruk copy her
-        return sporingslogg.map {
-            Sporingslogg(
+    suspend fun getDsop(authToken: String): List<SporingsloggOutbound> {
+        return sporingsloggConsumer.getSporingslogg(authToken).map {
+            SporingsloggOutbound(
                 tema = kodeverkConsumer.getKodeverk(kode = it.tema),
                 uthentingsTidspunkt = it.uthentingsTidspunkt,
                 mottaker = it.mottaker,

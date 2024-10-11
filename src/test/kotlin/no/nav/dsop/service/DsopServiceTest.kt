@@ -45,7 +45,6 @@ class DsopServiceTest {
             tema = TEMA_KODE,
             mottaker = MOTTAKER,
             uthentingsTidspunkt = UTHENTINGS_TIDSPUNKT,
-            mottakernavn = MOTTAKERNAVN,
             leverteData = LEVERTE_DATA,
             samtykkeToken = SAMTYKKE_TOKEN
         )
@@ -57,7 +56,6 @@ class DsopServiceTest {
         private const val TEMA_KODE = "temaKode"
         private const val UTHENTINGS_TIDSPUNKT = "uthentingsTidspunkt"
         private const val MOTTAKER = "mottaker"
-        private const val MOTTAKERNAVN = "mottakernavn"
         private const val LEVERTE_DATA = "leverteData"
         private const val SAMTYKKE_TOKEN = "samtykkeToken"
     }
