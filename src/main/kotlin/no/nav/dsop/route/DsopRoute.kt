@@ -15,9 +15,7 @@ fun Route.dsop(dsopService: DsopService) {
     get("get") {
         try {
             val authToken = getAuthTokenFromRequest(call.request)
-
             call.respond(dsopService.getDsop(authToken))
-
         } catch (e: Exception) {
             logger.error("Noe gikk galt i DsopCall", e)
             call.respond(HttpStatusCode.InternalServerError, HttpStatusCode.InternalServerError.description)

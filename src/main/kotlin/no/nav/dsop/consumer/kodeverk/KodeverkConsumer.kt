@@ -44,7 +44,7 @@ class KodeverkConsumer(
     }
 
     private fun Kodeverk.termBy(kode: String, spraak: String = NORSK_BOKMAAL): String {
-        return betydninger[kode]?.get(0)?.beskrivelser?.get(spraak)?.term ?: kode
+        return betydninger[kode]?.firstOrNull()?.beskrivelser?.get(spraak)?.term ?: kode
     }
 
     companion object {
