@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    val kotlinVersion = "2.0.21"
+    val kotlinVersion = "2.1.0"
     val shadowVersion = "8.1.1"
     val versionsVersion = "0.51.0"
 
@@ -31,15 +31,15 @@ repositories {
 
 dependencies {
     val auth0JwtVersion = "4.4.0"
-    val kotlinVersion = "2.0.0"
+    val kotlinVersion = "2.1.0"
     val kotlinxCoroutinesVersion = "1.9.0"
-    val ktorVersion = "2.3.12"
-    val logbackVersion = "1.5.9"
+    val ktorVersion = "3.0.1"
+    val logbackVersion = "1.5.12"
     val logstashVersion = "8.0"
-    val micrometerVersion = "1.13.5"
+    val micrometerVersion = "1.14.1"
     val mockkVersion = "1.13.13"
-    val navSecurityVersion = "5.0.5"
-    val tmsKtorTokenSupportVersion = "4.1.1"
+    val navSecurityVersion = "5.0.13"
+    val tmsKtorTokenSupportVersion = "5.0.0"
     val kotestVersion = "5.9.1"
 
     implementation("com.auth0:java-jwt:$auth0JwtVersion")
@@ -59,7 +59,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashVersion")
-    implementation("no.nav.security:token-validation-ktor-v2:$navSecurityVersion")
+    implementation("no.nav.security:token-validation-ktor-v3:$navSecurityVersion")
     implementation("no.nav.tms.token.support:tokendings-exchange:$tmsKtorTokenSupportVersion")
     implementation("no.nav.tms.token.support:azure-exchange:$tmsKtorTokenSupportVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlinVersion")
