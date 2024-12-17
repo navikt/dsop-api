@@ -4,7 +4,7 @@
 
 Ktor-backend som skal gi brukeren innsikt i informasjonen NAV har lagret.
 
-Secrets ligger i [Google Secret Manager](https://doc.nais.io/security/secrets/google-secrets-manager/).
+Secrets ligger i [Nais console](https://console.nav.cloud.nais.io/team/personbruker/secrets).
 
 ## Lokal kjøring
 
