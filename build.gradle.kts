@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-    val auth0JwtVersion = "4.4.0"
+    val auth0JwtVersion = "4.5.0"
     val kotlinVersion = "2.1.0"
     val kotlinxCoroutinesVersion = "1.9.0"
     val ktorVersion = "3.0.2"
