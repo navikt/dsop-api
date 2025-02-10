@@ -81,7 +81,7 @@ fun Application.mainModule(appContext: ApplicationContext = ApplicationContext()
 }
 
 private fun Application.configureShutdownHook(httpClient: HttpClient) {
-    environment.monitor.subscribe(ApplicationStopping) {
+    monitor.subscribe(ApplicationStopping) {
         httpClient.close()
     }
 }
